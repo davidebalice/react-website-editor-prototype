@@ -1,17 +1,18 @@
-const view = {
+const data = {
   pageData: {
     _id: "4dTQcIGijLUuqB-j3H_me",
-    title: "lorem ipsum",
-
-    creator: {
-      original: "60a2ddc385116e068c1d83e7",
+    title: "Homepage",
+    style: {
+      background: "#ff0000",
+      width: "80%",
+      maxWidth: "1400px",
     },
   },
   sectionData: [
     {
       _id: "3fl7H-5be-SkzISsDejBd",
-
-      layout: "one_column_layout",
+      layout: "two_column_layout_5050",
+      type: "header",
       label: {
         value: "",
         override: true,
@@ -21,11 +22,18 @@ const view = {
           position: "default",
           widgets: ["fydpEG38vjxUbtVjSxJwe"],
         },
+        {
+          position: "default",
+          widgets: ["mydpE348vjxUbtVjSxJwe"],
+        },
       ],
+      style: {
+        background: "yellow",
+        color: "black",
+      },
     },
     {
       _id: "S1UtpesVpckpfvzSVqAQM",
-
       layout: "two_column_layout_5050",
       label: {
         value: "Core",
@@ -41,10 +49,13 @@ const view = {
           widgets: ["42n-Rc5JpT8_Qt9yDHSSQ"],
         },
       ],
+      style: {
+        background: "yellow",
+        color: "black",
+      },
     },
     {
       _id: "SWE3_lGx-fopIZgdAJwcb",
-
       layout: "two_column_layout_5050",
       label: {
         value: "Stats",
@@ -60,10 +71,12 @@ const view = {
           widgets: ["EvyPzsDPVb-3Jx3F9vqBJ"],
         },
       ],
+      style: {
+        background: "yellow",
+      },
     },
     {
       _id: "lmTUfqMF7lTZYx-mcG5n3",
-
       layout: "two_column_layout_5050",
       label: {
         value: "Skill 1",
@@ -136,14 +149,15 @@ const view = {
   widgetData: [
     {
       _id: "0gEL5UTywUKrxbjf6HDHy",
-
       type: "table",
       icon: "TableIcon",
       fields: ["jAUD19BVwjGC5WSWDIO8O"],
+      style: {
+        background: "yellow",
+      },
     },
     {
       _id: "1sEvvov8Oqktyp6-CeJNt",
-
       type: "table",
       icon: "TableIcon",
       fields: ["ydG7ASZvd0Oa6BrwYo8hL", "1T6IO7Hmnx-rjpV22iekq"],
@@ -199,10 +213,15 @@ const view = {
     },
     {
       _id: "fydpEG38vjxUbtVjSxJwe",
-
       type: "table",
       icon: "TableIcon",
       fields: ["21ozPTyU49OX8rWE3R4Xd"],
+    },
+    {
+      _id: "mydpE348vjxUbtVjSxJwe",
+      type: "table",
+      icon: "TableIcon",
+      fields: ["70ozPTyU49OX8rWE3R4Xg"],
     },
     {
       _id: "gIHtfp2O40jYGJPgJVfPb",
@@ -274,6 +293,9 @@ const view = {
       status: {
         used: false,
       },
+      style: {
+        background: "yellow",
+      },
     },
     {
       _id: "1T6IO7Hmnx-rjpV22iekq",
@@ -307,6 +329,23 @@ const view = {
         used: false,
       },
     },
+    {
+      _id: "70ozPTyU49OX8rWE3R4Xg",
+      type: "text",
+
+      label: {
+        value: "lorem ipsum",
+        override: true,
+      },
+      field_id: {
+        value: "agi80",
+        override: true,
+      },
+      status: {
+        used: false,
+      },
+    },
+
     {
       _id: "3KgIflc9RBt2uuFMU9JyP",
       type: "text",
@@ -342,7 +381,6 @@ const view = {
     {
       _id: "6Pp4ckqSnfZYzCtgve21y",
       type: "text",
-
       label: {
         value: "Skill 2 Mods",
         override: true,
@@ -1196,4 +1234,4 @@ const view = {
   ],
 };
 
-export default view;
+export default data;

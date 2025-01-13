@@ -6,7 +6,6 @@ const FieldRenderer = ({ fieldId, viewData, activeId }) => {
 
   if (!result) return <div>{fieldId}</div>;
 
-  //Find reference to field definition
   const fieldValue = viewData.fieldData.find(
     ({ field_ref }) => field_ref === result._id
   );

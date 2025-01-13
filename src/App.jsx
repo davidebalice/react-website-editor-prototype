@@ -6,24 +6,22 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import React, { useEffect, useState } from "react";
-
-import Container from "./Container";
-import FieldRenderer from "./FieldRenderer";
-import SortableItem from "./SortableItem";
-import data from "./data.js";
+import Column from "./components/Column.jsx";
+import Container from "./components/Container.jsx";
+import FieldRenderer from "./components/FieldRenderer.jsx";
+import Section from "./components/Section.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import Content from "./components/Content.jsx";
+import Topbar from "./components/Topbar.jsx";
+import data from "./data/home.js";
+import "./styles.css";
 
 const App = () => {
+  const [view, setView] = useState("desktop");
   const [activeId, setActiveId] = useState(null);
-  /*
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-*/
   const sensors = useSensors(useSensor(PointerSensor));
+  const [currentStyle, setCurrentStyle] = useState({});
+  const [selectedContainer, setSelectedContainer] = useState(null);
 
   const handleDragStart = ({ active }) => {
     setActiveId(active.id);
@@ -39,68 +37,100 @@ const App = () => {
   };
 
   const { idArrays, idTypes } = processView(data);
+  const [items, setItems] = useState(idArrays);
+  const pageId = data.pageData._id;
+  const pageStyle = data.pageData.style;
 
   console.log({ data, idArrays });
-
-  const [items, setItems] = useState(idArrays);
-
   useEffect(() => console.log({ items }), [items]);
-
-  const pageId = data.pageData._id;
 
   return (
     <DndContext
       sensors={sensors}
-      // collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
     >
-      <Container id={pageId} items={items[pageId]}>
-        {items[pageId] &&
-          items[pageId].map((section) => {
-            return (
-              <Container
-                id={section}
-                items={items[section]}
-                key={section}
-                type="section"
-              >
-                <div style={wrapperStyle}>
-                  {items[section] &&
-                    items[section].map((widget) => {
-                      return (
-                        <Container
-                          id={widget}
-                          items={items[widget]}
-                          key={widget}
-                          type="column"
-                        >
-                          {items[widget] &&
-                            items[widget].map((field) => (
-                              <SortableItem
-                                key={field}
-                                id={field}
-                                activeId={activeId}
-                              >
-                                <FieldRenderer
-                                  fieldId={field}
-                                  viewData={data}
+      {selectedContainer}
+
+      <Topbar view={view} setView={setView} />
+
+      <Sidebar
+        id={selectedContainer}
+        pageStyle={pageStyle}
+        currentStyle={currentStyle}
+        setCurrentStyle={setCurrentStyle}
+      />
+
+      <div className={`siteContainer ${view === "mobile" ? "mobile" : ""}`}>
+        <Container
+          id={pageId}
+          items={items[pageId]}
+          className="siteContainer"
+          pageStyle={pageStyle}
+          currentStyle={currentStyle}
+          setCurrentStyle={setCurrentStyle}
+          setSelectedContainer={setSelectedContainer}
+          isSelected={selectedContainer === pageId}
+        >
+          {items[pageId] &&
+            items[pageId].map((section) => {
+              return (
+                <Section
+                  id={section}
+                  items={items[section]}
+                  key={section}
+                  currentStyle={currentStyle}
+                  setCurrentStyle={setCurrentStyle}
+                  setSelectedContainer={setSelectedContainer}
+                  isSelected={selectedContainer === section}
+                  idTypes={idTypes}
+                >
+                  |||||||||||||||| id section:{section} selected:
+                  {selectedContainer} style:{section.style} background:
+                  {section.style}
+                  <div style={wrapperStyle}>
+                    {items[section] &&
+                      items[section].map((widget) => {
+                        return (
+                          <Column
+                            id={widget}
+                            items={items[widget]}
+                            key={widget}
+                            currentStyle={currentStyle}
+                            setCurrentStyle={setCurrentStyle}
+                            setSelectedContainer={setSelectedContainer}
+                            isSelected={selectedContainer === widget}
+                            idTypes={idTypes}
+                          >
+                            {items[widget] &&
+                              items[widget].map((field) => (
+                                <Content
+                                  key={field}
+                                  id={field}
                                   activeId={activeId}
-                                />
-                              </SortableItem>
-                            ))}
-                        </Container>
-                      );
-                    })}
-                </div>
-              </Container>
-            );
-          })}
-      </Container>
-      {/* <DragOverlay>
-          {activeId ? <SortableItem key={activeId} id={activeId} /> : null}
-        </DragOverlay> */}
+                                  currentStyle={currentStyle}
+                                  setCurrentStyle={setCurrentStyle}
+                                  setSelectedContainer={setSelectedContainer}
+                                  isSelected={selectedContainer === field}
+                                  idTypes={idTypes}
+                                >
+                                  <FieldRenderer
+                                    fieldId={field}
+                                    viewData={data}
+                                    activeId={activeId}
+                                  />
+                                </Content>
+                              ))}
+                          </Column>
+                        );
+                      })}
+                  </div>
+                </Section>
+              );
+            })}
+        </Container>
+      </div>
     </DndContext>
   );
 
@@ -262,6 +292,7 @@ const App = () => {
         type: "section",
         container: "page",
         name: `section ${index}`,
+        style: section.style,
       };
     });
 
@@ -271,6 +302,7 @@ const App = () => {
         type: "widget",
         container: "section",
         name: `widget ${index}`,
+        style: widget.style,
       };
     });
 
@@ -279,6 +311,7 @@ const App = () => {
         type: "field",
         container: "widget",
         name: field.label.value,
+        style: field.style,
       };
     });
 
