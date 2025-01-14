@@ -77,15 +77,16 @@ const Content = React.memo(
       <div ref={setNodeRef} style={styles}>
         <div {...listeners} {...attributes} style={dragIconStyle}>
           <span>:::</span>
-          <div
+
+          <button
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={() => {
               setSelectedContainer(id);
               setCurrentStyle(style);
             }}
-            style={{ cursor: "pointer", color: "darkblue" }}
           >
-            OPZ {id}
-          </div>
+            OPZ
+          </button>
         </div>
 
         <div>{children}</div>

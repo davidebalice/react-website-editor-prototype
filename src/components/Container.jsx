@@ -1,6 +1,6 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React, { useState,useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Container({
   id,
@@ -19,30 +19,30 @@ export default function Container({
   const [style, setStyle] = useState(pageStyle);
 
   useEffect(() => {
-      if (isSelected && currentStyle) {
-        let updatedStyle = { ...style };
-  
-        if (
-          currentStyle.background &&
-          currentStyle.background !== updatedStyle.background
-        ) {
-          updatedStyle.background = currentStyle.background;
-        }
-  
-        if (
-          currentStyle.fontSize &&
-          currentStyle.fontSize !== updatedStyle.fontSize
-        ) {
-          updatedStyle.fontSize = currentStyle.fontSize;
-        }
-  
-        if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
-          updatedStyle.color = currentStyle.color;
-        }
-  
-        setStyle(updatedStyle);
+    if (isSelected && currentStyle) {
+      let updatedStyle = { ...style };
+
+      if (
+        currentStyle.background &&
+        currentStyle.background !== updatedStyle.background
+      ) {
+        updatedStyle.background = currentStyle.background;
       }
-    }, [isSelected, currentStyle]);
+
+      if (
+        currentStyle.fontSize &&
+        currentStyle.fontSize !== updatedStyle.fontSize
+      ) {
+        updatedStyle.fontSize = currentStyle.fontSize;
+      }
+
+      if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
+        updatedStyle.color = currentStyle.color;
+      }
+
+      setStyle(updatedStyle);
+    }
+  }, [isSelected, currentStyle]);
 
   const styles = {
     transform: CSS.Transform.toString(transform),
@@ -65,18 +65,14 @@ export default function Container({
   return (
     <SortableContext id={id} items={items}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        <div
+        <button
           onClick={() => {
             setSelectedContainer(id);
             setCurrentStyle(style);
           }}
-          style={{ cursor: "pointer", color: "darkblue" }}
         >
-          OPZ {id}
-        </div>
-
-        {currentStyle?.background}
-
+          OPZ
+        </button>
         {children}
       </div>
     </SortableContext>

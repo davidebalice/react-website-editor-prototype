@@ -168,7 +168,6 @@ const data = {
       type: "table",
       icon: "TableIcon",
       fields: [
-        "9TTQ5__7Z-H02ekQOb6e4",
         "e_9n5d1LNjSzx_d0mGWLW",
         "7lfHWaxDpFHid6f6l45i6",
         "CvWHZy2Bz2BsO0dWPsTjG",

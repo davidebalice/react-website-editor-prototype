@@ -15,9 +15,11 @@ export default function Section({
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
-  const section = idTypes[id];
+  const section = idTypes[id] || {};
 
-  const [style, setStyle] = useState(section.style);
+  const [style, setStyle] = useState(
+    section.style || { background: "white", color: "black" }
+  );
 
   useEffect(() => {
     if (isSelected && currentStyle) {
@@ -45,8 +47,6 @@ export default function Section({
     }
   }, [isSelected, currentStyle]);
 
-  console.log(section.style);
-
   const styles = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -66,17 +66,15 @@ export default function Section({
 
   return (
     <SortableContext id={id} items={items}>
-      {id} {isSelected ? "selected" : "not selected"}
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        <div
+        <button
           onClick={() => {
             setSelectedContainer(id);
             setCurrentStyle(style);
           }}
-          style={{ cursor: "pointer", color: "darkblue" }}
         >
-          OPZ {id}
-        </div>
+          OPZ
+        </button>
 
         {children}
       </div>

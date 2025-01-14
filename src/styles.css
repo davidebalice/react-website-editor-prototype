@@ -15,7 +15,7 @@ body {
 .siteContainer {
   max-width: 1400px;
   width: 100%;
-  height:auto;
+  height: auto;
   margin: 0 auto;
   transition: all 0.5s;
 }
@@ -23,10 +23,10 @@ body {
 .siteContainer.mobile {
   max-width: 90%;
   width: 400px;
-  height:600px;
+  height: 600px;
   overflow-y: scroll;
-  border:1px solid #ddd;
-  
+  border: 1px solid #ddd;
+  margin-top:50px
 }
 
 .topbar {
@@ -40,5 +40,13 @@ body {
   width: 150px;
   height: 100vh;
   border-right: 1px solid #ddd;
-  float: left;
+  position: fixed;
+  top: 60px;
+  left: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

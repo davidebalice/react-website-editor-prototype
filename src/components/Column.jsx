@@ -64,15 +64,14 @@ export default function Column({
 
   return (
     <SortableContext id={id} items={items}>
-      <div
+      <button
         onClick={() => {
           setSelectedContainer(id);
           setCurrentStyle(style);
         }}
-        style={{ cursor: "pointer", color: "darkblue" }}
       >
-        OPZ {id}
-      </div>
+        OPZ
+      </button>
 
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
         {children}

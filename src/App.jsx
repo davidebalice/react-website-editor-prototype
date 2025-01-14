@@ -1,5 +1,6 @@
 import {
   DndContext,
+  DragOverlay,
   PointerSensor,
   useSensor,
   useSensors,
@@ -8,10 +9,10 @@ import { arrayMove } from "@dnd-kit/sortable";
 import React, { useEffect, useState } from "react";
 import Column from "./components/Column.jsx";
 import Container from "./components/Container.jsx";
+import Content from "./components/Content.jsx";
 import FieldRenderer from "./components/FieldRenderer.jsx";
 import Section from "./components/Section.jsx";
 import Sidebar from "./components/Sidebar.jsx";
-import Content from "./components/Content.jsx";
 import Topbar from "./components/Topbar.jsx";
 import data from "./data/home.js";
 import "./styles.css";
@@ -19,7 +20,15 @@ import "./styles.css";
 const App = () => {
   const [view, setView] = useState("desktop");
   const [activeId, setActiveId] = useState(null);
-  const sensors = useSensors(useSensor(PointerSensor));
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      shouldStartDrag: (event) => {
+        return event.target.tagName !== "BUTTON";
+      },
+    })
+  );
+
   const [currentStyle, setCurrentStyle] = useState({});
   const [selectedContainer, setSelectedContainer] = useState(null);
 
@@ -29,20 +38,97 @@ const App = () => {
     console.log(active.id);
   };
 
-  const wrapperStyle = {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    border: "2px solid yellow",
-  };
-
   const { idArrays, idTypes } = processView(data);
-  const [items, setItems] = useState(idArrays);
+  const [items, setItems] = useState(idArrays || []);
   const pageId = data.pageData._id;
-  const pageStyle = data.pageData.style;
+  const pageStyle = data.pageData?.style || {};
 
   console.log({ data, idArrays });
   useEffect(() => console.log({ items }), [items]);
+
+  const handleAddContent = (widgetId) => {
+    const newContentId = `new-content-${Date.now()}`;
+    const newContent = {
+      id: newContentId,
+      type: "field",
+      content: "Nuovo contenuto",
+    };
+
+    setItems((prevItems) => {
+      return {
+        ...prevItems,
+        [widgetId]: [...prevItems[widgetId], newContentId],
+      };
+    });
+  };
+
+  const handleAddColumn = (sectionId) => {
+    const newColumnId = `column-${Date.now()}`; // Creiamo un ID unico per la colonna
+    const newColumn = {
+      id: newColumnId,
+      type: "column", // Tipo della colonna
+      content: "Nuovo contenuto della colonna", // Puoi personalizzare il contenuto
+    };
+
+    setItems((prevItems) => {
+      const section = prevItems[sectionId];
+      return {
+        ...prevItems,
+        [sectionId]: {
+          ...section,
+          columns: [...section.columns, newColumnId], // Aggiungiamo l'ID della colonna alla sezione
+        },
+      };
+    });
+  };
+  console.log("Struttura attuale di items:", items);
+
+  const newSectionId = `section-${Date.now()}`;
+  const newItemId = `item-${Date.now()}`;
+
+  const newSection = {
+    _id: newSectionId,
+    layout: "one_column_layout",
+    label: {
+      value: "New Section",
+      override: true,
+    },
+    content: [
+      {
+        position: "default",
+        widgets: [newItemId],
+      },
+    ],
+    style: {
+      background: "blue",
+      color: "white",
+    },
+  };
+  /*
+  const handleAddSection = () => {
+    if (!pageId || !items[pageId]) {
+      setItems((prevItems) => ({
+        ...prevItems,
+        [pageId]: [newSection],
+      }));
+    } else {
+      setItems((prevItems) => ({
+        ...prevItems,
+        [pageId]: [...prevItems[pageId], newSection],
+      }));
+    }
+  };
+*/
+  const handleAddSection = () => {
+    setItems((prevItems) => ({
+      ...prevItems,
+      [pageId]: [...prevItems[pageId], newSectionId],
+      [newSectionId]: newSectionId,
+    }));
+  };
+
+  console.log("items::::::::::::");
+  console.log(items);
 
   return (
     <DndContext
@@ -86,43 +172,59 @@ const App = () => {
                   isSelected={selectedContainer === section}
                   idTypes={idTypes}
                 >
-                  |||||||||||||||| id section:{section} selected:
-                  {selectedContainer} style:{section.style} background:
-                  {section.style}
-                  <div style={wrapperStyle}>
+                  <button onClick={() => handleAddSection()}>
+                    Aggiungi sezione
+                  </button>
+
+                  <div className="wrapper">
                     {items[section] &&
                       items[section].map((widget) => {
                         return (
-                          <Column
-                            id={widget}
-                            items={items[widget]}
-                            key={widget}
-                            currentStyle={currentStyle}
-                            setCurrentStyle={setCurrentStyle}
-                            setSelectedContainer={setSelectedContainer}
-                            isSelected={selectedContainer === widget}
-                            idTypes={idTypes}
-                          >
-                            {items[widget] &&
-                              items[widget].map((field) => (
-                                <Content
-                                  key={field}
-                                  id={field}
-                                  activeId={activeId}
-                                  currentStyle={currentStyle}
-                                  setCurrentStyle={setCurrentStyle}
-                                  setSelectedContainer={setSelectedContainer}
-                                  isSelected={selectedContainer === field}
-                                  idTypes={idTypes}
-                                >
-                                  <FieldRenderer
-                                    fieldId={field}
-                                    viewData={data}
-                                    activeId={activeId}
-                                  />
-                                </Content>
-                              ))}
-                          </Column>
+                          <>
+                            <button onClick={() => handleAddColumn(widget)}>
+                              Aggiungi colonna
+                            </button>
+                            <Column
+                              id={widget}
+                              items={items[widget]}
+                              key={widget}
+                              currentStyle={currentStyle}
+                              setCurrentStyle={setCurrentStyle}
+                              setSelectedContainer={setSelectedContainer}
+                              isSelected={selectedContainer === widget}
+                              idTypes={idTypes}
+                            >
+                              {items[widget] &&
+                                items[widget].map((field) => (
+                                  <>
+                                    <button
+                                      onClick={() => handleAddContent(widget)}
+                                    >
+                                      Aggiungi Contenuto
+                                    </button>
+
+                                    <Content
+                                      key={field}
+                                      id={field}
+                                      activeId={activeId}
+                                      currentStyle={currentStyle}
+                                      setCurrentStyle={setCurrentStyle}
+                                      setSelectedContainer={
+                                        setSelectedContainer
+                                      }
+                                      isSelected={selectedContainer === field}
+                                      idTypes={idTypes}
+                                    >
+                                      <FieldRenderer
+                                        fieldId={field}
+                                        viewData={data}
+                                        activeId={activeId}
+                                      />
+                                    </Content>
+                                  </>
+                                ))}
+                            </Column>{" "}
+                          </>
                         );
                       })}
                   </div>
@@ -131,6 +233,25 @@ const App = () => {
             })}
         </Container>
       </div>
+
+      {idTypes[activeId]?.type === "field" ? (
+        <DragOverlay>
+          {activeId ? (
+            <div
+              style={{
+                padding: "20px",
+                border: "2px dashed gray",
+                background: "lightgray",
+                cursor: "grabbing",
+              }}
+            >
+              {idTypes[activeId]?.type
+                ? `Dragging ${idTypes[activeId].type}: ${idTypes[activeId].name}`
+                : `Dragging ${activeId}`}
+            </div>
+          ) : null}
+        </DragOverlay>
+      ) : null}
     </DndContext>
   );
 
@@ -139,6 +260,11 @@ const App = () => {
   }
 
   function handleDragOver({ active, over }) {
+    if (!active || !over) {
+      console.warn("Active or Over is null or undefined", { active, over });
+      return;
+    }
+
     const id = active.id;
     const overId = over.id;
 
@@ -267,7 +393,7 @@ const App = () => {
       }));
     }
 
-    // setActiveId(null);
+    setActiveId(null);
   }
 
   function processView(view) {
