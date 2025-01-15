@@ -6,16 +6,17 @@ const Content = React.memo(
   ({
     id,
     children,
-    idTypes,
+    contents,
     isSelected,
     currentStyle,
     setSelectedContainer,
     setCurrentStyle,
+    editor,
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
 
-    const content = idTypes?.[id] || {};
+    const content = contents?.[id] || {};
 
     const [style, setStyle] = useState(content.style || {});
 
@@ -78,15 +79,18 @@ const Content = React.memo(
         <div {...listeners} {...attributes} style={dragIconStyle}>
           <span>:::</span>
 
-          <button
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => {
-              setSelectedContainer(id);
-              setCurrentStyle(style);
-            }}
-          >
-            OPZ
-          </button>
+          {editor && (
+            <button
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={() => {
+                setSelectedContainer(id);
+                setCurrentStyle(style);
+              }}
+              className="buttonOpzContent"
+            >
+              OPZ
+            </button>
+          )}
         </div>
 
         <div>{children}</div>

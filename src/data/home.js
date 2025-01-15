@@ -20,11 +20,11 @@ const data = {
       content: [
         {
           position: "default",
-          widgets: ["fydpEG38vjxUbtVjSxJwe"],
+          columns: ["fydpEG38vjxUbtVjSxJwe"],
         },
         {
           position: "default",
-          widgets: ["mydpE348vjxUbtVjSxJwe"],
+          columns: ["mydpE348vjxUbtVjSxJwe"],
         },
       ],
       style: {
@@ -42,11 +42,11 @@ const data = {
       content: [
         {
           position: "left",
-          widgets: ["7vxqu0BKnkDJJxNU8iBUm"],
+          columns: ["7vxqu0BKnkDJJxNU8iBUm"],
         },
         {
           position: "right",
-          widgets: ["42n-Rc5JpT8_Qt9yDHSSQ"],
+          columns: ["42n-Rc5JpT8_Qt9yDHSSQ"],
         },
       ],
       style: {
@@ -64,11 +64,11 @@ const data = {
       content: [
         {
           position: "left",
-          widgets: ["PSiKuYCIIjyUiVM5nMLjR"],
+          columns: ["PSiKuYCIIjyUiVM5nMLjR"],
         },
         {
           position: "right",
-          widgets: ["EvyPzsDPVb-3Jx3F9vqBJ"],
+          columns: ["EvyPzsDPVb-3Jx3F9vqBJ"],
         },
       ],
       style: {
@@ -85,11 +85,11 @@ const data = {
       content: [
         {
           position: "left",
-          widgets: ["uLHhlU_unzF58GxUi6nJF"],
+          columns: ["uLHhlU_unzF58GxUi6nJF"],
         },
         {
           position: "right",
-          widgets: ["1sEvvov8Oqktyp6-CeJNt"],
+          columns: ["1sEvvov8Oqktyp6-CeJNt"],
         },
       ],
     },
@@ -103,11 +103,11 @@ const data = {
       content: [
         {
           position: "left",
-          widgets: ["rdTS-deY4VY8ANjWIxL8z"],
+          columns: ["rdTS-deY4VY8ANjWIxL8z"],
         },
         {
           position: "right",
-          widgets: ["hHv0QL6x7IK_aJdLMwnFq"],
+          columns: ["hHv0QL6x7IK_aJdLMwnFq"],
         },
       ],
     },
@@ -122,11 +122,11 @@ const data = {
       content: [
         {
           position: "left",
-          widgets: ["mmA1e65RfIIAa3IVubb7U"],
+          columns: ["mmA1e65RfIIAa3IVubb7U"],
         },
         {
           position: "right",
-          widgets: ["gIHtfp2O40jYGJPgJVfPb"],
+          columns: ["gIHtfp2O40jYGJPgJVfPb"],
         },
       ],
     },
@@ -141,12 +141,12 @@ const data = {
       content: [
         {
           position: "default",
-          widgets: ["0gEL5UTywUKrxbjf6HDHy"],
+          columns: ["0gEL5UTywUKrxbjf6HDHy"],
         },
       ],
     },
   ],
-  widgetData: [
+  columnData: [
     {
       _id: "0gEL5UTywUKrxbjf6HDHy",
       type: "table",
@@ -1135,23 +1135,15 @@ const data = {
       _id: "t0N0S7a4GMm3Wfl6aydzr",
       field_ref: "21ozPTyU49OX8rWE3R4Xd",
       page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: {
-        location: "angular-panel1.jpg",
-        eTag: "3ecf70a4090c6801c98fd4d83f104974",
-        key: "angular-panel1.jpg",
-      },
+      type: "image",
+      value: "https://www.aroundweb.it/screenshot/angular-panel1.jpg",
     },
     {
       _id: "_VaTVCgOvni_4z3b3ztDS",
       field_ref: "Ov81qtvSOtv5ITYRhqFDF",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: {
-        location: "https://www.aroundweb.it/screenshot/angular-panel1.jpg",
-        eTag: "0ec83f609f68abd1ce124ac570ab9773",
-        key: "nalu/image/1622403850991_-a7lwhAMMy2XIFMWw-xXp.png",
-      },
+      value: "https://www.aroundweb.it/screenshot/angular-panel1.jpg",
     },
     {
       _id: "hXbjPmCwc0rTC-_ZZSdUn",

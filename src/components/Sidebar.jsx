@@ -1,9 +1,14 @@
 import { useDraggable } from "@dnd-kit/core";
 import React, { useState } from "react";
 import "../styles.css";
-import Content from "./Content"; // Adjust the path as necessary
 
-export default function Sidebar({ id, currentStyle, setCurrentStyle }) {
+export default function Sidebar({
+  id,
+  currentStyle,
+  setCurrentStyle,
+  setEditor,
+  editor,
+}) {
   const [backgroundColor, setBackgroundColor] = useState(
     currentStyle?.background || "white"
   );
@@ -40,19 +45,19 @@ export default function Sidebar({ id, currentStyle, setCurrentStyle }) {
     });
   };
 
-  // Crea un ID univoco per il draggabile
   const draggableId = `sidebar-item-${id}`;
 
   const { attributes, listeners, setNodeRef } = useDraggable({
-    id: draggableId, // Utilizza l'ID univoco per ogni elemento
+    id: draggableId,
   });
 
   return (
     <div className="sidebar">
+      Editor:
+      <div onClick={() => setEditor(!editor)}>attiva / disattiva editor</div>
       <div onClick={changeStyle}>
         Cambia {currentStyle?.background ?? null} {id}
       </div>
-
       <div>
         <label htmlFor="backgroundColor">Scegli colore di sfondo:</label>
         <input
@@ -62,7 +67,6 @@ export default function Sidebar({ id, currentStyle, setCurrentStyle }) {
           onChange={handleBackgroundChange}
         />
       </div>
-
       <div>
         <label htmlFor="textColor">Scegli colore del testo:</label>
         <input
@@ -71,21 +75,6 @@ export default function Sidebar({ id, currentStyle, setCurrentStyle }) {
           value={textColor}
           onChange={handleColorChange}
         />
-      </div>
-
-      <p>new contents</p>
-
-      <div ref={setNodeRef} {...attributes} {...listeners}>
-        <Content
-          key={draggableId} // Utilizza l'ID univoco anche qui
-          id={draggableId}
-          activeId={draggableId}
-          currentStyle={currentStyle}
-          setCurrentStyle={setCurrentStyle}
-          isSelected={false}
-        >
-          testo
-        </Content>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ body {
   height: 600px;
   overflow-y: scroll;
   border: 1px solid #ddd;
-  margin-top:50px
+  margin-top: 50px;
 }
 
 .topbar {
@@ -34,6 +34,11 @@ body {
   height: 40px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 8px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: #fff;
 }
 
 .sidebar {
@@ -49,4 +54,27 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.buttonAddColumn {
+  position: absolute;
+  border: 2px solid red;
+}
+
+.buttonAddContent {
+  position: absolute;
+  border: 2px solid red;
+  margin-left:100px
+}
+
+.buttonOpzContent {
+  position: absolute;
+  border: 2px solid red;
+  margin-left:100px
+}
+
+.buttonOpzColumn {
+  position: absolute;
+  border: 2px solid red;
+  margin-left:300px
 }

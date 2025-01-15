@@ -19,7 +19,12 @@ import "./styles.css";
 
 const App = () => {
   const [view, setView] = useState("desktop");
+  const [editor, setEditor] = useState(true);
   const [activeId, setActiveId] = useState(null);
+
+  const generateUniqueId = () => {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -38,97 +43,177 @@ const App = () => {
     console.log(active.id);
   };
 
-  const { idArrays, idTypes } = processView(data);
+  const { idArrays, idTypes, fieldData, fieldDefinitions } = processView(data);
   const [items, setItems] = useState(idArrays || []);
+  const [contents, setContents] = useState(idTypes || []);
+  const [fields, setFields] = useState(fieldData || []);
+  const [fieldsDetails, setFieldsDetails] = useState(fieldDefinitions || []);
   const pageId = data.pageData._id;
   const pageStyle = data.pageData?.style || {};
 
   console.log({ data, idArrays });
   useEffect(() => console.log({ items }), [items]);
 
-  const handleAddContent = (widgetId) => {
+  const handleAddContent = (columnId) => {
     const newContentId = `new-content-${Date.now()}`;
+    const field1Id = generateUniqueId();
+
     const newContent = {
-      id: newContentId,
       type: "field",
-      content: "Nuovo contenuto",
+      name: "Lorem ipsum",
+      container: "column",
+      style: { border: "1px solid red" },
     };
 
     setItems((prevItems) => {
       return {
         ...prevItems,
-        [widgetId]: [...prevItems[widgetId], newContentId],
+        [columnId]: [...prevItems[columnId], field1Id],
       };
+    });
+
+    setContents((prevContents) => {
+      return {
+        ...prevContents,
+        [newContentId]: newContent,
+      };
+    });
+
+    setFields((prevFields) => {
+      return [
+        ...prevFields,
+        {
+          _id: newContentId,
+          field_ref: field1Id,
+          page: pageId,
+          type: "text",
+          value: "lorem ipsum 1",
+        },
+      ];
     });
   };
 
   const handleAddColumn = (sectionId) => {
-    const newColumnId = `column-${Date.now()}`; // Creiamo un ID unico per la colonna
-    const newColumn = {
-      id: newColumnId,
-      type: "column", // Tipo della colonna
-      content: "Nuovo contenuto della colonna", // Puoi personalizzare il contenuto
-    };
+    const column1Id = generateUniqueId();
+    const field1Id = generateUniqueId();
+    const fielddata1Id = generateUniqueId();
 
-    setItems((prevItems) => {
-      const section = prevItems[sectionId];
+    setItems((prevItems) => ({
+      ...prevItems,
+      [sectionId]: [...prevItems[sectionId], column1Id],
+      [column1Id]: [field1Id],
+    }));
+
+    setContents((prevContents) => {
       return {
-        ...prevItems,
-        [sectionId]: {
-          ...section,
-          columns: [...section.columns, newColumnId], // Aggiungiamo l'ID della colonna alla sezione
-        },
+        ...prevContents,
+        [column1Id]: newColumn,
+        [field1Id]: newField,
       };
     });
+
+    setFields((prevFields) => {
+      return [
+        ...prevFields,
+        {
+          _id: fielddata1Id,
+          field_ref: field1Id,
+          page: pageId,
+          type: "text",
+          value: "lorem ipsum 1",
+        },
+      ];
+    });
   };
-  console.log("Struttura attuale di items:", items);
 
   const newSectionId = `section-${Date.now()}`;
-  const newItemId = `item-${Date.now()}`;
 
-  const newSection = {
-    _id: newSectionId,
-    layout: "one_column_layout",
-    label: {
-      value: "New Section",
-      override: true,
+  const newColumn = {
+    container: "section",
+    name: "column 1",
+    type: "column",
+    style: {
+      background: "f1f1f1",
+      color: "ddd",
     },
-    content: [
-      {
-        position: "default",
-        widgets: [newItemId],
-      },
-    ],
+  };
+
+  const newField = {
+    container: "column",
+    name: "aaa",
+    type: "field",
     style: {
       background: "blue",
       color: "white",
     },
   };
-  /*
-  const handleAddSection = () => {
-    if (!pageId || !items[pageId]) {
-      setItems((prevItems) => ({
-        ...prevItems,
-        [pageId]: [newSection],
-      }));
-    } else {
-      setItems((prevItems) => ({
-        ...prevItems,
-        [pageId]: [...prevItems[pageId], newSection],
-      }));
-    }
-  };
-*/
-  const handleAddSection = () => {
-    setItems((prevItems) => ({
-      ...prevItems,
-      [pageId]: [...prevItems[pageId], newSectionId],
-      [newSectionId]: newSectionId,
-    }));
+
+  const handleAddSection = (afterSectionId = null) => {
+    const column1Id = generateUniqueId();
+    const column2Id = generateUniqueId();
+    const field1Id = generateUniqueId();
+    const field2Id = generateUniqueId();
+    const fielddata1Id = generateUniqueId();
+    const fielddata2Id = generateUniqueId();
+
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+
+      if (afterSectionId && updatedItems[pageId]) {
+        const sectionIndex = updatedItems[pageId].indexOf(afterSectionId);
+        if (sectionIndex !== -1) {
+          updatedItems[pageId].splice(sectionIndex + 1, 0, newSectionId);
+        } else {
+          updatedItems[pageId].push(newSectionId);
+        }
+      } else {
+        updatedItems[pageId] = [...(updatedItems[pageId] || []), newSectionId];
+      }
+
+      updatedItems[newSectionId] = [column1Id, column2Id];
+      updatedItems[column1Id] = [field1Id];
+      updatedItems[column2Id] = [field2Id];
+
+      return updatedItems;
+    });
+
+    setContents((prevContents) => {
+      return {
+        ...prevContents,
+        [column1Id]: newColumn,
+        [column2Id]: newColumn,
+        [field1Id]: newField,
+        [field2Id]: newField,
+      };
+    });
+
+    setFields((prevFields) => {
+      return [
+        ...prevFields,
+        {
+          _id: fielddata1Id,
+          field_ref: field1Id,
+          page: pageId,
+          type: "text",
+          value: "lorem ipsum 1",
+        },
+        {
+          _id: fielddata2Id,
+          field_ref: field2Id,
+          page: pageId,
+          type: "text",
+          value: "lorem ipsum 2",
+        },
+      ];
+    });
   };
 
   console.log("items::::::::::::");
   console.log(items);
+  console.log("contents::::::::::::");
+  console.log(contents);
+  console.log("fields::::::::::::");
+  console.log(fields);
 
   return (
     <DndContext
@@ -138,16 +223,21 @@ const App = () => {
       onDragOver={handleDragOver}
     >
       {selectedContainer}
-
-      <Topbar view={view} setView={setView} />
-
+      activeid: {activeId}
+      <Topbar
+        view={view}
+        setView={setView}
+        editor={editor}
+        setEditor={setEditor}
+      />
       <Sidebar
         id={selectedContainer}
         pageStyle={pageStyle}
         currentStyle={currentStyle}
         setCurrentStyle={setCurrentStyle}
+        editor={editor}
+        setEditor={setEditor}
       />
-
       <div className={`siteContainer ${view === "mobile" ? "mobile" : ""}`}>
         <Container
           id={pageId}
@@ -164,44 +254,59 @@ const App = () => {
               return (
                 <Section
                   id={section}
-                  items={items[section]}
+                  items={items[section] || []}
                   key={section}
                   currentStyle={currentStyle}
                   setCurrentStyle={setCurrentStyle}
                   setSelectedContainer={setSelectedContainer}
                   isSelected={selectedContainer === section}
-                  idTypes={idTypes}
+                  contents={contents}
+                  editor={editor}
+                  setEditor={setEditor}
                 >
-                  <button onClick={() => handleAddSection()}>
-                    Aggiungi sezione
-                  </button>
+                  {editor && (
+                    <button onClick={() => handleAddSection(section)}>
+                      Aggiungi sezione
+                    </button>
+                  )}
 
                   <div className="wrapper">
-                    {items[section] &&
-                      items[section].map((widget) => {
+                    {Array.isArray(items[section]) &&
+                      (items[section] || []).map((column) => {
                         return (
                           <>
-                            <button onClick={() => handleAddColumn(widget)}>
-                              Aggiungi colonna
-                            </button>
                             <Column
-                              id={widget}
-                              items={items[widget]}
-                              key={widget}
+                              id={column}
+                              items={items[column]}
+                              key={column}
                               currentStyle={currentStyle}
                               setCurrentStyle={setCurrentStyle}
                               setSelectedContainer={setSelectedContainer}
-                              isSelected={selectedContainer === widget}
-                              idTypes={idTypes}
+                              isSelected={selectedContainer === column}
+                              contents={contents}
+                              editor={editor}
+                              setEditor={setEditor}
                             >
-                              {items[widget] &&
-                                items[widget].map((field) => (
+                              {editor && (
+                                <button
+                                  onClick={() => handleAddColumn(section)}
+                                  className="buttonAddColumn"
+                                >
+                                  Aggiungi colonna
+                                </button>
+                              )}
+
+                              {items[column] &&
+                                items[column].map((field, i) => (
                                   <>
-                                    <button
-                                      onClick={() => handleAddContent(widget)}
-                                    >
-                                      Aggiungi Contenuto
-                                    </button>
+                                    {i === 0 && editor && (
+                                      <button
+                                        onClick={() => handleAddContent(column)}
+                                        className="buttonAddContent"
+                                      >
+                                        Aggiungi Contenuto
+                                      </button>
+                                    )}
 
                                     <Content
                                       key={field}
@@ -213,17 +318,21 @@ const App = () => {
                                         setSelectedContainer
                                       }
                                       isSelected={selectedContainer === field}
-                                      idTypes={idTypes}
+                                      contents={contents}
+                                      editor={editor}
+                                      setEditor={setEditor}
                                     >
                                       <FieldRenderer
                                         fieldId={field}
-                                        viewData={data}
+                                        field={fields.find(
+                                          (f) => f.field_ref === field
+                                        )}
                                         activeId={activeId}
                                       />
                                     </Content>
                                   </>
                                 ))}
-                            </Column>{" "}
+                            </Column>
                           </>
                         );
                       })}
@@ -233,8 +342,7 @@ const App = () => {
             })}
         </Container>
       </div>
-
-      {idTypes[activeId]?.type === "field" ? (
+      {contents[activeId]?.type === "field" ? (
         <DragOverlay>
           {activeId ? (
             <div
@@ -245,8 +353,8 @@ const App = () => {
                 cursor: "grabbing",
               }}
             >
-              {idTypes[activeId]?.type
-                ? `Dragging ${idTypes[activeId].type}: ${idTypes[activeId].name}`
+              {contents[activeId]?.type
+                ? `Dragging ${contents[activeId].type}: ${contents[activeId].name}`
                 : `Dragging ${activeId}`}
             </div>
           ) : null}
@@ -273,13 +381,13 @@ const App = () => {
     const overContainer = findContainer(overId, items);
 
     console.log({
-      id: idTypes[id] ? idTypes[id].name : null,
-      overId: idTypes[overId] ? idTypes[overId].name : null,
-      activeContainer: idTypes[activeContainer]
-        ? idTypes[activeContainer].name
+      id: contents[id] ? contents[id].name : null,
+      overId: contents[overId] ? contents[overId].name : null,
+      activeContainer: contents[activeContainer]
+        ? contents[activeContainer].name
         : null,
-      overContainer: idTypes[overContainer]
-        ? idTypes[overContainer].name
+      overContainer: contents[overContainer]
+        ? contents[overContainer].name
         : null,
     });
 
@@ -294,9 +402,9 @@ const App = () => {
 
     //Move item to new container for the right container type
     if (
-      idTypes[id] &&
-      idTypes[overContainer] &&
-      idTypes[id].container === idTypes[overContainer].type
+      contents[id] &&
+      contents[overContainer] &&
+      contents[id].container === contents[overContainer].type
     ) {
       setItems((prev) => {
         const activeItems = prev[activeContainer];
@@ -332,9 +440,9 @@ const App = () => {
 
     //Move item to new container for the right container type
     if (
-      idTypes[id] &&
-      idTypes[overId] &&
-      idTypes[id].container === idTypes[overId].type &&
+      contents[id] &&
+      contents[overId] &&
+      contents[id].container === contents[overId].type &&
       !items[overId].length
     ) {
       setItems((prev) => {
@@ -360,17 +468,16 @@ const App = () => {
     const overContainer = findContainer(overId, items);
 
     console.log({
-      id: idTypes[id] ? idTypes[id].name : null,
-      overId: idTypes[overId] ? idTypes[overId].name : null,
-      activeContainer: idTypes[activeContainer]
-        ? idTypes[activeContainer].name
+      id: contents[id] ? contents[id].name : null,
+      overId: contents[overId] ? contents[overId].name : null,
+      activeContainer: contents[activeContainer]
+        ? contents[activeContainer].name
         : null,
-      overContainer: idTypes[overContainer]
-        ? idTypes[overContainer].name
+      overContainer: contents[overContainer]
+        ? contents[overContainer].name
         : null,
     });
 
-    //Only move if it's within the same container, HandleDragOver should have handled the moves between containers
     if (
       !activeContainer ||
       !overContainer ||
@@ -397,7 +504,7 @@ const App = () => {
   }
 
   function processView(view) {
-    const { pageData, sectionData, widgetData, fieldDefinitions, fieldData } =
+    const { pageData, sectionData, columnData, fieldData, fieldDefinitions } =
       view;
 
     const idArrays = {},
@@ -412,7 +519,7 @@ const App = () => {
 
     sectionData.forEach((section, index) => {
       idArrays[section._id] = section.content.map(
-        (widget) => widget.widgets[0]
+        (column) => column.columns[0]
       );
       idTypes[section._id] = {
         type: "section",
@@ -422,26 +529,26 @@ const App = () => {
       };
     });
 
-    widgetData.forEach((widget, index) => {
-      idArrays[widget._id] = widget.fields;
-      idTypes[widget._id] = {
-        type: "widget",
+    columnData.forEach((column, index) => {
+      idArrays[column._id] = column.fields;
+      idTypes[column._id] = {
+        type: "column",
         container: "section",
-        name: `widget ${index}`,
-        style: widget.style,
+        name: `column ${index}`,
+        style: column.style,
       };
     });
 
     fieldDefinitions.forEach((field) => {
       idTypes[field._id] = {
         type: "field",
-        container: "widget",
+        container: "column",
         name: field.label.value,
         style: field.style,
       };
     });
 
-    return { idArrays, idTypes };
+    return { idArrays, idTypes, fieldData, fieldDefinitions };
   }
 };
 

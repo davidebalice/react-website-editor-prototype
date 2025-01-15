@@ -6,16 +6,18 @@ export default function Column({
   id,
   items,
   children,
-  idTypes,
+  contents,
   isSelected,
   currentStyle,
   setSelectedContainer,
   setCurrentStyle,
+  editor,
+  setEditor
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
-  const column = idTypes?.[id] || {};
+  const column = contents?.[id] || {};
 
   const [style, setStyle] = useState(column.style || {});
 
@@ -64,16 +66,19 @@ export default function Column({
 
   return (
     <SortableContext id={id} items={items}>
-      <button
-        onClick={() => {
-          setSelectedContainer(id);
-          setCurrentStyle(style);
-        }}
-      >
-        OPZ
-      </button>
-
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
+        {editor && (
+          <button
+            onClick={() => {
+              setSelectedContainer(id);
+              setCurrentStyle(style);
+            }}
+            className="buttonOpzColumn"
+          >
+            OPZ
+          </button>
+        )}
+
         {children}
       </div>
     </SortableContext>

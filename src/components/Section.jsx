@@ -10,12 +10,13 @@ export default function Section({
   setCurrentStyle,
   setSelectedContainer,
   isSelected,
-  idTypes,
+  contents,
+  editor,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
-  const section = idTypes[id] || {};
+  const section = contents[id] || {};
 
   const [style, setStyle] = useState(
     section.style || { background: "white", color: "black" }
@@ -65,17 +66,18 @@ export default function Section({
   };
 
   return (
-    <SortableContext id={id} items={items}>
+    <SortableContext id={id} items={Array.isArray(items) ? items : []}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        <button
-          onClick={() => {
-            setSelectedContainer(id);
-            setCurrentStyle(style);
-          }}
-        >
-          OPZ
-        </button>
-
+        {editor && (
+          <button
+            onClick={() => {
+              setSelectedContainer(id);
+              setCurrentStyle(style);
+            }}
+          >
+            OPZ
+          </button>
+        )}
         {children}
       </div>
     </SortableContext>
