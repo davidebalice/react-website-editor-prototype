@@ -9,6 +9,7 @@
     "editor": "file:",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-quill": "^2.0.0",
     "react-scripts": "^5.0.1",
     "tailwindcss": "2.2.4",
     "website-editor-prototype": "file:"

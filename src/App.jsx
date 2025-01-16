@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import Column from "./components/Column.jsx";
 import Container from "./components/Container.jsx";
 import Content from "./components/Content.jsx";
-import FieldRenderer from "./components/FieldRenderer.jsx";
+import Field from "./components/Field.jsx";
 import Section from "./components/Section.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
@@ -47,7 +47,6 @@ const App = () => {
   const [items, setItems] = useState(idArrays || []);
   const [contents, setContents] = useState(idTypes || []);
   const [fields, setFields] = useState(fieldData || []);
-  const [fieldsDetails, setFieldsDetails] = useState(fieldDefinitions || []);
   const pageId = data.pageData._id;
   const pageStyle = data.pageData?.style || {};
 
@@ -93,6 +92,32 @@ const App = () => {
     });
   };
 
+  const handleDeleteContent = (contentId) => {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+      const containerId = findContainer(contentId, prevItems);
+      if (containerId) {
+        updatedItems[containerId] = updatedItems[containerId].filter(
+          (itemId) => itemId !== contentId
+        );
+      }
+      return updatedItems;
+    });
+
+    setContents((prevContents) => {
+      const updatedContents = { ...prevContents };
+      delete updatedContents[contentId];
+      return updatedContents;
+    });
+
+    setFields((prevFields) => {
+      const updatedFields = prevFields.filter(
+        (field) => field.field_ref !== contentId
+      );
+      return updatedFields;
+    });
+  };
+
   const handleAddColumn = (sectionId) => {
     const column1Id = generateUniqueId();
     const field1Id = generateUniqueId();
@@ -123,6 +148,20 @@ const App = () => {
           value: "lorem ipsum 1",
         },
       ];
+    });
+  };
+
+  const handleDeleteColumn = (columnId, sectionId) => {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+
+      if (updatedItems[sectionId]) {
+        updatedItems[sectionId] = updatedItems[sectionId].filter(
+          (colId) => colId !== columnId
+        );
+      }
+      delete updatedItems[columnId];
+      return updatedItems;
     });
   };
 
@@ -208,6 +247,22 @@ const App = () => {
     });
   };
 
+  const handleDeleteSection = (sectionId, pageId) => {
+    setItems((prevItems) => {
+      const updatedItems = { ...prevItems };
+
+      (updatedItems[sectionId] || []).forEach((columnId) => {
+        delete updatedItems[columnId];
+      });
+      updatedItems[pageId] = updatedItems[pageId].filter(
+        (sId) => sId !== sectionId
+      );
+      delete updatedItems[sectionId];
+
+      return updatedItems;
+    });
+  };
+
   console.log("items::::::::::::");
   console.log(items);
   console.log("contents::::::::::::");
@@ -263,13 +318,11 @@ const App = () => {
                   contents={contents}
                   editor={editor}
                   setEditor={setEditor}
+                  handleAddSection={handleAddSection}
+                  handleAddColumn={handleAddColumn}
+                  pageId={pageId}
+                  handleDeleteSection={handleDeleteSection}
                 >
-                  {editor && (
-                    <button onClick={() => handleAddSection(section)}>
-                      Aggiungi sezione
-                    </button>
-                  )}
-
                   <div className="wrapper">
                     {Array.isArray(items[section]) &&
                       (items[section] || []).map((column) => {
@@ -277,6 +330,7 @@ const App = () => {
                           <>
                             <Column
                               id={column}
+                              idSection={section}
                               items={items[column]}
                               key={column}
                               currentStyle={currentStyle}
@@ -286,28 +340,12 @@ const App = () => {
                               contents={contents}
                               editor={editor}
                               setEditor={setEditor}
+                              handleAddContent={handleAddContent}
+                              handleDeleteColumn={handleDeleteColumn}
                             >
-                              {editor && (
-                                <button
-                                  onClick={() => handleAddColumn(section)}
-                                  className="buttonAddColumn"
-                                >
-                                  Aggiungi colonna
-                                </button>
-                              )}
-
                               {items[column] &&
                                 items[column].map((field, i) => (
                                   <>
-                                    {i === 0 && editor && (
-                                      <button
-                                        onClick={() => handleAddContent(column)}
-                                        className="buttonAddContent"
-                                      >
-                                        Aggiungi Contenuto
-                                      </button>
-                                    )}
-
                                     <Content
                                       key={field}
                                       id={field}
@@ -321,13 +359,16 @@ const App = () => {
                                       contents={contents}
                                       editor={editor}
                                       setEditor={setEditor}
+                                      handleDeleteContent={handleDeleteContent}
                                     >
-                                      <FieldRenderer
+                                      <Field
+                                        editor={editor}
                                         fieldId={field}
                                         field={fields.find(
                                           (f) => f.field_ref === field
                                         )}
                                         activeId={activeId}
+                                        setFields={setFields}
                                       />
                                     </Content>
                                   </>

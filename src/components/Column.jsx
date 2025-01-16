@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 export default function Column({
   id,
+  idSection,
   items,
   children,
   contents,
@@ -12,7 +13,9 @@ export default function Column({
   setSelectedContainer,
   setCurrentStyle,
   editor,
-  setEditor
+  setEditor,
+  handleAddContent,
+  handleDeleteColumn,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -68,15 +71,32 @@ export default function Column({
     <SortableContext id={id} items={items}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
         {editor && (
-          <button
-            onClick={() => {
-              setSelectedContainer(id);
-              setCurrentStyle(style);
-            }}
-            className="buttonOpzColumn"
-          >
-            OPZ
-          </button>
+          <div className="buttonContainer buttonColumnContainer">
+            <button
+              onClick={() => handleAddContent(id)}
+              className="buttonAddContent"
+            >
+              Aggiungi Contenuto
+            </button>
+
+            <button
+              onClick={() => {
+                setSelectedContainer(id);
+                setCurrentStyle(style);
+              }}
+              className="buttonOpzColumn"
+            >
+              OPZ
+            </button>
+            <button
+              onClick={() => {
+                handleDeleteColumn(id, idSection);
+              }}
+              className="buttonOpzColumn"
+            >
+              delete 11
+            </button>
+          </div>
         )}
 
         {children}

@@ -12,6 +12,10 @@ export default function Section({
   isSelected,
   contents,
   editor,
+  handleAddSection,
+  handleAddColumn,
+  handleDeleteSection,
+  pageId
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -69,14 +73,36 @@ export default function Section({
     <SortableContext id={id} items={Array.isArray(items) ? items : []}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
         {editor && (
-          <button
-            onClick={() => {
-              setSelectedContainer(id);
-              setCurrentStyle(style);
-            }}
-          >
-            OPZ
-          </button>
+          <>
+            <div className="buttonContainer buttonSectionContainer">
+              <button onClick={() => handleAddSection(id)}>
+                Aggiungi sezione
+              </button>
+
+              <button
+                onClick={() => handleAddColumn(id)}
+                className="buttonAddColumn"
+              >
+                Aggiungi colonna
+              </button>
+
+              <button
+                onClick={() => handleDeleteSection(id,pageId)}
+                className="buttonAddColumn"
+              >
+                delete
+              </button>
+
+              <button
+                onClick={() => {
+                  setSelectedContainer(id);
+                  setCurrentStyle(style);
+                }}
+              >
+                OPZ
+              </button>
+            </div>
+          </>
         )}
         {children}
       </div>

@@ -12,6 +12,7 @@ const Content = React.memo(
     setSelectedContainer,
     setCurrentStyle,
     editor,
+    handleDeleteContent
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
@@ -51,8 +52,6 @@ const Content = React.memo(
     const styles = {
       transform: CSS.Transform.toString(transform),
       transition,
-      padding: 15,
-      margin: 5,
       flex: 1,
       flexWrap: "wrap",
       alignItems: "center",
@@ -67,32 +66,39 @@ const Content = React.memo(
 
     const dragIconStyle = {
       cursor: "grab",
-      padding: "5px",
-      marginRight: "10px",
-      backgroundColor: "lightgray",
-      borderRadius: "5px",
       userSelect: "none",
+      position:"relative"
     };
 
     return (
       <div ref={setNodeRef} style={styles}>
         <div {...listeners} {...attributes} style={dragIconStyle}>
-          <span>:::</span>
-
           {editor && (
-            <button
-              onPointerDown={(e) => e.stopPropagation()}
-              onClick={() => {
-                setSelectedContainer(id);
-                setCurrentStyle(style);
-              }}
-              className="buttonOpzContent"
-            >
-              OPZ
-            </button>
+            <div className="buttonContainer buttonContentContainer">
+              <div className="dragButton">:::</div>
+
+              <button
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={() => {
+                  setSelectedContainer(id);
+                  setCurrentStyle(style);
+                }}
+                className="buttonOpzContent"
+              >
+                OPZ
+              </button>
+              <button
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={() => {
+                  handleDeleteContent(id);
+                }}
+                className="buttonOpzContent"
+              >
+                delete
+              </button>
+            </div>
           )}
         </div>
-
         <div>{children}</div>
       </div>
     );
