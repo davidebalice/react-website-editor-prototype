@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 body {
   overflow-x: hidden;
   background: #fff;
+  font-family: Roboto;
 }
 
 .App {
@@ -12,26 +15,68 @@ body {
   will-change: transform;
 }
 
+.logo {
+  width: 100px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.siteContainer {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+}
+
 .siteContainer {
   max-width: 1400px;
   width: 100%;
   height: auto;
   margin: 0 auto;
   transition: all 0.5s;
+  margin-top: 40px;
+  transform-origin: top center;
 }
 
 .siteContainer.mobile {
-  max-width: 90%;
+  max-width: 70%;
   width: 400px;
-  height: 600px;
+  height: 680px;
   overflow-y: scroll;
-  border: 1px solid #ddd;
-  margin-top: 50px;
+  margin-top: 100px;
+}
+
+.siteContainer.tablet {
+  max-width: 80%;
+  width: 600px;
+  height: 800px;
+  overflow-y: scroll;
+  margin-top: 100px;
+}
+
+.siteContainer.full {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  overflow-y: scroll;
+  margin-top: 40px;
 }
 
 .topbar {
   width: 100%;
-  height: 40px;
+  height: 50px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 8px;
   position: fixed;
@@ -39,6 +84,57 @@ body {
   left: 0;
   z-index: 100;
   background: #fff;
+  justify-content: space-between;
+  z-index: 250;
+  box-shadow: 0px 2px 3px 0px rgb(0, 0, 0, 0.18);
+  user-select: none;
+}
+
+.topbar div:first-of-type {
+  gap: 10px;
+}
+
+.topbarIcon {
+  width: 37px;
+  height: 37px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.topbarIcon:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+  border-radius: 6px;
+  transform: scale(1.15);
+}
+
+.topbarIcon2 {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.topbarIcon2:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+  border-radius: 6px;
+  transform: scale(1.15);
+}
+
+.topbarTitle {
+  font-size: 15px;
+  text-align: center;
+  font-weight: bold;
+  line-height: 16px;
+}
+
+.topbarTitle span {
+  font-size: 12px;
+  font-weight: normal;
+  font-style: italic;
 }
 
 .sidebar {
@@ -56,50 +152,174 @@ body {
   flex-wrap: wrap;
 }
 
-.buttonContainer{
+.buttonContainer {
   position: absolute;
-  display: flex;
-  border: 2px solid red;
-  background-color: #111;
-  color: white;
+  background-color: #181818;
+  border-radius: 8px;
+  color: #f1f1f1;
   z-index: 100;
 }
 
-.buttonColumnContainer{
-  margin-top: -30px;
+.button {
+  transition: transform 0.3s;
+}
+
+.button:hover {
+  color: #d1d1d1;
+  transform: scale(1.2);
+}
+
+.buttonColumnContainer {
+  margin-top: -20px;
   margin-left: -20px;
+  padding: 4px 6px;
 }
 
-.buttonSectionContainer{
-  margin-top: -40px;
+.buttonSectionContainer {
+  margin-top: -30px;
+  padding: 4px 6px;
 }
 
-.buttonContentContainer{
+.buttonContentContainer {
   margin-top: 0px;
-  right:0px;
+  right: 0px;
+  padding: 4px 6px;
 }
 
 .buttonAddColumn {
-  border: 2px solid red;
 }
 
 .buttonAddContent {
-  border: 2px solid red;
+  font-size: 21px;
+  width: 30px;
 }
 
 .buttonOpzContent {
-  border: 2px solid red;
+  font-size: 19px;
+  width: 30px;
 }
 
-.buttonOpzColumn {
-  border: 2px solid yellow;
+.buttonDeleteColumn {
+  font-size: 19px;
+  width: 30px;
 }
 
-.dragButton{
-  width:40px;
-  border:1px solid green;
+.buttonDrag {
+  width: 30px;
+  font-size: 22px;
   cursor: grab;
-  padding: 5px;
   user-select: none;
 }
 
+.textButtonContainer {
+  font-size: 12px;
+  padding-left: 10px;
+}
+
+.spacerButtonContainer {
+  font-size: 1px;
+  padding: 0px 0px;
+  width: 20px;
+  text-align: center;
+}
+
+.spacerButtonContainer div {
+  font-size: 21px;
+  text-align: center;
+  color: #ccc;
+}
+
+.topbarDevices {
+  gap: 4px;
+}
+
+.tooltip {
+  font-size: 12px !important;
+  z-index: 300;
+}
+
+.ql-toolbar {
+  background-color: white !important;
+  border: 1px solid #ddd;
+}
+
+.ql-container {
+  background-color: white !important;
+  border: 1px solid #ddd;
+  height: 60px;
+}
+
+.ql-editor {
+  background-color: white !important;
+  padding: 4px;
+  font-size: 13px;
+}
+
+.zoomContainer {
+  display: flex;
+  font-size: 12px;
+}
+
+.zoomButtons {
+  gap: 0px !important;
+  margin-left:10px;
+}
+
+.github {
+  font-size: 30px;
+  margin-right: 10px;
+  transition: all 0.3s;
+}
+
+.github:hover {
+  font-size: 30px;
+  transform: scale(1.15);
+}
+
+.info {
+  font-size: 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.info:hover {
+  font-size: 30px;
+  transform: scale(1.15);
+}
+
+.infoContainer{
+  width: 1200px;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+.mobileTop {
+  width: 480px;
+  height: 70px;
+  position: absolute;
+  background-color: black;
+  margin-top: -20px;
+  z-index: 200;
+  margin-left: calc(50% - 240px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.mobileLeft {
+}
+.mobileRight {
+}
+
+.mobileBottom {
+  width: 480px;
+  height: 70px;
+  position: absolute;
+  background-color: black;
+  margin-top: 680px;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  margin-left: calc(50% - 240px);
+}

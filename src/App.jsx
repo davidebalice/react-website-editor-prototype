@@ -7,6 +7,7 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import React, { useEffect, useState } from "react";
+import { Tooltip } from "react-tooltip";
 import Column from "./components/Column.jsx";
 import Container from "./components/Container.jsx";
 import Content from "./components/Content.jsx";
@@ -16,11 +17,21 @@ import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import data from "./data/home.js";
 import "./styles.css";
+import Info from "./components/Info.jsx";
 
 const App = () => {
   const [view, setView] = useState("desktop");
   const [editor, setEditor] = useState(true);
   const [activeId, setActiveId] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+
+  const zoomIn = () => {
+    setZoomLevel((prevZoom) => Math.min(prevZoom + 0.05, 1.3));
+  };
+
+  const zoomOut = () => {
+    setZoomLevel((prevZoom) => Math.max(prevZoom - 0.05, 0.7));
+  };
 
   const generateUniqueId = () => {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -47,6 +58,7 @@ const App = () => {
   const [items, setItems] = useState(idArrays || []);
   const [contents, setContents] = useState(idTypes || []);
   const [fields, setFields] = useState(fieldData || []);
+  const [info, setInfo] = useState(false);
   const pageId = data.pageData._id;
   const pageStyle = data.pageData?.style || {};
 
@@ -284,7 +296,13 @@ const App = () => {
         setView={setView}
         editor={editor}
         setEditor={setEditor}
+        zoomIn={zoomIn}
+        zoomOut={zoomOut}
+        zoomLevel={zoomLevel}
+        setInfo={setInfo}
       />
+      <Tooltip id="tooltip-global" place="top" className="tooltip" />
+      <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
       <Sidebar
         id={selectedContainer}
         pageStyle={pageStyle}
@@ -293,96 +311,129 @@ const App = () => {
         editor={editor}
         setEditor={setEditor}
       />
-      <div className={`siteContainer ${view === "mobile" ? "mobile" : ""}`}>
-        <Container
-          id={pageId}
-          items={items[pageId]}
-          className="siteContainer"
-          pageStyle={pageStyle}
-          currentStyle={currentStyle}
-          setCurrentStyle={setCurrentStyle}
-          setSelectedContainer={setSelectedContainer}
-          isSelected={selectedContainer === pageId}
-        >
-          {items[pageId] &&
-            items[pageId].map((section) => {
-              return (
-                <Section
-                  id={section}
-                  items={items[section] || []}
-                  key={section}
-                  currentStyle={currentStyle}
-                  setCurrentStyle={setCurrentStyle}
-                  setSelectedContainer={setSelectedContainer}
-                  isSelected={selectedContainer === section}
-                  contents={contents}
-                  editor={editor}
-                  setEditor={setEditor}
-                  handleAddSection={handleAddSection}
-                  handleAddColumn={handleAddColumn}
-                  pageId={pageId}
-                  handleDeleteSection={handleDeleteSection}
-                >
-                  <div className="wrapper">
-                    {Array.isArray(items[section]) &&
-                      (items[section] || []).map((column) => {
-                        return (
-                          <>
-                            <Column
-                              id={column}
-                              idSection={section}
-                              items={items[column]}
-                              key={column}
-                              currentStyle={currentStyle}
-                              setCurrentStyle={setCurrentStyle}
-                              setSelectedContainer={setSelectedContainer}
-                              isSelected={selectedContainer === column}
-                              contents={contents}
-                              editor={editor}
-                              setEditor={setEditor}
-                              handleAddContent={handleAddContent}
-                              handleDeleteColumn={handleDeleteColumn}
-                            >
-                              {items[column] &&
-                                items[column].map((field, i) => (
-                                  <>
-                                    <Content
-                                      key={field}
-                                      id={field}
-                                      activeId={activeId}
-                                      currentStyle={currentStyle}
-                                      setCurrentStyle={setCurrentStyle}
-                                      setSelectedContainer={
-                                        setSelectedContainer
-                                      }
-                                      isSelected={selectedContainer === field}
-                                      contents={contents}
-                                      editor={editor}
-                                      setEditor={setEditor}
-                                      handleDeleteContent={handleDeleteContent}
-                                    >
-                                      <Field
-                                        editor={editor}
-                                        fieldId={field}
-                                        field={fields.find(
-                                          (f) => f.field_ref === field
-                                        )}
-                                        activeId={activeId}
-                                        setFields={setFields}
-                                      />
-                                    </Content>
-                                  </>
-                                ))}
-                            </Column>
-                          </>
-                        );
-                      })}
-                  </div>
-                </Section>
-              );
-            })}
-        </Container>
-      </div>
+      {info ? (
+        <><Info setInfo={setInfo}/></>
+      ) : (
+        <div className="siteWrapper">
+          <div
+            className="mobileTop"
+            style={{ opacity: view === "mobile" ? "1" : "0" }}
+          ></div>
+          <div
+            className="mobileLeft"
+            style={{ opacity: view === "mobile" ? "1" : "0" }}
+          ></div>
+          <div
+            className="mobileRight"
+            style={{ opacity: view === "mobile" ? "1" : "0" }}
+          ></div>
+          <div
+            className="mobileBottom"
+            style={{ opacity: view === "mobile" ? "1" : "0" }}
+          ></div>
+
+          <div
+            className={`siteContainer
+            ${view === "mobile" ? "mobile" : ""}
+            ${view === "tablet" ? "tablet" : ""}
+            ${view === "full" ? "full" : ""}`}
+            style={{ transform: `scale(${zoomLevel})` }}
+          >
+            <Container
+              id={pageId}
+              items={items[pageId]}
+              className="siteContainer"
+              pageStyle={pageStyle}
+              currentStyle={currentStyle}
+              setCurrentStyle={setCurrentStyle}
+              setSelectedContainer={setSelectedContainer}
+              isSelected={selectedContainer === pageId}
+            >
+              {items[pageId] &&
+                items[pageId].map((section) => {
+                  return (
+                    <Section
+                      id={section}
+                      items={items[section] || []}
+                      key={section}
+                      currentStyle={currentStyle}
+                      setCurrentStyle={setCurrentStyle}
+                      setSelectedContainer={setSelectedContainer}
+                      isSelected={selectedContainer === section}
+                      contents={contents}
+                      editor={editor}
+                      setEditor={setEditor}
+                      handleAddSection={handleAddSection}
+                      handleAddColumn={handleAddColumn}
+                      pageId={pageId}
+                      handleDeleteSection={handleDeleteSection}
+                    >
+                      <div className="wrapper">
+                        {Array.isArray(items[section]) &&
+                          (items[section] || []).map((column) => {
+                            return (
+                              <>
+                                <Column
+                                  id={column}
+                                  idSection={section}
+                                  items={items[column]}
+                                  key={column}
+                                  currentStyle={currentStyle}
+                                  setCurrentStyle={setCurrentStyle}
+                                  setSelectedContainer={setSelectedContainer}
+                                  isSelected={selectedContainer === column}
+                                  contents={contents}
+                                  editor={editor}
+                                  setEditor={setEditor}
+                                  handleAddContent={handleAddContent}
+                                  handleDeleteColumn={handleDeleteColumn}
+                                >
+                                  {items[column] &&
+                                    items[column].map((field, i) => (
+                                      <>
+                                        <Content
+                                          key={field}
+                                          id={field}
+                                          activeId={activeId}
+                                          currentStyle={currentStyle}
+                                          setCurrentStyle={setCurrentStyle}
+                                          setSelectedContainer={
+                                            setSelectedContainer
+                                          }
+                                          isSelected={
+                                            selectedContainer === field
+                                          }
+                                          contents={contents}
+                                          editor={editor}
+                                          setEditor={setEditor}
+                                          handleDeleteContent={
+                                            handleDeleteContent
+                                          }
+                                        >
+                                          <Field
+                                            editor={editor}
+                                            fieldId={field}
+                                            field={fields.find(
+                                              (f) => f.field_ref === field
+                                            )}
+                                            activeId={activeId}
+                                            setFields={setFields}
+                                          />
+                                        </Content>
+                                      </>
+                                    ))}
+                                </Column>
+                              </>
+                            );
+                          })}
+                      </div>
+                    </Section>
+                  );
+                })}
+            </Container>
+          </div>
+        </div>
+      )}
       {contents[activeId]?.type === "field" ? (
         <DragOverlay>
           {activeId ? (
