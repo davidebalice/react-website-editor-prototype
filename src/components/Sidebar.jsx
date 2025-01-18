@@ -1,5 +1,7 @@
 import { useDraggable } from "@dnd-kit/core";
 import React, { useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack} from "react-icons/io";
 import "../styles.css";
 
 export default function Sidebar({
@@ -8,6 +10,8 @@ export default function Sidebar({
   setCurrentStyle,
   setEditor,
   editor,
+  sidebar,
+  setSidebar,
 }) {
   const [backgroundColor, setBackgroundColor] = useState(
     currentStyle?.background || "white"
@@ -52,7 +56,17 @@ export default function Sidebar({
   });
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${sidebar ? "" : "close"}`}>
+
+
+      <div className="flexCenter sidebarClose" onClick={() => setSidebar(!sidebar)}>
+       {sidebar ? (<><IoIosArrowBack/></>) : (<> <IoIosArrowForward /></>)}
+      </div>
+
+
+
+
+      
       Editor:
       <div onClick={() => setEditor(!editor)}>attiva / disattiva editor</div>
       <div onClick={changeStyle}>

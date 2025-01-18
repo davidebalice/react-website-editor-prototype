@@ -1,6 +1,8 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
+import { HiMiniCog6Tooth } from "react-icons/hi2";
+import { RxDividerVertical } from "react-icons/rx";
 
 export default function Container({
   id,
@@ -12,6 +14,7 @@ export default function Container({
   setCurrentStyle,
   setSelectedContainer,
   isSelected,
+  editor
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -65,14 +68,24 @@ export default function Container({
   return (
     <SortableContext id={id} items={items}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        <button
-          onClick={() => {
-            setSelectedContainer(id);
-            setCurrentStyle(style);
-          }}
-        >
-          OPZ
-        </button>
+        {editor && (
+          <div className="flex buttonContainer buttonPageContainer">
+            <div className="textButtonContainer" style={{background:"none"}}>Page</div>
+
+            <button
+              onClick={() => {
+                setSelectedContainer(id);
+                setCurrentStyle(style);
+              }}
+              className="button buttonOpzContent"
+              data-tooltip-id="tooltip-global"
+              data-tooltip-content="Options"
+            >
+              <HiMiniCog6Tooth />
+            </button>
+          </div>
+        )}
+
         {children}
       </div>
     </SortableContext>

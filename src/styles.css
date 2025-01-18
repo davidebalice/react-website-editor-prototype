@@ -86,7 +86,7 @@ body {
   background: #fff;
   justify-content: space-between;
   z-index: 250;
-  box-shadow: 0px 2px 3px 0px rgb(0, 0, 0, 0.18);
+  box-shadow: 0px 1px 3px 0px rgb(0, 0, 0, 0.18);
   user-select: none;
 }
 
@@ -138,12 +138,39 @@ body {
 }
 
 .sidebar {
-  width: 150px;
+  width: 200px;
+  background: white;
   height: 100vh;
   border-right: 1px solid #ddd;
   position: fixed;
-  top: 60px;
+  top: 50px;
+  box-shadow: 1px 0px 2px 0px rgb(0, 0, 0, 0.18);
   left: 0;
+  z-index: 240;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.close {
+  transform: translateX(-100%);
+}
+
+.sidebarClose {
+  background-color: #111;
+  color: white;
+  width: 24px;
+  height: 60px;
+  font-weight: bold;
+  font-size: 24px;
+  position: absolute;
+  margin-left: 200px;
+  margin-top: 20px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebarClose:hover {
+  background-color: #444;
 }
 
 .wrapper {
@@ -155,38 +182,107 @@ body {
 .buttonContainer {
   position: absolute;
   background-color: #181818;
-  border-radius: 8px;
   color: #f1f1f1;
   z-index: 100;
+  transition: all 0.3s;
+}
+
+.buttonContainer:hover {
+  background-color: #3f3f3f;
 }
 
 .button {
   transition: transform 0.3s;
+  width: 31px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:3px;
+  text-align: center;
 }
 
 .button:hover {
-  color: #d1d1d1;
-  transform: scale(1.2);
+  background-color: #555;
 }
 
-.buttonColumnContainer {
+.buttonPageContainer {
   margin-top: -20px;
-  margin-left: -20px;
+  margin-left: 6px;
   padding: 4px 6px;
+  height: 30px;
 }
 
 .buttonSectionContainer {
-  margin-top: -30px;
+  margin-top: -9px;
+  margin-left: -14px;
   padding: 4px 6px;
+  height: 30px;
+}
+
+.buttonColumnContainer {
+  margin-top: -11px;
+  margin-left: 0px;
+  padding: 4px 6px;
+  height: 30px;
+  z-index: 99;
+}
+
+.buttonColumnContainer1 {
+  margin-top: -11px;
+  margin-left: 16px;
+  padding: 4px 6px;
+  height: 30px;
+  z-index: 99;
 }
 
 .buttonContentContainer {
-  margin-top: 0px;
-  right: 0px;
+  margin-top: -1px;
+  margin-left: 0px;
   padding: 4px 6px;
+  height: 30px;
+  z-index: 98;
 }
 
-.buttonAddColumn {
+.buttonContentContainer1 {
+  margin-top: -11px;
+  margin-left: 45px;
+  padding: 4px 6px;
+  height: 30px;
+  z-index: 98;
+}
+
+.buttonContentContainer2 {
+  margin-top: -11px;
+  margin-left: 29px;
+  padding: 4px 6px;
+  height: 30px;
+  z-index: 98;
+}
+
+.buttonContainerOpened {
+  background-color: #111;
+  position: absolute;
+  margin-top: 116px;
+  border-radius: 6px !important;
+  margin-left: -6px;
+  width:70px
+}
+
+.buttonContainerWrapper {
+  padding: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index:300
+}
+
+.buttonContainerInt {
+  padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 20px;
 }
 
 .buttonAddContent {
@@ -213,7 +309,8 @@ body {
 
 .textButtonContainer {
   font-size: 12px;
-  padding-left: 10px;
+  background-color: #444;
+  padding: 4px 12px;
 }
 
 .spacerButtonContainer {
@@ -227,6 +324,10 @@ body {
   font-size: 21px;
   text-align: center;
   color: #ccc;
+}
+
+.openButtonContainer {
+  font-size: 22px;
 }
 
 .topbarDevices {
@@ -262,7 +363,7 @@ body {
 
 .zoomButtons {
   gap: 0px !important;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .github {
@@ -287,39 +388,80 @@ body {
   transform: scale(1.15);
 }
 
-.infoContainer{
+.infoContainer {
   width: 1200px;
   margin: 0 auto;
   margin-top: 70px;
 }
 
-.mobileTop {
-  width: 480px;
-  height: 70px;
+.deviceWrapper {
   position: absolute;
-  background-color: black;
-  margin-top: -20px;
   z-index: 200;
-  margin-left: calc(50% - 240px);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out 0.5s;
 }
 
-.mobileLeft {
-}
-.mobileRight {
+.mobileTop {
+  width: 427px;
+  height: 77px;
+  margin-top: -20px;
+  margin-left: calc(50% - 223px);
+  background-image: url("../public/images/mobileTop.png");
 }
 
 .mobileBottom {
-  width: 480px;
-  height: 70px;
-  position: absolute;
-  background-color: black;
-  margin-top: 680px;
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s;
-  margin-left: calc(50% - 240px);
+  width: 427px;
+  height: 59px;
+  margin-top: 635px;
+  margin-left: calc(50% - 223px);
+  background-image: url("../public/images/mobileBottom.png");
+}
+
+.mobileLeft {
+  width: 35px;
+  height: 580px;
+  margin-top: 56px;
+  margin-left: calc(50% - 223px);
+  background-image: url("../public/images/mobileLeft.png");
+}
+
+.mobileRight {
+  width: 32px;
+  height: 580px;
+  margin-top: 56px;
+  margin-left: calc(50% + 172px);
+  background-image: url("../public/images/mobileRight.png");
+}
+
+.tabletTop {
+  width: 664px;
+  height: 77px;
+  margin-top: -40px;
+  margin-left: calc(50% - 340px);
+  background-image: url("../public/images/tabletTop.png");
+}
+
+.tabletBottom {
+  width: 664px;
+  height: 74px;
+  margin-top: 765px;
+  margin-left: calc(50% - 340px);
+  background-image: url("../public/images/tabletBottom.png");
+}
+
+.tabletLeft {
+  width: 55px;
+  height: 730px;
+  margin-top: 37px;
+  margin-left: calc(50% - 340px);
+  background-image: url("../public/images/tabletLeft.png");
+}
+
+.tabletRight {
+  width: 47px;
+  height: 730px;
+  margin-top: 37px;
+  margin-left: calc(50% + 271px);
+  background-image: url("../public/images/tabletRight.png");
 }

@@ -1,10 +1,10 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
-import { MdAddBox } from "react-icons/md";
-import { RxDividerVertical } from "react-icons/rx";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
+import { MdAddBox } from "react-icons/md";
+import { PiRectangleDashedBold } from "react-icons/pi";
 
 export default function Section({
   id,
@@ -20,12 +20,14 @@ export default function Section({
   handleAddColumn,
   handleDeleteSection,
   pageId,
+  setSidebar,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
   const section = contents[id] || {};
   const [hovered, setHovered] = useState(false);
+  const [open, setOpen] = useState(false);
   const [style, setStyle] = useState(
     section.style || { background: "white", color: "black" }
   );
@@ -64,13 +66,13 @@ export default function Section({
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
-    borderRadius: 5,
     userSelect: "none",
     cursor: "grab",
     boxSizing: "border-box",
     minHeight: 100,
     color: style?.color ?? "black",
-    background: hovered && editor ? "#f0f5fa" : style?.background ?? "white",
+    background: style?.background || "white",
+    outline: hovered && editor ? "2px dashed #999" : "none",
   };
 
   return (
@@ -83,54 +85,64 @@ export default function Section({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {editor && hovered && (
+        {editor && (
           <>
-            <div className="flex buttonContainer buttonSectionContainer">
-              <div className="textButtonContainer">Section</div>
-              <div className="spacerButtonContainer">
-                <div>
-                  <RxDividerVertical />
-                </div>
-              </div>
+            <div
+              className="flex buttonContainer buttonSectionContainer"
+              onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
+            >
+              <PiRectangleDashedBold style={{ fontSize: "20px" }} />
 
-              <button
-                onClick={() => handleAddSection(id)}
-                className="button buttonAddContent"
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Add section"
-              >
-                <MdAddBox />
-              </button>
+              {open && (
+                <>
+                  <div className="buttonContainerOpened">
+                    <div className="textButtonContainer">Section</div>
 
-              <button
-                onClick={() => handleAddColumn(id)}
-                className="button buttonAddContent"
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Add column"
-              >
-                 <MdAddBox />
-              </button>
+                    <div className="buttonContainerWrapper">
+                      <button
+                        onClick={() => handleAddSection(id)}
+                        className="button buttonAddContent"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Add section"
+                      >
+                        <MdAddBox />
+                      </button>
 
-              <button
-                onClick={() => {
-                  setSelectedContainer(id);
-                  setCurrentStyle(style);
-                }}
-                className="button buttonOpzContent"
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Options"
-              >
-                <HiMiniCog6Tooth />
-              </button>
+                      <button
+                        onClick={() => handleAddColumn(id)}
+                        className="button buttonAddContent"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Add column"
+                      >
+                        <MdAddBox />
+                      </button>
 
-              <button
-                onClick={() => handleDeleteSection(id, pageId)}
-                className="button buttonOpzColumn"
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Delete"
-              >
-                 <FaRegTrashAlt />
-              </button>
+                      <button
+                        onClick={() => {
+                          setSelectedContainer(id);
+                          setCurrentStyle(style);
+                          setSidebar(true);
+                        }}
+                        className="button buttonOpzContent"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Options"
+                      >
+                        <HiMiniCog6Tooth />
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteSection(id, pageId)}
+                        className="button buttonOpzColumn"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Delete"
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}

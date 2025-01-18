@@ -2,10 +2,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { HiTemplate } from "react-icons/hi";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
 import { RiDragMove2Line } from "react-icons/ri";
-import { RxDividerVertical } from "react-icons/rx";
-
 
 const Content = React.memo(
   ({
@@ -18,13 +17,17 @@ const Content = React.memo(
     setCurrentStyle,
     editor,
     handleDeleteContent,
+    i,
+    j,
+    setSidebar,
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
 
     const content = contents?.[id] || {};
-    const [hovered, setHovered] = useState(false);
     const [style, setStyle] = useState(content.style || {});
+    const [open, setOpen] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     useEffect(() => {
       if (isSelected && currentStyle) {
@@ -60,13 +63,13 @@ const Content = React.memo(
       flex: 1,
       flexWrap: "wrap",
       alignItems: "center",
-      borderRadius: 5,
       userSelect: "none",
       cursor: "grab",
       boxSizing: "border-box",
-      minHeight: 100,
+      minHeight: 40,
       color: style?.color ?? "black",
-      background: hovered && editor ? "#f0f5fa" : style?.background ?? "white",
+      background: style?.background || "white",
+      outline: hovered && editor ? "2px dashed #999" : "none",
     };
 
     const dragIconStyle = {
@@ -83,41 +86,67 @@ const Content = React.memo(
         onMouseLeave={() => setHovered(false)}
       >
         <div {...listeners} {...attributes} style={dragIconStyle}>
-          {editor && hovered && (
-            <div className="flex buttonContainer buttonContentContainer">
-              <div className="textButtonContainer">Content</div>
-              <div className="spacerButtonContainer">
-                <div>
-                  <RxDividerVertical />
-                </div>
-              </div>
-              <div className="button buttonDrag" data-tooltip-id="tooltip-global"
-                data-tooltip-content="Drag content">
-                <RiDragMove2Line />
-              </div>
-              <button
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Options"
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={() => {
-                  setSelectedContainer(id);
-                  setCurrentStyle(style);
-                }}
-                className="button buttonOpzContent"
-              >
-                <HiMiniCog6Tooth />
-              </button>
-              <button
-                data-tooltip-id="tooltip-global"
-                data-tooltip-content="Delete"
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={() => {
-                  handleDeleteContent(id);
-                }}
-                className="button buttonDeleteContent"
-              >
-                <FaRegTrashAlt />
-              </button>
+          {editor && (hovered || j === 0) && (
+            <div
+              className={`flex buttonContainer ${
+                i === 0 && j === 0
+                  ? "buttonContentContainer1"
+                  : i === 1 && j === 0
+                  ? "buttonContentContainer2"
+                  : "buttonContentContainer"
+              }`}
+              onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
+            >
+              <HiTemplate style={{ fontSize: "20px" }} />
+
+              {open && (
+                <>
+                  <div className="buttonContainerOpened">
+                    <div className="textButtonContainer">Content</div>
+
+                    <div className="buttonContainerWrapper">
+                      <div
+                        className="button buttonDrag"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Drag content"
+                      >
+                        <RiDragMove2Line />
+                      </div>
+
+                      <button
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Options"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => {
+                          setSelectedContainer(id);
+                          setCurrentStyle(style);
+                          setSidebar(true);
+                        }}
+                        className="button buttonOpzContent"
+                      >
+                        <HiMiniCog6Tooth />
+                      </button>
+
+                      <button
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Delete"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => {
+                          handleDeleteContent(id);
+                        }}
+                        className="button buttonDeleteContent"
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+
+                      <button className="button buttonDeleteContent">
+                        &nbsp;
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

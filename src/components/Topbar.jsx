@@ -11,6 +11,7 @@ import { FaGithub, FaToggleOff, FaToggleOn } from "react-icons/fa6";
 import { MdTabletAndroid } from "react-icons/md";
 import logo from "../assets/img/logo.png";
 import "../styles.css";
+import { TbArrowAutofitContent } from "react-icons/tb";
 
 export default function Topbar({
   view,
@@ -20,7 +21,8 @@ export default function Topbar({
   zoomLevel,
   zoomIn,
   zoomOut,
-  setInfo
+  setInfo,
+  setSidebar
 }) {
   return (
     <div className="flex topbar">
@@ -68,12 +70,13 @@ export default function Topbar({
           onClick={() => {
             setView("full");
             setEditor(false);
+            setSidebar(false);
           }}
           className="flexCenter topbarIcon"
           data-tooltip-id="tooltip-topbar"
           data-tooltip-content="100%"
         >
-          <AiOutlineFullscreen style={{ fontSize: "28px" }} />
+          <TbArrowAutofitContent style={{ fontSize: "28px" }} />
         </div>
 
         {editor && (

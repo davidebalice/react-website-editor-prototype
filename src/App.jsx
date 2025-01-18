@@ -11,17 +11,19 @@ import { Tooltip } from "react-tooltip";
 import Column from "./components/Column.jsx";
 import Container from "./components/Container.jsx";
 import Content from "./components/Content.jsx";
+import Devices from "./components/Devices.jsx";
 import Field from "./components/Field.jsx";
+import Info from "./components/Info.jsx";
 import Section from "./components/Section.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
 import data from "./data/home.js";
 import "./styles.css";
-import Info from "./components/Info.jsx";
 
 const App = () => {
   const [view, setView] = useState("desktop");
   const [editor, setEditor] = useState(true);
+  const [sidebar, setSidebar] = useState(true);
   const [activeId, setActiveId] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
 
@@ -300,6 +302,7 @@ const App = () => {
         zoomOut={zoomOut}
         zoomLevel={zoomLevel}
         setInfo={setInfo}
+        setSidebar={setSidebar}
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
@@ -310,27 +313,16 @@ const App = () => {
         setCurrentStyle={setCurrentStyle}
         editor={editor}
         setEditor={setEditor}
+        sidebar={sidebar}
+        setSidebar={setSidebar}
       />
       {info ? (
-        <><Info setInfo={setInfo}/></>
+        <>
+          <Info setInfo={setInfo} />
+        </>
       ) : (
         <div className="siteWrapper">
-          <div
-            className="mobileTop"
-            style={{ opacity: view === "mobile" ? "1" : "0" }}
-          ></div>
-          <div
-            className="mobileLeft"
-            style={{ opacity: view === "mobile" ? "1" : "0" }}
-          ></div>
-          <div
-            className="mobileRight"
-            style={{ opacity: view === "mobile" ? "1" : "0" }}
-          ></div>
-          <div
-            className="mobileBottom"
-            style={{ opacity: view === "mobile" ? "1" : "0" }}
-          ></div>
+          <Devices view={view} />
 
           <div
             className={`siteContainer
@@ -341,6 +333,7 @@ const App = () => {
           >
             <Container
               id={pageId}
+              editor={editor}
               items={items[pageId]}
               className="siteContainer"
               pageStyle={pageStyle}
@@ -367,10 +360,11 @@ const App = () => {
                       handleAddColumn={handleAddColumn}
                       pageId={pageId}
                       handleDeleteSection={handleDeleteSection}
+                      setSidebar={setSidebar}
                     >
                       <div className="wrapper">
                         {Array.isArray(items[section]) &&
-                          (items[section] || []).map((column) => {
+                          (items[section] || []).map((column, i) => {
                             return (
                               <>
                                 <Column
@@ -378,6 +372,7 @@ const App = () => {
                                   idSection={section}
                                   items={items[column]}
                                   key={column}
+                                  i={i}
                                   currentStyle={currentStyle}
                                   setCurrentStyle={setCurrentStyle}
                                   setSelectedContainer={setSelectedContainer}
@@ -387,13 +382,17 @@ const App = () => {
                                   setEditor={setEditor}
                                   handleAddContent={handleAddContent}
                                   handleDeleteColumn={handleDeleteColumn}
+                                  setSidebar={setSidebar}
                                 >
                                   {items[column] &&
-                                    items[column].map((field, i) => (
+                                    items[column].map((field, j) => (
                                       <>
                                         <Content
                                           key={field}
                                           id={field}
+                                          i={i}
+                                          j={j}
+                                          idSection={section}
                                           activeId={activeId}
                                           currentStyle={currentStyle}
                                           setCurrentStyle={setCurrentStyle}
@@ -409,6 +408,7 @@ const App = () => {
                                           handleDeleteContent={
                                             handleDeleteContent
                                           }
+                                          setSidebar={setSidebar}
                                         >
                                           <Field
                                             editor={editor}

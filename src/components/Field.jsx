@@ -7,10 +7,11 @@ const Field = ({ field, editor, setFields, activeId }) => {
   const [text, setText] = useState(field?.value ?? "");
   const [isEditing, setIsEditing] = useState(false);
 
+  /*
   useEffect(() => {
     setIsEditing(false);
   }, [editor]);
-
+*/
   const handleChange = (value) => {
     setText(value);
   };

@@ -1,16 +1,16 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaColumns, FaRegTrashAlt } from "react-icons/fa";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
 import { MdAddBox } from "react-icons/md";
 import { RiDragMove2Line } from "react-icons/ri";
-import { RxDividerVertical } from "react-icons/rx";
 
 export default function Column({
   id,
   idSection,
   items,
+  i,
   children,
   contents,
   isSelected,
@@ -18,16 +18,17 @@ export default function Column({
   setSelectedContainer,
   setCurrentStyle,
   editor,
-  setEditor,
   handleAddContent,
   handleDeleteColumn,
+  setSidebar,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
   const column = contents?.[id] || {};
-  const [hovered, setHovered] = useState(false);
   const [style, setStyle] = useState(column.style || {});
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (isSelected && currentStyle) {
@@ -58,18 +59,18 @@ export default function Column({
   const styles = {
     transform: CSS.Transform.toString(transform),
     transition,
-    padding: 15,
-    margin: 5,
+    padding: 0,
+    margin: 2,
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
-    borderRadius: 5,
     userSelect: "none",
     cursor: "grab",
     boxSizing: "border-box",
     minHeight: 100,
     color: style?.color ?? "black",
-    background: hovered && editor ? "#f0f5fa" : style?.background ?? "white",
+    background: style?.background || "white",
+    outline: hovered && editor ? "2px dashed #999" : "none",
   };
 
   return (
@@ -82,51 +83,64 @@ export default function Column({
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {editor && hovered && (
-          <div className="flex buttonContainer buttonColumnContainer">
-            <div className="textButtonContainer">Column</div>
-            <div className="spacerButtonContainer">
-              <div>
-                <RxDividerVertical />
-              </div>
-            </div>
-            <div
-              className="button buttonDrag"
-              data-tooltip-id="tooltip-global"
-              data-tooltip-content="Drag column"
-            >
-              <RiDragMove2Line />
-            </div>
-            <button
-              onClick={() => handleAddContent(id)}
-              className="button buttonAddContent"
-              data-tooltip-id="tooltip-global"
-              data-tooltip-content="Add content"
-            >
-              <MdAddBox />
-            </button>
+        {editor && (
+          <div
+            className={`flex buttonContainer   ${
+              i === 0 ? "buttonColumnContainer1" : "buttonColumnContainer"
+            }`}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <FaColumns style={{ fontSize: "17px" }} />
 
-            <button
-              onClick={() => {
-                setSelectedContainer(id);
-                setCurrentStyle(style);
-              }}
-              className="button buttonOpzContent"
-              data-tooltip-id="tooltip-global"
-              data-tooltip-content="Options"
-            >
-              <HiMiniCog6Tooth />
-            </button>
-            <button
-              onClick={() => {
-                handleDeleteColumn(id, idSection);
-              }}
-              className="button buttonOpzColumn"
-              data-tooltip-id="tooltip-global"
-              data-tooltip-content="Delete"
-            >
-              <FaRegTrashAlt />
-            </button>
+            {open && (
+              <>
+                <div className="buttonContainerOpened">
+                  <div className="textButtonContainer">Column</div>
+
+                  <div className="buttonContainerWrapper">
+                    <div
+                      className="button buttonDrag"
+                      data-tooltip-id="tooltip-global"
+                      data-tooltip-content="Drag column"
+                    >
+                      <RiDragMove2Line />
+                    </div>
+                    <button
+                      onClick={() => handleAddContent(id)}
+                      className="button buttonAddContent"
+                      data-tooltip-id="tooltip-global"
+                      data-tooltip-content="Add content"
+                    >
+                      <MdAddBox />
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setSelectedContainer(id);
+                        setCurrentStyle(style);
+                        setSidebar(true);
+                      }}
+                      className="button buttonOpzContent"
+                      data-tooltip-id="tooltip-global"
+                      data-tooltip-content="Options"
+                    >
+                      <HiMiniCog6Tooth />
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleDeleteColumn(id, idSection);
+                      }}
+                      className="button buttonOpzColumn"
+                      data-tooltip-id="tooltip-global"
+                      data-tooltip-content="Delete"
+                    >
+                      <FaRegTrashAlt />
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
 
