@@ -1,7 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import React, { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack} from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "../styles.css";
 
 export default function Sidebar({
@@ -12,6 +11,9 @@ export default function Sidebar({
   editor,
   sidebar,
   setSidebar,
+  newContentData,
+  setNewContentData,
+  handleAddContent,
 }) {
   const [backgroundColor, setBackgroundColor] = useState(
     currentStyle?.background || "white"
@@ -57,39 +59,63 @@ export default function Sidebar({
 
   return (
     <div className={`sidebar ${sidebar ? "" : "close"}`}>
-
-
-      <div className="flexCenter sidebarClose" onClick={() => setSidebar(!sidebar)}>
-       {sidebar ? (<><IoIosArrowBack/></>) : (<> <IoIosArrowForward /></>)}
+      <div
+        className="flexCenter sidebarClose"
+        onClick={() => setSidebar(!sidebar)}
+      >
+        {sidebar ? (
+          <>
+            <IoIosArrowBack />
+          </>
+        ) : (
+          <>
+            {" "}
+            <IoIosArrowForward />
+          </>
+        )}
       </div>
 
-
-
-
-      
-      Editor:
-      <div onClick={() => setEditor(!editor)}>attiva / disattiva editor</div>
-      <div onClick={changeStyle}>
-        Cambia {currentStyle?.background ?? null} {id}
-      </div>
-      <div>
-        <label htmlFor="backgroundColor">Scegli colore di sfondo:</label>
-        <input
-          type="color"
-          id="backgroundColor"
-          value={backgroundColor}
-          onChange={handleBackgroundChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="textColor">Scegli colore del testo:</label>
-        <input
-          type="color"
-          id="textColor"
-          value={textColor}
-          onChange={handleColorChange}
-        />
-      </div>
+      {newContentData.selectContent ? (
+        <>
+          niu
+          <br />
+          {newContentData.columnId}
+          <br />
+          <div
+            onClick={() => {
+              handleAddContent(newContentData.columnId, 0, "text");
+            }}
+          >
+            text
+          </div>
+          <br />
+          <div>img</div>
+        </>
+      ) : (
+        <>
+          <div onClick={changeStyle}>
+            Cambia {currentStyle?.background ?? null} {id}
+          </div>
+          <div>
+            <label htmlFor="backgroundColor">Scegli colore di sfondo:</label>
+            <input
+              type="color"
+              id="backgroundColor"
+              value={backgroundColor}
+              onChange={handleBackgroundChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="textColor">Scegli colore del testo:</label>
+            <input
+              type="color"
+              id="textColor"
+              value={textColor}
+              onChange={handleColorChange}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

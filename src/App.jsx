@@ -61,49 +61,75 @@ const App = () => {
   const [contents, setContents] = useState(idTypes || []);
   const [fields, setFields] = useState(fieldData || []);
   const [info, setInfo] = useState(false);
+  const [newContentData, setNewContentData] = useState({
+    selectContent: false,
+    columnId: "",
+    type: "",
+  });
   const pageId = data.pageData._id;
+  const [style, setStyle] = useState(data.pageData?.style || {});
   const pageStyle = data.pageData?.style || {};
 
   console.log({ data, idArrays });
   useEffect(() => console.log({ items }), [items]);
 
-  const handleAddContent = (columnId) => {
+  useEffect(() => {
+    setNewContentData({
+      selectContent: false,
+      columnId: "",
+      type: "",
+    });
+    setSidebar(true);
+  }, [currentStyle]);
+
+  const handleAddContent = (columnId, selectContent, type) => {
+    setSidebar(true);
     const newContentId = `new-content-${Date.now()}`;
     const field1Id = generateUniqueId();
 
-    const newContent = {
-      type: "field",
-      name: "Lorem ipsum",
-      container: "column",
-      style: { border: "1px solid red" },
-    };
+    if (selectContent) {
+      setNewContentData({
+        selectContent: true,
+        columnId: columnId,
+        type: "",
+      });
+    } else {
 
-    setItems((prevItems) => {
-      return {
-        ...prevItems,
-        [columnId]: [...prevItems[columnId], field1Id],
+
+      const newContent = {
+        type: "field",
+        name: "Lorem ipsum",
+        container: "column",
+        style: { border: "1px solid red" },
       };
-    });
 
-    setContents((prevContents) => {
-      return {
-        ...prevContents,
-        [newContentId]: newContent,
-      };
-    });
+      setItems((prevItems) => {
+        return {
+          ...prevItems,
+          [columnId]: [...prevItems[columnId], field1Id],
+        };
+      });
 
-    setFields((prevFields) => {
-      return [
-        ...prevFields,
-        {
-          _id: newContentId,
-          field_ref: field1Id,
-          page: pageId,
-          type: "text",
-          value: "lorem ipsum 1",
-        },
-      ];
-    });
+      setContents((prevContents) => {
+        return {
+          ...prevContents,
+          [newContentId]: newContent,
+        };
+      });
+
+      setFields((prevFields) => {
+        return [
+          ...prevFields,
+          {
+            _id: newContentId,
+            field_ref: field1Id,
+            page: pageId,
+            type: type,
+            value: "lorem ipsum 1",
+          },
+        ];
+      });
+    }
   };
 
   const handleDeleteContent = (contentId) => {
@@ -294,6 +320,7 @@ const App = () => {
       {selectedContainer}
       activeid: {activeId}
       <Topbar
+        id={pageId}
         view={view}
         setView={setView}
         editor={editor}
@@ -303,6 +330,10 @@ const App = () => {
         zoomLevel={zoomLevel}
         setInfo={setInfo}
         setSidebar={setSidebar}
+        style={style}
+        setStyle={setStyle}
+        setCurrentStyle={setCurrentStyle}
+        setSelectedContainer={setSelectedContainer}
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
@@ -315,6 +346,9 @@ const App = () => {
         setEditor={setEditor}
         sidebar={sidebar}
         setSidebar={setSidebar}
+        handleAddContent={handleAddContent}
+        newContentData={newContentData}
+        setNewContentData={setNewContentData}
       />
       {info ? (
         <>
@@ -362,7 +396,11 @@ const App = () => {
                       handleDeleteSection={handleDeleteSection}
                       setSidebar={setSidebar}
                     >
-                      <div className="wrapper">
+                      <div
+                        className={`wrapper ${
+                          view === "mobile" ? "small" : ""
+                        }`}
+                      >
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
                             return (
@@ -373,6 +411,7 @@ const App = () => {
                                   items={items[column]}
                                   key={column}
                                   i={i}
+                                  view={view}
                                   currentStyle={currentStyle}
                                   setCurrentStyle={setCurrentStyle}
                                   setSelectedContainer={setSelectedContainer}

@@ -7,7 +7,6 @@ body {
 }
 
 .App {
-  font-family: sans-serif;
   text-align: center;
 }
 
@@ -137,6 +136,24 @@ body {
   font-style: italic;
 }
 
+.column {
+  border: 3px solid yellow;
+}
+
+.column.small {
+  width: 100% !important;
+  margin: 0 auto;
+  border: 3px solid brown;
+}
+
+@media screen and (max-width: 768px) {
+  .column {
+    width: 100% !important;
+    margin: 0 auto;
+    border: 3px solid green;
+  }
+}
+
 .sidebar {
   width: 200px;
   background: white;
@@ -177,6 +194,17 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+.wrapper.small{
+  flex-direction: column !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-direction: column !important;
+  }
 }
 
 .buttonContainer {
@@ -198,7 +226,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding:3px;
+  padding: 3px;
   text-align: center;
 }
 
@@ -214,15 +242,15 @@ body {
 }
 
 .buttonSectionContainer {
-  margin-top: -9px;
-  margin-left: -14px;
+  margin-top: -11px;
+  margin-left: 0px;
   padding: 4px 6px;
   height: 30px;
 }
 
 .buttonColumnContainer {
   margin-top: -11px;
-  margin-left: 0px;
+  margin-left: 2px;
   padding: 4px 6px;
   height: 30px;
   z-index: 99;
@@ -230,7 +258,7 @@ body {
 
 .buttonColumnContainer1 {
   margin-top: -11px;
-  margin-left: 16px;
+  margin-left: 32px;
   padding: 4px 6px;
   height: 30px;
   z-index: 99;
@@ -246,7 +274,7 @@ body {
 
 .buttonContentContainer1 {
   margin-top: -11px;
-  margin-left: 45px;
+  margin-left: 59px;
   padding: 4px 6px;
   height: 30px;
   z-index: 98;
@@ -254,7 +282,7 @@ body {
 
 .buttonContentContainer2 {
   margin-top: -11px;
-  margin-left: 29px;
+  margin-left: 31px;
   padding: 4px 6px;
   height: 30px;
   z-index: 98;
@@ -266,7 +294,7 @@ body {
   margin-top: 116px;
   border-radius: 6px !important;
   margin-left: -6px;
-  width:70px
+  width: 70px;
 }
 
 .buttonContainerWrapper {
@@ -274,7 +302,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  z-index:300
+  z-index: 300;
 }
 
 .buttonContainerInt {

@@ -66,11 +66,23 @@ const Content = React.memo(
       userSelect: "none",
       cursor: "grab",
       boxSizing: "border-box",
-      minHeight: 40,
+      minHeight: 30,
       color: style?.color ?? "black",
       background: style?.background || "white",
+      border: style?.border || "none",
       outline: hovered && editor ? "2px dashed #999" : "none",
+      width: style?.width || "100%",
+      maxWidth: style?.maxWidth || "auto",
+      align: style?.align || "left",
+
+
+
+
+
+
     };
+
+    const wrapperStyles = { padding: 10 };
 
     const dragIconStyle = {
       cursor: "grab",
@@ -91,7 +103,7 @@ const Content = React.memo(
               className={`flex buttonContainer ${
                 i === 0 && j === 0
                   ? "buttonContentContainer1"
-                  : i === 1 && j === 0
+                  : i > 0 && j === 0
                   ? "buttonContentContainer2"
                   : "buttonContentContainer"
               }`}
@@ -150,7 +162,7 @@ const Content = React.memo(
             </div>
           )}
         </div>
-        <div>{children}</div>
+        <div style={wrapperStyles}>{children}</div>
       </div>
     );
   }

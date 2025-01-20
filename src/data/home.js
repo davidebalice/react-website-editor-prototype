@@ -3,9 +3,10 @@ const data = {
     _id: "4dTQcIGijLUuqB-j3H_me",
     title: "Homepage",
     style: {
-      background: "#ff0000",
+      background: "#fff",
       width: "80%",
       maxWidth: "1400px",
+      border: "1px solid #ddd",
     },
   },
   sectionData: [
@@ -28,10 +29,34 @@ const data = {
         },
       ],
       style: {
-        background: "yellow",
-        color: "black",
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
       },
     },
+
+    {
+      _id: "vu567u57353vu35uvb3567",
+      layout: "one_column_layout",
+      label: {
+        value: "",
+        override: true,
+      },
+      content: [
+        {
+          position: "default",
+          columns: ["ethn673rtb5366uk099"],
+        },
+      ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+      },
+    },
+
     {
       _id: "S1UtpesVpckpfvzSVqAQM",
       layout: "two_column_layout_5050",
@@ -50,8 +75,12 @@ const data = {
         },
       ],
       style: {
-        background: "yellow",
-        color: "black",
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
       },
     },
     {
@@ -72,7 +101,12 @@ const data = {
         },
       ],
       style: {
-        background: "yellow",
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
       },
     },
     {
@@ -92,6 +126,14 @@ const data = {
           columns: ["1sEvvov8Oqktyp6-CeJNt"],
         },
       ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+      },
     },
     {
       _id: "kGsYEK_SVfYovo0Xikvia",
@@ -110,10 +152,17 @@ const data = {
           columns: ["hHv0QL6x7IK_aJdLMwnFq"],
         },
       ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+      },
     },
     {
       _id: "2FFnsZwEdiTmJblgpwIne",
-
       layout: "two_column_layout_5050",
       label: {
         value: "Skill 3",
@@ -129,6 +178,14 @@ const data = {
           columns: ["gIHtfp2O40jYGJPgJVfPb"],
         },
       ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+      },
     },
     {
       _id: "LVDPPHKPhECCZ5J2FH890",
@@ -144,6 +201,14 @@ const data = {
           columns: ["0gEL5UTywUKrxbjf6HDHy"],
         },
       ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+      },
     },
   ],
   columnData: [
@@ -216,6 +281,14 @@ const data = {
       icon: "TableIcon",
       fields: ["21ozPTyU49OX8rWE3R4Xd"],
     },
+
+    {
+      _id: "ethn673rtb5366uk099",
+      type: "table",
+      icon: "TableIcon",
+      fields: ["bqr0oqm0qimnjqb4b4"],
+    },
+
     {
       _id: "mydpE348vjxUbtVjSxJwe",
       type: "table",
@@ -315,7 +388,6 @@ const data = {
     {
       _id: "21ozPTyU49OX8rWE3R4Xd",
       type: "image",
-
       label: {
         value: "Image",
         override: true,
@@ -327,7 +399,33 @@ const data = {
       status: {
         used: false,
       },
+      style: {
+        width: "70%",
+        maxWidth: "190px",
+        align: "left",
+      },
     },
+
+    {
+      _id: "bqr0oqm0qimnjqb4b4",
+      type: "menu",
+      label: {
+        value: "Image",
+        override: true,
+      },
+      field_id: {
+        value: "image",
+        override: true,
+      },
+      status: {
+        used: false,
+      },
+      style: {
+        background: "#111111",
+        color: "#ffffff",
+      },
+    },
+
     {
       _id: "70ozPTyU49OX8rWE3R4Xg",
       type: "text",
@@ -598,6 +696,11 @@ const data = {
       },
       status: {
         used: false,
+      },
+      style: {
+        width: "100%",
+        maxWidth: "auto",
+        align: "center",
       },
     },
     {
@@ -1136,14 +1239,23 @@ const data = {
       field_ref: "21ozPTyU49OX8rWE3R4Xd",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "https://www.aroundweb.it/screenshot/angular-panel1.jpg",
+      value: "logo.png",
     },
+
+    {
+      _id: "39m25ug6bn56g5b36gg4m",
+      field_ref: "bqr0oqm0qimnjqb4b4",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "menu",
+      value: "",
+    },
+
     {
       _id: "_VaTVCgOvni_4z3b3ztDS",
       field_ref: "Ov81qtvSOtv5ITYRhqFDF",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "https://www.aroundweb.it/screenshot/angular-panel1.jpg",
+      value: "001.jpg",
     },
     {
       _id: "hXbjPmCwc0rTC-_ZZSdUn",

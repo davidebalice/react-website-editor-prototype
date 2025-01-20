@@ -2,7 +2,6 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
-import { RxDividerVertical } from "react-icons/rx";
 
 export default function Container({
   id,
@@ -50,12 +49,12 @@ export default function Container({
   const styles = {
     transform: CSS.Transform.toString(transform),
     transition,
-    padding: 15,
+    padding: 0,
     margin: 5,
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
-    border: type === "section" ? "1px solid green" : "1px solid blue",
+    border: style?.border,
     borderRadius: 5,
     userSelect: "none",
     cursor: "grab",
@@ -68,7 +67,9 @@ export default function Container({
   return (
     <SortableContext id={id} items={items}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        {editor && (
+        {/*
+        
+        editor && (
           <div className="flex buttonContainer buttonPageContainer">
             <div className="textButtonContainer" style={{background:"none"}}>Page</div>
 
@@ -84,7 +85,7 @@ export default function Container({
               <HiMiniCog6Tooth />
             </button>
           </div>
-        )}
+        )*/}
 
         {children}
       </div>

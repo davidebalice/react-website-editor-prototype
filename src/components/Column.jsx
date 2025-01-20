@@ -11,6 +11,7 @@ export default function Column({
   idSection,
   items,
   i,
+  view,
   children,
   contents,
   isSelected,
@@ -60,14 +61,13 @@ export default function Column({
     transform: CSS.Transform.toString(transform),
     transition,
     padding: 0,
-    margin: 2,
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
     userSelect: "none",
     cursor: "grab",
     boxSizing: "border-box",
-    minHeight: 100,
+    minHeight: 30,
     color: style?.color ?? "black",
     background: style?.background || "white",
     outline: hovered && editor ? "2px dashed #999" : "none",
@@ -82,6 +82,7 @@ export default function Column({
         {...listeners}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        className={`column ${view === "mobile" ? "small" : ""}`}
       >
         {editor && (
           <div
@@ -107,7 +108,7 @@ export default function Column({
                       <RiDragMove2Line />
                     </div>
                     <button
-                      onClick={() => handleAddContent(id)}
+                      onClick={() => handleAddContent(id, 1, "")}
                       className="button buttonAddContent"
                       data-tooltip-id="tooltip-global"
                       data-tooltip-content="Add content"

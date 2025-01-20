@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
 const Field = ({ field, editor, setFields, activeId }) => {
+  const fileRepositoryUrl = process.env.REACT_APP_FILE_REPOSITORY;
   const [text, setText] = useState(field?.value ?? "");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -137,11 +138,16 @@ const Field = ({ field, editor, setFields, activeId }) => {
       case "image":
         return (
           <div style={itemStyle}>
-            <div style={itemStyle}>
-              <img src={field.value} alt={field.name} width="200" />
-            </div>
+            <img
+              src={`${fileRepositoryUrl}${field.value}`}
+              alt={field.name}
+              width="100%"
+            />
           </div>
         );
+
+      case "menu":
+        return <div style={itemStyle}>menu</div>;
       default:
         return (
           <div style={itemStyle}>

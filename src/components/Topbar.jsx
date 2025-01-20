@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlineFullscreen } from "react-icons/ai";
 import {
   FaDesktop,
   FaInfoCircle,
@@ -8,12 +7,14 @@ import {
   FaSearchPlus,
 } from "react-icons/fa";
 import { FaGithub, FaToggleOff, FaToggleOn } from "react-icons/fa6";
+import { HiMiniCog6Tooth } from "react-icons/hi2";
 import { MdTabletAndroid } from "react-icons/md";
+import { TbArrowAutofitContent } from "react-icons/tb";
 import logo from "../assets/img/logo.png";
 import "../styles.css";
-import { TbArrowAutofitContent } from "react-icons/tb";
 
 export default function Topbar({
+  id,
   view,
   setView,
   editor,
@@ -22,7 +23,11 @@ export default function Topbar({
   zoomIn,
   zoomOut,
   setInfo,
-  setSidebar
+  setSidebar,
+  style,
+  setStyle,
+  setSelectedContainer,
+  setCurrentStyle,
 }) {
   return (
     <div className="flex topbar">
@@ -36,6 +41,19 @@ export default function Topbar({
       </div>
 
       <div className="flex topbarDevices">
+        <div
+          className="flexCenter topbarIcon"
+          data-tooltip-id="tooltip-topbar"
+          data-tooltip-content="Site options"
+          onClick={() => {
+            setSelectedContainer(id);
+            setCurrentStyle(style);
+            setSidebar(true);
+          }}
+        >
+          <HiMiniCog6Tooth style={{ fontSize: "23px" }} />
+        </div>
+
         <div
           onClick={() => setView("desktop")}
           className="flexCenter topbarIcon"
@@ -125,19 +143,26 @@ export default function Topbar({
               <FaSearchMinus style={{ fontSize: "20px" }} />
             </div>
 
-            <div style={{marginLeft:"6px"}}>{Math.round(zoomLevel * 100)}%</div>
+            <div style={{ marginLeft: "6px" }}>
+              {Math.round(zoomLevel * 100)}%
+            </div>
           </div>
         </div>
       </div>
       <div>
         <div className="flex">
-            <FaInfoCircle className="info" onClick={()=>{setInfo(true)}} />
+          <FaInfoCircle
+            className="info"
+            onClick={() => {
+              setInfo(true);
+            }}
+          />
           <a
             href="https://github.com/davidebalice/react-website-editor-prototype"
             target="_blank"
             rel="noreferrer"
           >
-            <FaGithub className="github"/>
+            <FaGithub className="github" />
           </a>
         </div>
       </div>
