@@ -1,7 +1,9 @@
 import {
+  closestCenter,
   DndContext,
   DragOverlay,
   PointerSensor,
+  rectIntersection,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -21,11 +23,28 @@ import data from "./data/home.js";
 import "./styles.css";
 
 const App = () => {
+  const [dragMode, setDragMode] = useState("sections");
   const [view, setView] = useState("desktop");
   const [editor, setEditor] = useState(true);
   const [sidebar, setSidebar] = useState(true);
   const [activeId, setActiveId] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [dragging, setDragging] = useState(false);
+  const [currentStyle, setCurrentStyle] = useState({});
+  const [selectedContainer, setSelectedContainer] = useState(null);
+  const { idArrays, idTypes, fieldData } = processView(data);
+  const [items, setItems] = useState(idArrays || []);
+  const [contents, setContents] = useState(idTypes || []);
+  const [fields, setFields] = useState(fieldData || []);
+  const [info, setInfo] = useState(false);
+  const [newContentData, setNewContentData] = useState({
+    selectContent: false,
+    columnId: "",
+    type: "",
+  });
+  const pageId = data.pageData._id;
+  const [style, setStyle] = useState(data.pageData?.style || {});
+  const pageStyle = data.pageData?.style || {};
 
   const zoomIn = () => {
     setZoomLevel((prevZoom) => Math.min(prevZoom + 0.05, 1.3));
@@ -44,34 +63,35 @@ const App = () => {
       shouldStartDrag: (event) => {
         return event.target.tagName !== "BUTTON";
       },
+      activationConstraint: {
+        distance: 5,
+      },
     })
   );
 
-  const [currentStyle, setCurrentStyle] = useState({});
-  const [selectedContainer, setSelectedContainer] = useState(null);
-
   const handleDragStart = ({ active }) => {
+    setDragging(true);
     setActiveId(active.id);
     console.log("active.id");
     console.log(active.id);
   };
 
-  const { idArrays, idTypes, fieldData, fieldDefinitions } = processView(data);
-  const [items, setItems] = useState(idArrays || []);
-  const [contents, setContents] = useState(idTypes || []);
-  const [fields, setFields] = useState(fieldData || []);
-  const [info, setInfo] = useState(false);
-  const [newContentData, setNewContentData] = useState({
-    selectContent: false,
-    columnId: "",
-    type: "",
-  });
-  const pageId = data.pageData._id;
-  const [style, setStyle] = useState(data.pageData?.style || {});
-  const pageStyle = data.pageData?.style || {};
-
+  console.log("data, idArrays");
   console.log({ data, idArrays });
+
+  console.log("items udeeffect");
   useEffect(() => console.log({ items }), [items]);
+
+  const typeContent = (type) => {
+    switch (type) {
+      case "text":
+        return "lorem ipsum new";
+      case "image":
+        return "001.jpg";
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     setNewContentData({
@@ -94,13 +114,11 @@ const App = () => {
         type: "",
       });
     } else {
-
-
       const newContent = {
         type: "field",
         name: "Lorem ipsum",
         container: "column",
-        style: { border: "1px solid red" },
+        style: { border: "none" },
       };
 
       setItems((prevItems) => {
@@ -113,7 +131,7 @@ const App = () => {
       setContents((prevContents) => {
         return {
           ...prevContents,
-          [newContentId]: newContent,
+          [field1Id]: newContent,
         };
       });
 
@@ -125,7 +143,7 @@ const App = () => {
             field_ref: field1Id,
             page: pageId,
             type: type,
-            value: "lorem ipsum 1",
+            value: typeContent(type),
           },
         ];
       });
@@ -185,7 +203,7 @@ const App = () => {
           field_ref: field1Id,
           page: pageId,
           type: "text",
-          value: "lorem ipsum 1",
+          value: "lorem ipsum",
         },
       ];
     });
@@ -209,7 +227,7 @@ const App = () => {
 
   const newColumn = {
     container: "section",
-    name: "column 1",
+    name: "column",
     type: "column",
     style: {
       background: "f1f1f1",
@@ -219,7 +237,7 @@ const App = () => {
 
   const newField = {
     container: "column",
-    name: "aaa",
+    name: "content",
     type: "field",
     style: {
       background: "blue",
@@ -316,9 +334,10 @@ const App = () => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
+      collisionDetection={
+        dragMode === "contents" ? closestCenter : rectIntersection
+      }
     >
-      {selectedContainer}
-      activeid: {activeId}
       <Topbar
         id={pageId}
         view={view}
@@ -334,6 +353,7 @@ const App = () => {
         setStyle={setStyle}
         setCurrentStyle={setCurrentStyle}
         setSelectedContainer={setSelectedContainer}
+        activeId={activeId}
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
@@ -395,6 +415,7 @@ const App = () => {
                       pageId={pageId}
                       handleDeleteSection={handleDeleteSection}
                       setSidebar={setSidebar}
+                      setDragMode={setDragMode}
                     >
                       <div
                         className={`wrapper ${
@@ -422,6 +443,7 @@ const App = () => {
                                   handleAddContent={handleAddContent}
                                   handleDeleteColumn={handleDeleteColumn}
                                   setSidebar={setSidebar}
+                                  setDragMode={setDragMode}
                                 >
                                   {items[column] &&
                                     items[column].map((field, j) => (
@@ -435,6 +457,7 @@ const App = () => {
                                           activeId={activeId}
                                           currentStyle={currentStyle}
                                           setCurrentStyle={setCurrentStyle}
+                                          dragging={dragging}
                                           setSelectedContainer={
                                             setSelectedContainer
                                           }
@@ -448,16 +471,30 @@ const App = () => {
                                             handleDeleteContent
                                           }
                                           setSidebar={setSidebar}
+                                          setDragMode={setDragMode}
                                         >
-                                          <Field
-                                            editor={editor}
-                                            fieldId={field}
-                                            field={fields.find(
-                                              (f) => f.field_ref === field
-                                            )}
-                                            activeId={activeId}
-                                            setFields={setFields}
-                                          />
+                                          <div
+                                            style={{
+                                              height: dragging
+                                                ? "50px"
+                                                : "auto",
+                                              overflow: dragging
+                                                ? "hidden"
+                                                : "visible",
+                                            }}
+                                            className="fieldWrapper"
+                                          >
+                                            <Field
+                                              editor={editor}
+                                              fieldId={field}
+                                              field={fields.find(
+                                                (f) => f.field_ref === field
+                                              )}
+                                              activeId={activeId}
+                                              setFields={setFields}
+                                              dragging={dragging}
+                                            />
+                                          </div>
                                         </Content>
                                       </>
                                     ))}
@@ -478,10 +515,13 @@ const App = () => {
           {activeId ? (
             <div
               style={{
-                padding: "20px",
+                padding: "10px",
                 border: "2px dashed gray",
                 background: "lightgray",
                 cursor: "grabbing",
+                width: "250px",
+                height: "50px",
+                overflow: "hidden",
               }}
             >
               {contents[activeId]?.type
@@ -510,17 +550,6 @@ const App = () => {
     // Find the containers
     const activeContainer = findContainer(id, items);
     const overContainer = findContainer(overId, items);
-
-    console.log({
-      id: contents[id] ? contents[id].name : null,
-      overId: contents[overId] ? contents[overId].name : null,
-      activeContainer: contents[activeContainer]
-        ? contents[activeContainer].name
-        : null,
-      overContainer: contents[overContainer]
-        ? contents[overContainer].name
-        : null,
-    });
 
     //Do nothing if haven't moved out of current container
     if (
@@ -569,7 +598,6 @@ const App = () => {
       return;
     }
 
-    //Move item to new container for the right container type
     if (
       contents[id] &&
       contents[overId] &&
@@ -591,24 +619,20 @@ const App = () => {
   }
 
   function handleDragEnd(event) {
+    setDragging(false);
     const { active, over } = event;
-    const { id } = active;
-    const { id: overId } = over;
+    const activeId = active.id;
+    const overId = over?.id;
 
-    const activeContainer = findContainer(id, items);
+    // Verifica che ci sia un elemento sopra
+    if (!overId) {
+      return;
+    }
+
+    const activeContainer = findContainer(activeId, items);
     const overContainer = findContainer(overId, items);
 
-    console.log({
-      id: contents[id] ? contents[id].name : null,
-      overId: contents[overId] ? contents[overId].name : null,
-      activeContainer: contents[activeContainer]
-        ? contents[activeContainer].name
-        : null,
-      overContainer: contents[overContainer]
-        ? contents[overContainer].name
-        : null,
-    });
-
+    // Verifica che gli elementi siano nello stesso contenitore
     if (
       !activeContainer ||
       !overContainer ||
@@ -617,18 +641,23 @@ const App = () => {
       return;
     }
 
-    const activeIndex = items[activeContainer].indexOf(active.id);
+    // Ottieni gli indici degli elementi nelle rispettive liste
+    const activeIndex = items[activeContainer].indexOf(activeId);
     const overIndex = items[overContainer].indexOf(overId);
 
+    // Verifica se la posizione è cambiata
     if (activeIndex !== overIndex) {
-      setItems((items) => ({
-        ...items,
-        [overContainer]: arrayMove(
-          items[overContainer],
+      setItems((prevItems) => {
+        const updatedItems = { ...prevItems };
+
+        updatedItems[overContainer] = arrayMove(
+          updatedItems[overContainer],
           activeIndex,
           overIndex
-        ),
-      }));
+        );
+
+        return updatedItems;
+      });
     }
 
     setActiveId(null);

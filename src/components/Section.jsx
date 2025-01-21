@@ -5,6 +5,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
 import { MdAddBox } from "react-icons/md";
 import { PiRectangleDashedBold } from "react-icons/pi";
+import { RiDragMove2Line } from "react-icons/ri";
 
 export default function Section({
   id,
@@ -21,6 +22,7 @@ export default function Section({
   handleDeleteSection,
   pageId,
   setSidebar,
+  setDragMode
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -59,7 +61,7 @@ export default function Section({
   }, [isSelected, currentStyle]);
 
   const styles = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
     width: style?.width ?? "100%",
     paddingTop: style?.paddingTop ?? 10,
@@ -86,6 +88,7 @@ export default function Section({
         {...listeners}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        className="draggable-section"
       >
         {editor && (
           <>
@@ -102,6 +105,15 @@ export default function Section({
                     <div className="textButtonContainer">Section</div>
 
                     <div className="buttonContainerWrapper">
+                      <div
+                        className="button buttonDrag"
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Drag section"
+                        onMouseEnter={()=>setDragMode("sections")}
+                      >
+                        <RiDragMove2Line />
+                      </div>
+
                       <button
                         onClick={() => handleAddSection(id)}
                         className="button buttonAddContent"

@@ -16,6 +16,7 @@ import "../styles.css";
 export default function Topbar({
   id,
   view,
+  activeId,
   setView,
   editor,
   setEditor,
@@ -41,6 +42,12 @@ export default function Topbar({
       </div>
 
       <div className="flex topbarDevices">
+
+
+     {activeId}
+
+
+
         <div
           className="flexCenter topbarIcon"
           data-tooltip-id="tooltip-topbar"
@@ -53,6 +60,7 @@ export default function Topbar({
         >
           <HiMiniCog6Tooth style={{ fontSize: "23px" }} />
         </div>
+
 
         <div
           onClick={() => setView("desktop")}

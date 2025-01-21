@@ -89,7 +89,9 @@ export default function Sidebar({
             text
           </div>
           <br />
-          <div>img</div>
+          <div   onClick={() => {
+              handleAddContent(newContentData.columnId, 0, "image");
+            }}>img</div>
         </>
       ) : (
         <>

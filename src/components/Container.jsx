@@ -67,26 +67,6 @@ export default function Container({
   return (
     <SortableContext id={id} items={items}>
       <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
-        {/*
-        
-        editor && (
-          <div className="flex buttonContainer buttonPageContainer">
-            <div className="textButtonContainer" style={{background:"none"}}>Page</div>
-
-            <button
-              onClick={() => {
-                setSelectedContainer(id);
-                setCurrentStyle(style);
-              }}
-              className="button buttonOpzContent"
-              data-tooltip-id="tooltip-global"
-              data-tooltip-content="Options"
-            >
-              <HiMiniCog6Tooth />
-            </button>
-          </div>
-        )*/}
-
         {children}
       </div>
     </SortableContext>

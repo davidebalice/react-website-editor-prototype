@@ -3,16 +3,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
-const Field = ({ field, editor, setFields, activeId }) => {
+const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
   const fileRepositoryUrl = process.env.REACT_APP_FILE_REPOSITORY;
   const [text, setText] = useState(field?.value ?? "");
   const [isEditing, setIsEditing] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  /*
-  useEffect(() => {
-    setIsEditing(false);
-  }, [editor]);
-*/
   const handleChange = (value) => {
     setText(value);
   };
@@ -69,7 +65,14 @@ const Field = ({ field, editor, setFields, activeId }) => {
   const itemStyle = {
     display: "flex",
     flexDirection: "row",
-    transition: "transform 0.2s ease",
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   if (field) {
@@ -123,26 +126,24 @@ const Field = ({ field, editor, setFields, activeId }) => {
           </div>
         );
 
-      case "reference":
-        return (
-          <div style={itemStyle}>
-            <div>
-              <div
-                className="mx-auto"
-                dangerouslySetInnerHTML={{ __html: field.name }}
-              />
-            </div>
-          </div>
-        );
-
       case "image":
         return (
-          <div style={itemStyle}>
-            <img
-              src={`${fileRepositoryUrl}${field.value}`}
-              alt={field.name}
-              width="100%"
-            />
+          <div
+            style={itemStyle}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <>
+              <img
+                src={`${fileRepositoryUrl}${field.value}`}
+                alt={field.name}
+                style={{
+                  height: "auto",
+                  opacity: isHovered ? 0.8 : 1,
+                  width: "100%",
+                }}
+              />
+            </>
           </div>
         );
 

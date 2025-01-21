@@ -20,6 +20,7 @@ const Content = React.memo(
     i,
     j,
     setSidebar,
+    setDragMode
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
@@ -55,10 +56,8 @@ const Content = React.memo(
       }
     }, [isSelected, currentStyle]);
 
-    console.log(content.style);
-
     const styles = {
-      transform: CSS.Transform.toString(transform),
+      transform: CSS.Translate.toString(transform),
       transition,
       flex: 1,
       flexWrap: "wrap",
@@ -66,7 +65,7 @@ const Content = React.memo(
       userSelect: "none",
       cursor: "grab",
       boxSizing: "border-box",
-      minHeight: 30,
+      minHeight: 20,
       color: style?.color ?? "black",
       background: style?.background || "white",
       border: style?.border || "none",
@@ -74,13 +73,8 @@ const Content = React.memo(
       width: style?.width || "100%",
       maxWidth: style?.maxWidth || "auto",
       align: style?.align || "left",
-
-
-
-
-
-
     };
+
 
     const wrapperStyles = { padding: 10 };
 
@@ -122,6 +116,7 @@ const Content = React.memo(
                         className="button buttonDrag"
                         data-tooltip-id="tooltip-global"
                         data-tooltip-content="Drag content"
+                        onMouseEnter={()=>setDragMode("contents")}
                       >
                         <RiDragMove2Line />
                       </div>

@@ -197,7 +197,7 @@ body {
   width: 100%;
 }
 
-.wrapper.small{
+.wrapper.small {
   flex-direction: column !important;
 }
 
@@ -217,6 +217,7 @@ body {
 
 .buttonContainer:hover {
   background-color: #3f3f3f;
+  z-index: 310;
 }
 
 .button {
@@ -242,8 +243,8 @@ body {
 }
 
 .buttonSectionContainer {
-  margin-top: -11px;
-  margin-left: 0px;
+  margin-top: -8px;
+  margin-left: 3px;
   padding: 4px 6px;
   height: 30px;
 }
