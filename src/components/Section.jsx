@@ -22,7 +22,8 @@ export default function Section({
   handleDeleteSection,
   pageId,
   setSidebar,
-  setDragMode
+  setDragMode,
+  dragging,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -88,7 +89,6 @@ export default function Section({
         {...listeners}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="draggable-section"
       >
         {editor && (
           <>
@@ -101,7 +101,10 @@ export default function Section({
 
               {open && (
                 <>
-                  <div className="buttonContainerOpened">
+                  <div
+                    className="buttonContainerOpened"
+                    style={{ marginTop: "144px" }}
+                  >
                     <div className="textButtonContainer">Section</div>
 
                     <div className="buttonContainerWrapper">
@@ -109,7 +112,9 @@ export default function Section({
                         className="button buttonDrag"
                         data-tooltip-id="tooltip-global"
                         data-tooltip-content="Drag section"
-                        onMouseEnter={()=>setDragMode("sections")}
+                        onMouseEnter={() =>
+                          !dragging && setDragMode("sections")
+                        }
                       >
                         <RiDragMove2Line />
                       </div>
@@ -134,7 +139,7 @@ export default function Section({
 
                       <button
                         onClick={() => {
-                          setSelectedContainer(id);
+                          setSelectedContainer({ id: id, type: "Section" });
                           setCurrentStyle(style);
                           setSidebar(true);
                         }}
@@ -153,6 +158,8 @@ export default function Section({
                       >
                         <FaRegTrashAlt />
                       </button>
+
+                      <div className="button buttonOpzColumn">&nbsp;</div>
                     </div>
                   </div>
                 </>

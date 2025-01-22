@@ -147,6 +147,19 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
           </div>
         );
 
+        case "spacer":
+        return (
+          <div
+            style={itemStyle}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <>
+             <div className="spacer"></div>
+            </>
+          </div>
+        );
+
       case "menu":
         return <div style={itemStyle}>menu</div>;
       default:

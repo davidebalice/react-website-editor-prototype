@@ -20,7 +20,9 @@ const Content = React.memo(
     i,
     j,
     setSidebar,
-    setDragMode
+    setDragMode,
+    dragging,
+    field,
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id });
@@ -69,12 +71,16 @@ const Content = React.memo(
       color: style?.color ?? "black",
       background: style?.background || "white",
       border: style?.border || "none",
+      borderTop: style?.borderTop || "",
+      borderBottom: style?.borderBottom || "",
       outline: hovered && editor ? "2px dashed #999" : "none",
       width: style?.width || "100%",
+      height: style?.height || "",
       maxWidth: style?.maxWidth || "auto",
       align: style?.align || "left",
+      marginTop: style?.marginTop || "",
+      marginBottom: style?.marginBottom || "",
     };
-
 
     const wrapperStyles = { padding: 10 };
 
@@ -92,7 +98,7 @@ const Content = React.memo(
         onMouseLeave={() => setHovered(false)}
       >
         <div {...listeners} {...attributes} style={dragIconStyle}>
-          {editor && (hovered || j === 0) && (
+          {editor && field && (hovered || j === 0) && (
             <div
               className={`flex buttonContainer ${
                 i === 0 && j === 0
@@ -109,14 +115,19 @@ const Content = React.memo(
               {open && (
                 <>
                   <div className="buttonContainerOpened">
-                    <div className="textButtonContainer">Content</div>
+                    <div className="textButtonContainer">
+                      {field?.type.charAt(0).toUpperCase() +
+                        field?.type.slice(1) || " - "}
+                    </div>
 
                     <div className="buttonContainerWrapper">
                       <div
                         className="button buttonDrag"
                         data-tooltip-id="tooltip-global"
                         data-tooltip-content="Drag content"
-                        onMouseEnter={()=>setDragMode("contents")}
+                        onMouseEnter={() =>
+                          !dragging && setDragMode("contents")
+                        }
                       >
                         <RiDragMove2Line />
                       </div>
@@ -126,7 +137,12 @@ const Content = React.memo(
                         data-tooltip-content="Options"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={() => {
-                          setSelectedContainer(id);
+                          setSelectedContainer({
+                            id: id,
+                            type:
+                              field?.type.charAt(0).toUpperCase() +
+                                field?.type.slice(1) || null,
+                          });
                           setCurrentStyle(style);
                           setSidebar(true);
                         }}

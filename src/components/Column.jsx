@@ -22,7 +22,8 @@ export default function Column({
   handleAddContent,
   handleDeleteColumn,
   setSidebar,
-  setDragMode
+  setDragMode,
+  dragging,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -105,7 +106,7 @@ export default function Column({
                       className="button buttonDrag"
                       data-tooltip-id="tooltip-global"
                       data-tooltip-content="Drag column"
-                      onMouseEnter={()=>setDragMode("columns")}
+                      onMouseEnter={() => !dragging && setDragMode("columns")}
                     >
                       <RiDragMove2Line />
                     </div>
@@ -120,7 +121,7 @@ export default function Column({
 
                     <button
                       onClick={() => {
-                        setSelectedContainer(id);
+                        setSelectedContainer({ id: id, type: "Column" });
                         setCurrentStyle(style);
                         setSidebar(true);
                       }}

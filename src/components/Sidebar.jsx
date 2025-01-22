@@ -1,10 +1,13 @@
 import { useDraggable } from "@dnd-kit/core";
 import React, { useState } from "react";
+import { FaGear } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import "../styles.css";
+import NewContent from "./NewContent";
 
 export default function Sidebar({
   id,
+  type,
   currentStyle,
   setCurrentStyle,
   setEditor,
@@ -57,6 +60,9 @@ export default function Sidebar({
     id: draggableId,
   });
 
+  console.log('currentStyle::::::::::::::::::::::::::::::::');
+  console.log(currentStyle);
+
   return (
     <div className={`sidebar ${sidebar ? "" : "close"}`}>
       <div
@@ -77,27 +83,23 @@ export default function Sidebar({
 
       {newContentData.selectContent ? (
         <>
-          niu
-          <br />
-          {newContentData.columnId}
-          <br />
-          <div
-            onClick={() => {
-              handleAddContent(newContentData.columnId, 0, "text");
-            }}
-          >
-            text
-          </div>
-          <br />
-          <div   onClick={() => {
-              handleAddContent(newContentData.columnId, 0, "image");
-            }}>img</div>
+          <NewContent
+            newContentData={newContentData}
+            handleAddContent={handleAddContent}
+          />
         </>
       ) : (
         <>
-          <div onClick={changeStyle}>
-            Cambia {currentStyle?.background ?? null} {id}
+          <div className="title1">
+            <div className="flex" style={{ gap: "14px" }}>
+              <FaGear style={{ fontSize: "23px" }} />
+              <span> {type || "Options"}</span>
+            </div>
           </div>
+
+
+
+
           <div>
             <label htmlFor="backgroundColor">Scegli colore di sfondo:</label>
             <input
@@ -107,6 +109,21 @@ export default function Sidebar({
               onChange={handleBackgroundChange}
             />
           </div>
+
+
+
+
+
+
+
+
+
+
+
+          <div onClick={changeStyle}>
+            Cambia {currentStyle?.background ?? null} {id}
+          </div>
+        
           <div>
             <label htmlFor="textColor">Scegli colore del testo:</label>
             <input

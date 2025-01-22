@@ -23,6 +23,8 @@ import data from "./data/home.js";
 import "./styles.css";
 
 const App = () => {
+  const pageId = data.pageData._id;
+  const pageStyle = data.pageData?.style || {};
   const [dragMode, setDragMode] = useState("sections");
   const [view, setView] = useState("desktop");
   const [editor, setEditor] = useState(true);
@@ -31,7 +33,10 @@ const App = () => {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragging, setDragging] = useState(false);
   const [currentStyle, setCurrentStyle] = useState({});
-  const [selectedContainer, setSelectedContainer] = useState(null);
+  const [selectedContainer, setSelectedContainer] = useState({
+    id: pageId,
+    type: "Site options",
+  });
   const { idArrays, idTypes, fieldData } = processView(data);
   const [items, setItems] = useState(idArrays || []);
   const [contents, setContents] = useState(idTypes || []);
@@ -42,9 +47,7 @@ const App = () => {
     columnId: "",
     type: "",
   });
-  const pageId = data.pageData._id;
   const [style, setStyle] = useState(data.pageData?.style || {});
-  const pageStyle = data.pageData?.style || {};
 
   const zoomIn = () => {
     setZoomLevel((prevZoom) => Math.min(prevZoom + 0.05, 1.3));
@@ -106,6 +109,7 @@ const App = () => {
     setSidebar(true);
     const newContentId = `new-content-${Date.now()}`;
     const field1Id = generateUniqueId();
+    let newContent = {};
 
     if (selectContent) {
       setNewContentData({
@@ -114,12 +118,27 @@ const App = () => {
         type: "",
       });
     } else {
-      const newContent = {
-        type: "field",
-        name: "Lorem ipsum",
-        container: "column",
-        style: { border: "none" },
-      };
+      if (type === "spacer") {
+        newContent = {
+          type: "field",
+          name: "Lorem ipsum",
+          container: "column",
+          style: {
+            borderTop: "1px solid #ddd",
+            width: "98%",
+            height: "1px",
+            marginTop: "20px",
+            marginBottom: "0px",
+          },
+        };
+      } else {
+        newContent = {
+          type: "field",
+          name: "Lorem ipsum",
+          container: "column",
+          style: { border: "none" },
+        };
+      }
 
       setItems((prevItems) => {
         return {
@@ -338,6 +357,12 @@ const App = () => {
         dragMode === "contents" ? closestCenter : rectIntersection
       }
     >
+      {/*
+      
+      collisionDetection={
+        dragMode === "contents" ? closestCenter : rectIntersection
+      }
+      */}
       <Topbar
         id={pageId}
         view={view}
@@ -354,11 +379,15 @@ const App = () => {
         setCurrentStyle={setCurrentStyle}
         setSelectedContainer={setSelectedContainer}
         activeId={activeId}
+        dragMode={dragMode}
+        setDragMode={setDragMode}
+        setNewContentData={setNewContentData}
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
       <Sidebar
-        id={selectedContainer}
+        id={selectedContainer.id}
+        type={selectedContainer.type}
         pageStyle={pageStyle}
         currentStyle={currentStyle}
         setCurrentStyle={setCurrentStyle}
@@ -377,7 +406,6 @@ const App = () => {
       ) : (
         <div className="siteWrapper">
           <Devices view={view} />
-
           <div
             className={`siteContainer
             ${view === "mobile" ? "mobile" : ""}
@@ -394,7 +422,7 @@ const App = () => {
               currentStyle={currentStyle}
               setCurrentStyle={setCurrentStyle}
               setSelectedContainer={setSelectedContainer}
-              isSelected={selectedContainer === pageId}
+              isSelected={selectedContainer.id === pageId}
             >
               {items[pageId] &&
                 items[pageId].map((section) => {
@@ -403,10 +431,11 @@ const App = () => {
                       id={section}
                       items={items[section] || []}
                       key={section}
+                      dragging={dragging}
                       currentStyle={currentStyle}
                       setCurrentStyle={setCurrentStyle}
                       setSelectedContainer={setSelectedContainer}
-                      isSelected={selectedContainer === section}
+                      isSelected={selectedContainer.id === section}
                       contents={contents}
                       editor={editor}
                       setEditor={setEditor}
@@ -421,6 +450,14 @@ const App = () => {
                         className={`wrapper ${
                           view === "mobile" ? "small" : ""
                         }`}
+                        style={{
+                          height:
+                            dragging && dragMode === "sections"
+                              ? "100px"
+                              : "auto",
+
+                          zIndex: dragging && dragMode && 500,
+                        }}
                       >
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
@@ -436,7 +473,7 @@ const App = () => {
                                   currentStyle={currentStyle}
                                   setCurrentStyle={setCurrentStyle}
                                   setSelectedContainer={setSelectedContainer}
-                                  isSelected={selectedContainer === column}
+                                  isSelected={selectedContainer.id === column}
                                   contents={contents}
                                   editor={editor}
                                   setEditor={setEditor}
@@ -444,6 +481,7 @@ const App = () => {
                                   handleDeleteColumn={handleDeleteColumn}
                                   setSidebar={setSidebar}
                                   setDragMode={setDragMode}
+                                  dragging={dragging}
                                 >
                                   {items[column] &&
                                     items[column].map((field, j) => (
@@ -453,6 +491,9 @@ const App = () => {
                                           id={field}
                                           i={i}
                                           j={j}
+                                          field={fields.find(
+                                            (f) => f.field_ref === field
+                                          )}
                                           idSection={section}
                                           activeId={activeId}
                                           currentStyle={currentStyle}
@@ -462,7 +503,7 @@ const App = () => {
                                             setSelectedContainer
                                           }
                                           isSelected={
-                                            selectedContainer === field
+                                            selectedContainer.id === field
                                           }
                                           contents={contents}
                                           editor={editor}
@@ -510,24 +551,28 @@ const App = () => {
           </div>
         </div>
       )}
-      {contents[activeId]?.type === "field" ? (
+      {contents[activeId]?.type === "field" ||
+      contents[activeId]?.type === "column" ||
+      contents[activeId]?.type === "section" ? (
         <DragOverlay>
           {activeId ? (
             <div
-              style={{
-                padding: "10px",
-                border: "2px dashed gray",
-                background: "lightgray",
-                cursor: "grabbing",
-                width: "250px",
-                height: "50px",
-                overflow: "hidden",
-              }}
+              className={`dragOverlay ${
+                contents[activeId]?.type === "field"
+                  ? "dragOverlayContents"
+                  : contents[activeId]?.type === "column"
+                  ? "dragOverlayColumns"
+                  : contents[activeId]?.type === "section"
+                  ? "dragOverlaySections"
+                  : ""
+              }`}
             >
               {contents[activeId]?.type
                 ? `Dragging ${contents[activeId].type}: ${contents[activeId].name}`
                 : `Dragging ${activeId}`}
             </div>
+          ) : contents[activeId]?.type === "section" ? (
+            <Section content={contents[activeId]} />
           ) : null}
         </DragOverlay>
       ) : null}
@@ -624,7 +669,6 @@ const App = () => {
     const activeId = active.id;
     const overId = over?.id;
 
-    // Verifica che ci sia un elemento sopra
     if (!overId) {
       return;
     }
@@ -632,7 +676,6 @@ const App = () => {
     const activeContainer = findContainer(activeId, items);
     const overContainer = findContainer(overId, items);
 
-    // Verifica che gli elementi siano nello stesso contenitore
     if (
       !activeContainer ||
       !overContainer ||
@@ -641,11 +684,9 @@ const App = () => {
       return;
     }
 
-    // Ottieni gli indici degli elementi nelle rispettive liste
     const activeIndex = items[activeContainer].indexOf(activeId);
     const overIndex = items[overContainer].indexOf(overId);
 
-    // Verifica se la posizione è cambiata
     if (activeIndex !== overIndex) {
       setItems((prevItems) => {
         const updatedItems = { ...prevItems };

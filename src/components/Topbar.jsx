@@ -29,7 +29,14 @@ export default function Topbar({
   setStyle,
   setSelectedContainer,
   setCurrentStyle,
+  dragMode,
+  setDragMode,
+  setNewContentData,
 }) {
+  const handleChange = (event) => {
+    setDragMode(event.target.value);
+  };
+
   return (
     <div className="flex topbar">
       <div className="flex">
@@ -42,26 +49,23 @@ export default function Topbar({
       </div>
 
       <div className="flex topbarDevices">
-
-
-     {activeId}
-
-
-
         <div
           className="flexCenter topbarIcon"
           data-tooltip-id="tooltip-topbar"
           data-tooltip-content="Site options"
           onClick={() => {
-            setSelectedContainer(id);
+            setSelectedContainer({ id: id, type: "Site options" });
             setCurrentStyle(style);
             setSidebar(true);
+            setNewContentData({
+              selectContent: false,
+              columnId: "",
+              type: "",
+            });
           }}
         >
           <HiMiniCog6Tooth style={{ fontSize: "23px" }} />
         </div>
-
-
         <div
           onClick={() => setView("desktop")}
           className="flexCenter topbarIcon"
@@ -104,7 +108,6 @@ export default function Topbar({
         >
           <TbArrowAutofitContent style={{ fontSize: "28px" }} />
         </div>
-
         {editor && (
           <div
             onClick={() => {
@@ -117,7 +120,6 @@ export default function Topbar({
             <FaToggleOn style={{ fontSize: "28px", color: "green" }} />
           </div>
         )}
-
         {!editor && (
           <div
             onClick={() => {
@@ -130,7 +132,6 @@ export default function Topbar({
             <FaToggleOff style={{ fontSize: "28px", color: "red" }} />
           </div>
         )}
-
         <div className="zoomContainer">
           <div className="flexCenter zoomButtons">
             <div
