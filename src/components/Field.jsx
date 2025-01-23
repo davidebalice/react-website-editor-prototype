@@ -1,13 +1,75 @@
 import React, { useEffect, useState } from "react";
+import { IoMdSave } from "react-icons/io";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
-const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
+const Field = ({
+  isSelected,
+  field,
+  fieldId,
+  editor,
+  setFields,
+  activeId,
+  dragging,
+  content,
+  currentStyle,
+  setCurrentStyle,
+  setDragMode,
+}) => {
   const fileRepositoryUrl = process.env.REACT_APP_FILE_REPOSITORY;
   const [text, setText] = useState(field?.value ?? "");
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [style, setStyle] = useState(content.style || {});
+
+  useEffect(() => {
+    if (isSelected && currentStyle) {
+      let updatedStyle = { ...style };
+
+      if (
+        currentStyle.background &&
+        currentStyle.background !== updatedStyle.background
+      ) {
+        updatedStyle.background = currentStyle.background;
+      }
+
+      if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
+        updatedStyle.align = currentStyle.align;
+      }
+
+      if (
+        currentStyle.position &&
+        currentStyle.position !== updatedStyle.position
+      ) {
+        updatedStyle.position = currentStyle.position;
+      }
+
+      if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
+        updatedStyle.color = currentStyle.color;
+      }
+
+      if (
+        currentStyle.fontFamily &&
+        currentStyle.fontFamily !== updatedStyle.fontFamily
+      ) {
+        updatedStyle.fontFamily = currentStyle.fontFamily;
+      }
+
+      if (
+        currentStyle.fontSize &&
+        currentStyle.fontSize !== updatedStyle.fontSize
+      ) {
+        updatedStyle.fontSize = currentStyle.fontSize;
+      }
+
+      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+        updatedStyle.width = currentStyle.width;
+      }
+
+      setStyle(updatedStyle);
+    }
+  }, [isSelected, currentStyle]);
 
   const handleChange = (value) => {
     setText(value);
@@ -15,6 +77,7 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
 
   const handleSave = () => {
     setIsEditing(false);
+    setDragMode("Sections");
 
     setFields((prevFields) => {
       return prevFields.map((f) => {
@@ -38,13 +101,15 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
   const handleEditing = () => {
     if (editor) {
       setIsEditing(true);
+      setDragMode("none");
     } else {
       setIsEditing(false);
+      setDragMode("Sections");
     }
   };
 
   const handleMouseDown = (e) => {
-    if (window.getSelection().toString()) {
+    if (isEditing && window.getSelection().toString()) {
       e.stopPropagation();
     }
   };
@@ -63,8 +128,10 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
   }
 
   const itemStyle = {
-    display: "flex",
-    flexDirection: "row",
+    cursor: "pointer",
+    color: style?.color ?? "#222222",
+    textAlign: style?.align === "" ? "left" : style?.align,
+    fontSize: style?.fontSize || "14px",
   };
 
   const handleMouseEnter = () => {
@@ -79,13 +146,11 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
     switch (field.type) {
       case "text":
         return (
-          <div style={itemStyle}>
+          <div>
             {!isEditing ? (
               <div
                 onClick={() => handleEditing()}
-                style={{
-                  cursor: "pointer",
-                }}
+                style={itemStyle}
                 dangerouslySetInnerHTML={{ __html: text }}
               />
             ) : (
@@ -106,20 +171,9 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
                     fontSize: "13px",
                   }}
                 />
-                <button
-                  onClick={handleSave}
-                  style={{
-                    marginTop: "38px",
-                    marginLeft: "3px",
-                    padding: "3px 9px",
-                    backgroundColor: "#222222",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Save
+                <button onClick={handleSave} className="flex textSave">
+                  <IoMdSave style={{fontSize:"16px"}} />
+                  <span>Save</span>
                 </button>
               </div>
             )}
@@ -147,7 +201,7 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
           </div>
         );
 
-        case "spacer":
+      case "spacer":
         return (
           <div
             style={itemStyle}
@@ -155,7 +209,7 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
             onMouseLeave={handleMouseLeave}
           >
             <>
-             <div className="spacer"></div>
+              <div className="spacer"></div>
             </>
           </div>
         );
@@ -166,7 +220,12 @@ const Field = ({ field, fieldId, editor, setFields, activeId, dragging }) => {
         return (
           <div style={itemStyle}>
             <div>
-              <span className="mx-auto">{text}</span>
+              <span
+                className="mx-auto"
+                style={{ color: content.style.color || "#333" }}
+              >
+                {text}
+              </span>
             </div>
           </div>
         );

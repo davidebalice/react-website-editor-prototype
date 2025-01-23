@@ -32,7 +32,9 @@ const App = () => {
   const [activeId, setActiveId] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragging, setDragging] = useState(false);
-  const [currentStyle, setCurrentStyle] = useState({});
+  const [currentStyle, setCurrentStyle] = useState(
+    { background: data.pageData?.style.background } || {}
+  );
   const [selectedContainer, setSelectedContainer] = useState({
     id: pageId,
     type: "Site options",
@@ -64,7 +66,13 @@ const App = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       shouldStartDrag: (event) => {
-        return event.target.tagName !== "BUTTON";
+        return (
+          event.target.getAttribute("contenteditable") !== "true" &&
+          event.target.getClass("class") !== "ql-clipboard" &&
+          event.target.tagName !== "BUTTON" &&
+          event.target.tagName !== "INPUT" &&
+          event.target.tagName !== "TEXTAREA"
+        );
       },
       activationConstraint: {
         distance: 5,
@@ -82,7 +90,7 @@ const App = () => {
   console.log("data, idArrays");
   console.log({ data, idArrays });
 
-  console.log("items udeeffect");
+  console.log("items useeffect");
   useEffect(() => console.log({ items }), [items]);
 
   const typeContent = (type) => {
@@ -357,12 +365,6 @@ const App = () => {
         dragMode === "contents" ? closestCenter : rectIntersection
       }
     >
-      {/*
-      
-      collisionDetection={
-        dragMode === "contents" ? closestCenter : rectIntersection
-      }
-      */}
       <Topbar
         id={pageId}
         view={view}
@@ -444,21 +446,29 @@ const App = () => {
                       pageId={pageId}
                       handleDeleteSection={handleDeleteSection}
                       setSidebar={setSidebar}
+                      dragMode={dragMode}
                       setDragMode={setDragMode}
                     >
                       <div
                         className={`wrapper ${
                           view === "mobile" ? "small" : ""
                         }`}
+                      >
+                       
+                        {/*
+                        
+                       
+                      
                         style={{
                           height:
                             dragging && dragMode === "sections"
                               ? "100px"
                               : "auto",
-
-                          zIndex: dragging && dragMode && 500,
                         }}
                       >
+                        
+                        */}
+                        
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
                             return (
@@ -480,6 +490,7 @@ const App = () => {
                                   handleAddContent={handleAddContent}
                                   handleDeleteColumn={handleDeleteColumn}
                                   setSidebar={setSidebar}
+                                  dragMode={dragMode}
                                   setDragMode={setDragMode}
                                   dragging={dragging}
                                 >
@@ -505,13 +516,14 @@ const App = () => {
                                           isSelected={
                                             selectedContainer.id === field
                                           }
-                                          contents={contents}
+                                          content={contents[field] || {}}
                                           editor={editor}
                                           setEditor={setEditor}
                                           handleDeleteContent={
                                             handleDeleteContent
                                           }
                                           setSidebar={setSidebar}
+                                          dragMode={dragMode}
                                           setDragMode={setDragMode}
                                         >
                                           <div
@@ -527,6 +539,7 @@ const App = () => {
                                           >
                                             <Field
                                               editor={editor}
+                                              content={contents[field] || {}}
                                               fieldId={field}
                                               field={fields.find(
                                                 (f) => f.field_ref === field
@@ -534,6 +547,12 @@ const App = () => {
                                               activeId={activeId}
                                               setFields={setFields}
                                               dragging={dragging}
+                                              setDragMode={setDragMode}
+                                              currentStyle={currentStyle}
+                                              setCurrentStyle={setCurrentStyle}
+                                              isSelected={
+                                                selectedContainer.id === field
+                                              }
                                             />
                                           </div>
                                         </Content>
@@ -744,7 +763,6 @@ const App = () => {
       idTypes[field._id] = {
         type: "field",
         container: "column",
-        name: field.label.value,
         style: field.style,
       };
     });

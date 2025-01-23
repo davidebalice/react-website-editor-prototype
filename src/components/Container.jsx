@@ -1,7 +1,6 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React, { useEffect, useState } from "react";
-import { HiMiniCog6Tooth } from "react-icons/hi2";
 
 export default function Container({
   id,
@@ -13,10 +12,10 @@ export default function Container({
   setCurrentStyle,
   setSelectedContainer,
   isSelected,
-  editor
+  editor,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+    useSortable({ id, disabled: true });
 
   const [style, setStyle] = useState(pageStyle);
 
@@ -29,6 +28,10 @@ export default function Container({
         currentStyle.background !== updatedStyle.background
       ) {
         updatedStyle.background = currentStyle.background;
+      }
+
+      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+        updatedStyle.width = currentStyle.width;
       }
 
       if (
@@ -62,6 +65,7 @@ export default function Container({
     minHeight: 100,
     color: style?.color ?? "black",
     background: style?.background ?? "white",
+    width: style?.width || "100%",
   };
 
   return (

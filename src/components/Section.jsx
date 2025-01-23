@@ -22,11 +22,15 @@ export default function Section({
   handleDeleteSection,
   pageId,
   setSidebar,
+  dragMode,
   setDragMode,
   dragging,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+    useSortable({
+      id,
+      disabled: dragMode === "none" || dragMode !== "sections" ? true : false,
+    });
 
   const section = contents[id] || {};
   const [hovered, setHovered] = useState(false);
@@ -44,6 +48,20 @@ export default function Section({
         currentStyle.background !== updatedStyle.background
       ) {
         updatedStyle.background = currentStyle.background;
+      }
+      if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
+        updatedStyle.align = currentStyle.align;
+      }
+
+      if (
+        currentStyle.position &&
+        currentStyle.position !== updatedStyle.position
+      ) {
+        updatedStyle.position = currentStyle.position;
+      }
+
+      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+        updatedStyle.width = currentStyle.width;
       }
 
       if (
@@ -64,10 +82,9 @@ export default function Section({
   const styles = {
     transform: CSS.Translate.toString(transform),
     transition,
-    width: style?.width ?? "100%",
+    width: style?.width || "100%",
     paddingTop: style?.paddingTop ?? 10,
     paddingBottom: style?.paddingBottom ?? 10,
-    margin: "0 auto",
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
@@ -78,6 +95,9 @@ export default function Section({
     color: style?.color ?? "black",
     background: style?.background || "white",
     outline: hovered && editor ? "2px dashed #999" : "none",
+    marginRight: style?.align === "left" ? "auto" : "",
+    marginLeft: style?.align === "right" ? "auto" : "",
+    margin: !style?.align || style?.align === "center" ? "0 auto" : "",
   };
 
   return (

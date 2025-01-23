@@ -22,11 +22,13 @@ export default function Column({
   handleAddContent,
   handleDeleteColumn,
   setSidebar,
+  dragMode,
   setDragMode,
   dragging,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+    useSortable({ id, disabled: dragMode === "none" || dragMode !== "columns" ? true : false,
+    });
 
   const column = contents?.[id] || {};
   const [style, setStyle] = useState(column.style || {});
@@ -42,6 +44,21 @@ export default function Column({
         currentStyle.background !== updatedStyle.background
       ) {
         updatedStyle.background = currentStyle.background;
+      }
+
+      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+        updatedStyle.width = currentStyle.width;
+      }
+
+      if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
+        updatedStyle.align = currentStyle.align;
+      }
+
+      if (
+        currentStyle.position &&
+        currentStyle.position !== updatedStyle.position
+      ) {
+        updatedStyle.position = currentStyle.position;
       }
 
       if (
@@ -72,7 +89,12 @@ export default function Column({
     minHeight: 30,
     color: style?.color ?? "black",
     background: style?.background || "white",
+    width: style?.width || "100%",
     outline: hovered && editor ? "2px dashed #999" : "none",
+    textAlign: !style?.align ? "left" : style?.align,
+    marginRight: style?.position === "left" ? "auto" : "",
+    marginLeft: style?.position === "right" ? "auto" : "",
+    margin: !style?.position || style?.position === "center" ? "0 auto" : "",
   };
 
   return (

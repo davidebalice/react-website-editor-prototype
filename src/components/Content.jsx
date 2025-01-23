@@ -10,7 +10,7 @@ const Content = React.memo(
   ({
     id,
     children,
-    contents,
+    content,
     isSelected,
     currentStyle,
     setSelectedContainer,
@@ -20,14 +20,16 @@ const Content = React.memo(
     i,
     j,
     setSidebar,
+    dragMode,
     setDragMode,
     dragging,
     field,
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
-      useSortable({ id });
-
-    const content = contents?.[id] || {};
+      useSortable({
+        id,
+        disabled: dragMode === "none" || dragMode !== "contents" ? true : false,
+      });
     const [style, setStyle] = useState(content.style || {});
     const [open, setOpen] = useState(false);
     const [hovered, setHovered] = useState(false);
@@ -43,6 +45,28 @@ const Content = React.memo(
           updatedStyle.background = currentStyle.background;
         }
 
+        if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
+          updatedStyle.align = currentStyle.align;
+        }
+
+        if (
+          currentStyle.position &&
+          currentStyle.position !== updatedStyle.position
+        ) {
+          updatedStyle.position = currentStyle.position;
+        }
+
+        if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
+          updatedStyle.color = currentStyle.color;
+        }
+
+        if (
+          currentStyle.fontFamily &&
+          currentStyle.fontFamily !== updatedStyle.fontFamily
+        ) {
+          updatedStyle.fontFamily = currentStyle.fontFamily;
+        }
+
         if (
           currentStyle.fontSize &&
           currentStyle.fontSize !== updatedStyle.fontSize
@@ -50,9 +74,50 @@ const Content = React.memo(
           updatedStyle.fontSize = currentStyle.fontSize;
         }
 
-        if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
-          updatedStyle.color = currentStyle.color;
+        if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+          updatedStyle.width = currentStyle.width;
         }
+
+        if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
+          updatedStyle.width = currentStyle.width;
+        }
+
+
+
+
+
+
+
+
+
+
+/*
+        border: style?.selectBorder ? style?.border : undefined,
+        borderTop: !style?.selectBorder ? style?.borderTop : undefined,
+        borderBottom: !style?.selectBorder ? style?.borderBottom : undefined,
+        borderLeft: !style?.selectBorder ? style?.borderLeft : undefined,
+        borderRight: !style?.selectBorder ? style?.borderRight : undefined,
+        borderRadius: !style?.selectRadius ? style?.borderRadius : undefined,
+        borderTopLeftRadius: !style?.selectRadius
+          ? style?.borderTopLeftRadius
+          : undefined,
+        borderTopRightRadius: !style?.selectRadius
+          ? style?.borderTopRightRadius
+          : undefined,
+        borderBottomLeftRadius: !style?.selectRadius
+          ? style?.borderBottomLeftRadius
+          : undefined,
+        borderBottomRightRadius: !style?.selectRadius
+          ? style?.borderBottomRightRadius
+          : undefined,
+
+*/
+
+
+
+
+
+
 
         setStyle(updatedStyle);
       }
@@ -68,18 +133,38 @@ const Content = React.memo(
       cursor: "grab",
       boxSizing: "border-box",
       minHeight: 20,
-      color: style?.color ?? "black",
+      color: style?.color ?? "#222222",
       background: style?.background || "white",
-      border: style?.border || "none",
-      borderTop: style?.borderTop || "",
-      borderBottom: style?.borderBottom || "",
+      border: !style?.selectBorder ? style?.border : undefined,
+      borderTop: style?.selectBorder ? style?.borderTop : undefined,
+      borderBottom: style?.selectBorder ? style?.borderBottom : undefined,
+      borderLeft: style?.selectBorder ? style?.borderLeft : undefined,
+      borderRight: style?.selectBorder ? style?.borderRight : undefined,
+      borderRadius: !style?.selectRadius ? style?.borderRadius : undefined,
+      borderTopLeftRadius: style?.selectRadius
+        ? style?.borderTopLeftRadius
+        : undefined,
+      borderTopRightRadius: style?.selectRadius
+        ? style?.borderTopRightRadius
+        : undefined,
+      borderBottomLeftRadius: style?.selectRadius
+        ? style?.borderBottomLeftRadius
+        : undefined,
+      borderBottomRightRadius: style?.selectRadius
+        ? style?.borderBottomRightRadius
+        : undefined,
+
       outline: hovered && editor ? "2px dashed #999" : "none",
       width: style?.width || "100%",
       height: style?.height || "",
       maxWidth: style?.maxWidth || "auto",
-      align: style?.align || "left",
+      textAlign: style?.align === "" ? "left" : style?.align,
+      marginRight: style?.position === "left" ? "auto" : "",
+      marginLeft: style?.position === "right" ? "auto" : "",
+      margin: !style?.position || style?.position === "center" ? "0 auto" : "",
       marginTop: style?.marginTop || "",
       marginBottom: style?.marginBottom || "",
+      fontFamily: style?.fontFamily || "",
     };
 
     const wrapperStyles = { padding: 10 };
