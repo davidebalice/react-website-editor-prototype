@@ -2,8 +2,17 @@ import React, { useEffect, useState } from "react";
 import { FaSquarePlus } from "react-icons/fa6";
 import newContents from "../data/newContents";
 import "../styles.css";
+import { HiMiniCog6Tooth } from "react-icons/hi2";
 
-export default function NewContent({ newContentData, handleAddContent }) {
+export default function NewContent({
+  id,
+  newContentData,
+  handleAddContent,
+  setSelectedContainer,
+  currentStyle,
+  setCurrentStyle,
+  setSidebar,
+}) {
   const [pressed, setPressed] = useState(null);
 
   useEffect(() => {
@@ -22,12 +31,25 @@ export default function NewContent({ newContentData, handleAddContent }) {
           <span>New content</span>
         </div>
       </div>
+
+      <div
+        className="flex newColumnButton"
+        style={{ gap: "14px" }}
+        onClick={() => {
+          setSelectedContainer({ id: id, type: "Column" });
+          setCurrentStyle({ ...currentStyle });
+          setSidebar(true);
+        }}
+      >
+        <HiMiniCog6Tooth style={{ fontSize: "20px" }} />
+        <span>Column options</span>
+      </div>
+
       <div className="newButtonDescription">
         Add new content
         <br />
         to selected Column
       </div>
-
       {newContents.map((item) => {
         return item.implemented ? (
           <div
@@ -65,8 +87,6 @@ export default function NewContent({ newContentData, handleAddContent }) {
           </div>
         );
       })}
-
-    
     </>
   );
 }

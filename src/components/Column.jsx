@@ -27,7 +27,9 @@ export default function Column({
   dragging,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id, disabled: dragMode === "none" || dragMode !== "columns" ? true : false,
+    useSortable({
+      id,
+      disabled: dragMode === "none" || dragMode !== "columns" ? true : false,
     });
 
   const column = contents?.[id] || {};
@@ -39,38 +41,40 @@ export default function Column({
     if (isSelected && currentStyle) {
       let updatedStyle = { ...style };
 
-      if (
-        currentStyle.background &&
-        currentStyle.background !== updatedStyle.background
-      ) {
-        updatedStyle.background = currentStyle.background;
-      }
+      const properties = [
+        "background",
+        "align",
+        "position",
+        "border",
+        "borderSelect",
+        "borderSize",
+        "borderType",
+        "borderColor",
+        "borderTop",
+        "borderBottom",
+        "borderLeft",
+        "borderRight",
+        "borderRadius",
+        "radiusSelect",
+        "borderTopLeftRadius",
+        "borderTopRightRadius",
+        "borderBottomLeftRadius",
+        "borderBottomRightRadius",
+        "padding",
+        "paddingSelect",
+        "paddingTop",
+        "paddingBottom",
+        "paddingLeft",
+        "paddingRight",
+        "marginTop",
+        "marginBottom",
+      ];
 
-      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
-        updatedStyle.width = currentStyle.width;
-      }
-
-      if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
-        updatedStyle.align = currentStyle.align;
-      }
-
-      if (
-        currentStyle.position &&
-        currentStyle.position !== updatedStyle.position
-      ) {
-        updatedStyle.position = currentStyle.position;
-      }
-
-      if (
-        currentStyle.fontSize &&
-        currentStyle.fontSize !== updatedStyle.fontSize
-      ) {
-        updatedStyle.fontSize = currentStyle.fontSize;
-      }
-
-      if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
-        updatedStyle.color = currentStyle.color;
-      }
+      properties.forEach((prop) => {
+        if (currentStyle[prop] && currentStyle[prop] !== updatedStyle[prop]) {
+          updatedStyle[prop] = currentStyle[prop];
+        }
+      });
 
       setStyle(updatedStyle);
     }
@@ -79,7 +83,6 @@ export default function Column({
   const styles = {
     transform: CSS.Translate.toString(transform),
     transition,
-    padding: 0,
     flex: 1,
     flexWrap: "wrap",
     alignItems: "center",
@@ -95,6 +98,45 @@ export default function Column({
     marginRight: style?.position === "left" ? "auto" : "",
     marginLeft: style?.position === "right" ? "auto" : "",
     margin: !style?.position || style?.position === "center" ? "0 auto" : "",
+    marginTop: style?.marginTop || "",
+    marginBottom: style?.marginBottom || "",
+    ...(style?.borderSelect !== "select" && {
+      border: `${style?.borderSize || "0px"} ${style?.borderType || "solid"} ${
+        style?.borderColor || "#ddd"
+      }`,
+    }),
+    ...(style?.borderSelect === "select" && {
+      borderTop: `${style?.borderTop || "0px"} ${
+        style?.borderType || "solid"
+      } ${style?.borderColor || "#ddd"}`,
+      borderBottom: `${style?.borderBottom || "0px"} ${
+        style?.borderType || "solid"
+      } ${style?.borderColor || "#ddd"}`,
+      borderLeft: `${style?.borderLeft || "0px"} ${
+        style?.borderType || "solid"
+      } ${style?.borderColor || "#ddd"}`,
+      borderRight: `${style?.borderRight || "0px"} ${
+        style?.borderType || "solid"
+      } ${style?.borderColor || "#ddd"}`,
+    }),
+    ...(style?.radiusSelect !== "select" && {
+      borderRadius: style?.borderRadius || "0px",
+    }),
+    ...(style?.radiusSelect === "select" && {
+      borderTopLeftRadius: style?.borderTopLeftRadius || "0px",
+      borderTopRightRadius: style?.borderTopRightRadius || "0px",
+      borderBottomLeftRadius: style?.borderBottomLeftRadius || "0px",
+      borderBottomRightRadius: style?.borderBottomRightRadius || "0px",
+    }),
+    ...(style?.paddingSelect !== "select" && {
+      padding: style?.padding || "0px",
+    }),
+    ...(style?.paddingSelect === "select" && {
+      paddingLeft: style?.paddingLeft || "0px",
+      paddingRight: style?.paddingRight || "0px",
+      paddingTop: style?.paddingTop || "0px",
+      paddingBottom: style?.paddingBottom || "0px",
+    }),
   };
 
   return (

@@ -397,10 +397,12 @@ const App = () => {
         setEditor={setEditor}
         sidebar={sidebar}
         setSidebar={setSidebar}
+        setSelectedContainer={setSelectedContainer}
         handleAddContent={handleAddContent}
         newContentData={newContentData}
         setNewContentData={setNewContentData}
       />
+
       {info ? (
         <>
           <Info setInfo={setInfo} />
@@ -454,7 +456,6 @@ const App = () => {
                           view === "mobile" ? "small" : ""
                         }`}
                       >
-                       
                         {/*
                         
                        
@@ -468,7 +469,7 @@ const App = () => {
                       >
                         
                         */}
-                        
+
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
                             return (

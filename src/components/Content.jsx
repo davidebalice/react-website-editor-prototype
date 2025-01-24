@@ -38,86 +38,44 @@ const Content = React.memo(
       if (isSelected && currentStyle) {
         let updatedStyle = { ...style };
 
-        if (
-          currentStyle.background &&
-          currentStyle.background !== updatedStyle.background
-        ) {
-          updatedStyle.background = currentStyle.background;
-        }
+        const properties = [
+          "background",
+          "align",
+          "position",
+          "color",
+          "fontFamily",
+          "fontSize",
+          "width",
+          "border",
+          "borderSelect",
+          "borderSize",
+          "borderType",
+          "borderColor",
+          "borderTop",
+          "borderBottom",
+          "borderLeft",
+          "borderRight",
+          "borderRadius",
+          "radiusSelect",
+          "borderTopLeftRadius",
+          "borderTopRightRadius",
+          "borderBottomLeftRadius",
+          "borderBottomRightRadius",
+          "padding",
+          "paddingSelect",
+          "paddingTop",
+          "paddingBottom",
+          "paddingLeft",
+          "paddingRight",
+          "marginTop",
+          "marginBottom",
+        ];
 
-        if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
-          updatedStyle.align = currentStyle.align;
-        }
-
-        if (
-          currentStyle.position &&
-          currentStyle.position !== updatedStyle.position
-        ) {
-          updatedStyle.position = currentStyle.position;
-        }
-
-        if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
-          updatedStyle.color = currentStyle.color;
-        }
-
-        if (
-          currentStyle.fontFamily &&
-          currentStyle.fontFamily !== updatedStyle.fontFamily
-        ) {
-          updatedStyle.fontFamily = currentStyle.fontFamily;
-        }
-
-        if (
-          currentStyle.fontSize &&
-          currentStyle.fontSize !== updatedStyle.fontSize
-        ) {
-          updatedStyle.fontSize = currentStyle.fontSize;
-        }
-
-        if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
-          updatedStyle.width = currentStyle.width;
-        }
-
-        if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
-          updatedStyle.width = currentStyle.width;
-        }
-
-
-
-
-
-
-
-
-
-
-/*
-        border: style?.selectBorder ? style?.border : undefined,
-        borderTop: !style?.selectBorder ? style?.borderTop : undefined,
-        borderBottom: !style?.selectBorder ? style?.borderBottom : undefined,
-        borderLeft: !style?.selectBorder ? style?.borderLeft : undefined,
-        borderRight: !style?.selectBorder ? style?.borderRight : undefined,
-        borderRadius: !style?.selectRadius ? style?.borderRadius : undefined,
-        borderTopLeftRadius: !style?.selectRadius
-          ? style?.borderTopLeftRadius
-          : undefined,
-        borderTopRightRadius: !style?.selectRadius
-          ? style?.borderTopRightRadius
-          : undefined,
-        borderBottomLeftRadius: !style?.selectRadius
-          ? style?.borderBottomLeftRadius
-          : undefined,
-        borderBottomRightRadius: !style?.selectRadius
-          ? style?.borderBottomRightRadius
-          : undefined,
-
-*/
-
-
-
-
-
-
+        properties.forEach((prop) => {
+          if (currentStyle[prop] && currentStyle[prop] !== updatedStyle[prop]) {
+            updatedStyle[prop] = currentStyle[prop];
+          }
+        });
 
         setStyle(updatedStyle);
       }
@@ -135,25 +93,6 @@ const Content = React.memo(
       minHeight: 20,
       color: style?.color ?? "#222222",
       background: style?.background || "white",
-      border: !style?.selectBorder ? style?.border : undefined,
-      borderTop: style?.selectBorder ? style?.borderTop : undefined,
-      borderBottom: style?.selectBorder ? style?.borderBottom : undefined,
-      borderLeft: style?.selectBorder ? style?.borderLeft : undefined,
-      borderRight: style?.selectBorder ? style?.borderRight : undefined,
-      borderRadius: !style?.selectRadius ? style?.borderRadius : undefined,
-      borderTopLeftRadius: style?.selectRadius
-        ? style?.borderTopLeftRadius
-        : undefined,
-      borderTopRightRadius: style?.selectRadius
-        ? style?.borderTopRightRadius
-        : undefined,
-      borderBottomLeftRadius: style?.selectRadius
-        ? style?.borderBottomLeftRadius
-        : undefined,
-      borderBottomRightRadius: style?.selectRadius
-        ? style?.borderBottomRightRadius
-        : undefined,
-
       outline: hovered && editor ? "2px dashed #999" : "none",
       width: style?.width || "100%",
       height: style?.height || "",
@@ -165,9 +104,44 @@ const Content = React.memo(
       marginTop: style?.marginTop || "",
       marginBottom: style?.marginBottom || "",
       fontFamily: style?.fontFamily || "",
+      ...(style?.borderSelect !== "select" && {
+        border: `${style?.borderSize || "0px"} ${
+          style?.borderType || "solid"
+        } ${style?.borderColor || "#ddd"}`,
+      }),
+      ...(style?.borderSelect === "select" && {
+        borderTop: `${style?.borderTop || "0px"} ${
+          style?.borderType || "solid"
+        } ${style?.borderColor || "#ddd"}`,
+        borderBottom: `${style?.borderBottom || "0px"} ${
+          style?.borderType || "solid"
+        } ${style?.borderColor || "#ddd"}`,
+        borderLeft: `${style?.borderLeft || "0px"} ${
+          style?.borderType || "solid"
+        } ${style?.borderColor || "#ddd"}`,
+        borderRight: `${style?.borderRight || "0px"} ${
+          style?.borderType || "solid"
+        } ${style?.borderColor || "#ddd"}`,
+      }),
+      ...(style?.radiusSelect !== "select" && {
+        borderRadius: style?.borderRadius || "0px",
+      }),
+      ...(style?.radiusSelect === "select" && {
+        borderTopLeftRadius: style?.borderTopLeftRadius || "0px",
+        borderTopRightRadius: style?.borderTopRightRadius || "0px",
+        borderBottomLeftRadius: style?.borderBottomLeftRadius || "0px",
+        borderBottomRightRadius: style?.borderBottomRightRadius || "0px",
+      }),
+      ...(style?.paddingSelect !== "select" && {
+        padding: style?.padding || "0px",
+      }),
+      ...(style?.paddingSelect === "select" && {
+        paddingLeft: style?.paddingLeft || "0px",
+        paddingRight: style?.paddingRight || "0px",
+        paddingTop: style?.paddingTop || "0px",
+        paddingBottom: style?.paddingBottom || "0px",
+      }),
     };
-
-    const wrapperStyles = { padding: 10 };
 
     const dragIconStyle = {
       cursor: "grab",
@@ -258,7 +232,7 @@ const Content = React.memo(
             </div>
           )}
         </div>
-        <div style={wrapperStyles}>{children}</div>
+        <div>{children}</div>
       </div>
     );
   }

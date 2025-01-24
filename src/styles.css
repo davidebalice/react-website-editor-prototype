@@ -1,5 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&family=Lato:wght@400;700&family=Poppins:wght@400;600&display=swap");
+:root {
+  --button-color: #fff;
+  --button-background-primary: #111111;
+  --button-background-secondary: #555555;
+}
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&family=Lato:wght@400;700&family=Poppins:wght@400;600&display=swap");
 
 body {
   overflow-x: hidden;
@@ -166,7 +171,7 @@ body {
 }
 
 .sidebarClose {
-  background-color: #111;
+  background-color: var(--button-background-primary);
   color: white;
   width: 24px;
   height: 60px;
@@ -181,7 +186,7 @@ body {
 }
 
 .sidebarClose:hover {
-  background-color: #555;
+  background-color: var(--button-background-secondary);
 }
 
 .wrapper {
@@ -210,7 +215,7 @@ body {
 }
 
 .buttonContainer:hover {
-  background-color: #555;
+  background-color: var(--button-background-secondary);
   z-index: 310;
 }
 
@@ -226,7 +231,7 @@ body {
 }
 
 .button:hover {
-  background-color: #555;
+  background-color: var(--button-background-secondary);
 }
 
 .buttonPageContainer {
@@ -284,7 +289,7 @@ body {
 }
 
 .buttonContainerOpened {
-  background-color: #111;
+  background-color: var(--button-background-primary);
   position: absolute;
   margin-top: 116px;
   border-radius: 6px !important;
@@ -490,7 +495,7 @@ body {
 }
 
 .title1 {
-  background-color: #111;
+  background-color: var(--button-background-primary);
   color: #fff;
   font-size: 14px;
   padding: 12px 10px;
@@ -571,7 +576,7 @@ body {
   margin: 0 auto;
   gap: 14px;
   color: #fff;
-  background-color: #111;
+  background-color: var(--button-background-primary);
   font-size: 13px;
   padding: 4px 8px;
   margin-top: 20px;
@@ -580,7 +585,7 @@ body {
 }
 
 .sidebarMenu:hover {
-  background-color: #555;
+  background-color: var(--button-background-secondary);
 }
 
 .sidebarMenuTitle {
@@ -595,7 +600,7 @@ body {
 }
 
 .sidebarMenuOpened {
-  background-color: #111;
+  background-color: var(--button-background-primary);
   font-size: 12px;
   width: 90%;
   color: #fff;
@@ -609,18 +614,19 @@ body {
 }
 
 .sidebarMenuOpened.open {
-  max-height: 200px;
+  max-height: 290px;
   opacity: 1;
 }
 
 .sidebarMenuItem {
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 6px 6px;
   gap: 12px;
+  border-top: 1px dashed #555;
 }
 
 .sidebarMenuItem:hover {
-  background-color: #555;
+  background-color: var(--button-background-secondary);
 }
 
 .sidebarMenuSection {
@@ -630,7 +636,7 @@ body {
   color: #333;
 }
 
-.sidebarMenuSection p{
+.sidebarMenuSection p {
   width: 100%;
   text-align: left;
   margin-top: 20px;
@@ -660,56 +666,168 @@ body {
   border-radius: 6px;
 }
 
-.sidebarId{
+.sidebarId {
   font-size: 11px;
   text-align: center;
   border-bottom: 1px solid #ddd;
-  margin:0 auto;
+  margin: 0 auto;
   padding: 4px 0;
   width: 100%;
-  color:#777
+  color: #777;
+  display:none
 }
 
-.sidebarSelect{
-  padding:6px;
+.sidebarSelect {
+  padding: 6px;
   border-radius: 4px;
   width: calc(100% - 6px);
-  border:1px solid #ccc
+  border: 1px solid #ccc;
 }
 
-.sidebarDivider{
+.sidebarDivider {
   width: 96%;
   border-top: 1px dashed #ddd;
-  margin:0 auto;
-  margin-top:16px;
-  height:6px;
+  margin: 0 auto;
+  margin-top: 16px;
+  height: 6px;
 }
 
-.sidebarSlider{
-  width:100%
+.sidebarSlider {
+  width: 100%;
 }
 
-.bottomCode{
+.sidebarMenuIcon {
+  justify-content: center;
+  display: flex;
+  width: 26px;
+}
+
+.bottomCode {
   text-align: left;
   font-size: 12px;
   margin: 0 auto;
-  width:100%;
+  width: 100%;
 }
 
-.textSave{
-    margin-top: 38px;
-    margin-left: 3px;
-    padding: 5px 9px;
-    background-color: #111;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    gap:8px;
-    font-size: 13px;
-    transition: background 0.3s ease-in-out;
+.textSave {
+  margin-top: 38px;
+  margin-left: 3px;
+  padding: 5px 9px;
+  background-color: var(--button-background-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Roboto;
+  gap: 8px;
+  font-size: 13px;
+  transition: background 0.3s ease-in-out;
 }
 
-.textSave:hover{
-  background-color: #555;
+.textSave:hover {
+  background-color: var(--button-background-secondary);
+}
+
+.notImplemented {
+  font-weight: bold;
+  color: red;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.newColumnButton {
+  margin: 0 auto;
+  background-color: var(--button-background-primary);
+  width: 90%;
+  gap: 14px;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.newColumnButton:hover {
+  background-color: var(--button-background-secondary);
+}
+
+.topSave {
+  margin-left: 18px;
+  padding: 5px 9px;
+  background-color: var(--button-background-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Roboto;
+  gap: 8px;
+  font-size: 13px;
+  transition: background 0.3s ease-in-out;
+}
+
+.topSave:hover {
+  background-color: var(--button-background-secondary);
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 500;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  width: 540px;
+  height: 280px;
+  background-color: #fff;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: translateY(-40px);
+  opacity: 0;
+  padding:20px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 3px 0px rgb(0, 0, 0, 0.18);
+}
+
+.modal.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.closeButton{
+  float:right;
+  margin-right: 0px;
+  margin-top: 0px;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.closeButton:hover {
+  opacity:0.7;
+}
+
+.modalSave {
+  padding: 5px 9px;
+  padding-left: 0px;
+  color: #333;
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: Roboto;
+  gap: 8px;
+  font-size: 15px;
+  transition: background 0.3s ease-in-out;
 }

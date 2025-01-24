@@ -6,7 +6,11 @@ const data = {
       background: "#ffffff",
       width: "80%",
       maxWidth: "1400px",
-      border: "1px solid #ddd",
+      borderSize: "1px",
+      borderType: "solid",
+      borderColor: "#dddddd",
+      borderRadius: "4px",
+      borderSelect: "all",
     },
   },
   sectionData: [
@@ -29,6 +33,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
+        paddingSelect: "select",
       },
     },
 
@@ -45,30 +50,25 @@ const data = {
         background: "none",
         width: "100%",
         paddingTop: 10,
-        paddingBottom: 10,
+        paddingSelect: "select",
       },
     },
 
     {
       _id: "S1UtpesVpckpfvzSVqAQM",
-      layout: "two_column_layout_5050",
+      layout: "one_column_layout",
       content: [
         {
-          position: "left",
+          position: "center",
           columns: ["7vxqu0BKnkDJJxNU8iBUm"],
-        },
-        {
-          position: "right",
-          columns: ["42n-Rc5JpT8_Qt9yDHSSQ"],
         },
       ],
       style: {
         background: "none",
         width: "100%",
-        paddingTop: 10,
+        paddingTop: 0,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
     {
@@ -89,8 +89,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
     {
@@ -111,8 +110,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
     {
@@ -133,8 +131,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
     {
@@ -155,8 +152,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
     {
@@ -173,8 +169,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        paddingSelect: "select",
       },
     },
   ],
@@ -192,15 +187,6 @@ const data = {
       _id: "1sEvvov8Oqktyp6-CeJNt",
       type: "column",
       fields: ["ydG7ASZvd0Oa6BrwYo8hL", "1T6IO7Hmnx-rjpV22iekq"],
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "42n-Rc5JpT8_Qt9yDHSSQ",
-      type: "column",
-      fields: ["e_9n5d1LNjSzx_d0mGWLW", "fQij6BJ3wQMkOPC6JEPMw"],
       style: {
         width: "100%",
         background: "none",
@@ -253,7 +239,6 @@ const data = {
     {
       _id: "ethn673rtb5366uk099",
       type: "column",
-
       fields: ["bqr0oqm0qimnjqb4b4"],
       style: {
         width: "100%",
@@ -367,6 +352,7 @@ const data = {
         width: "100%",
         background: "#222222",
         color: "#ffffff",
+        padding:"10px"
       },
     },
 
@@ -501,22 +487,6 @@ const data = {
       },
     },
     {
-      _id: "e_9n5d1LNjSzx_d0mGWLW",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "fQij6BJ3wQMkOPC6JEPMw",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
       _id: "iXVDIUPAAdX2W4MdsRufA",
       type: "text",
       style: {
@@ -624,20 +594,6 @@ const data = {
     },
   ],
   fieldData: [
-    {
-      _id: "dIbXQonS3xKSgmSmSVT6P",
-      field_ref: "e_9n5d1LNjSzx_d0mGWLW",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "406007",
-    },
-    {
-      _id: "pQG5cAXLMq3ewlp_JmmVg",
-      field_ref: "fQij6BJ3wQMkOPC6JEPMw",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "Limited",
-    },
     {
       _id: "ymsMTaKM12NCVJp0Fb3Fj",
       field_ref: "pDmiLz7ATant93rvnqSZX",
@@ -757,7 +713,7 @@ const data = {
       field_ref: "Ov81qtvSOtv5ITYRhqFDF",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "001.jpg",
+      value: "002.jpg",
     },
     {
       _id: "hXbjPmCwc0rTC-_ZZSdUn",
