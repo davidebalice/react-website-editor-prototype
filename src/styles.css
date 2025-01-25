@@ -51,18 +51,18 @@ body {
 
 .siteContainer.mobile {
   max-width: 70%;
-  width: 400px;
+  width: 392px;
   height: 680px;
   overflow-y: scroll;
-  margin-top: 110px;
+  margin-top: 118px;
 }
 
 .siteContainer.tablet {
   max-width: 80%;
-  width: 600px;
+  width: 587px;
   height: 800px;
   overflow-y: scroll;
-  margin-top: 110px;
+  margin-top: 118px;
 }
 
 .siteContainer.full {
@@ -194,6 +194,7 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  min-height: 10px;
 }
 
 .wrapper.small {
@@ -433,7 +434,7 @@ body {
 .mobileTop {
   width: 427px;
   height: 77px;
-  margin-top: -20px;
+  margin-top: -24px;
   margin-left: calc(50% - 223px);
   background-image: url("../public/images/mobileTop.png");
 }
@@ -448,16 +449,16 @@ body {
 
 .mobileLeft {
   width: 35px;
-  height: 580px;
-  margin-top: 56px;
+  height: 583px;
+  margin-top: 52px;
   margin-left: calc(50% - 223px);
   background-image: url("../public/images/mobileLeft.png");
 }
 
 .mobileRight {
   width: 32px;
-  height: 580px;
-  margin-top: 56px;
+  height: 583px;
+  margin-top: 52px;
   margin-left: calc(50% + 172px);
   background-image: url("../public/images/mobileRight.png");
 }
@@ -465,7 +466,7 @@ body {
 .tabletTop {
   width: 664px;
   height: 77px;
-  margin-top: -40px;
+  margin-top: -48px;
   margin-left: calc(50% - 340px);
   background-image: url("../public/images/tabletTop.png");
 }
@@ -480,16 +481,16 @@ body {
 
 .tabletLeft {
   width: 55px;
-  height: 730px;
-  margin-top: 37px;
+  height: 736px;
+  margin-top: 29px;
   margin-left: calc(50% - 340px);
   background-image: url("../public/images/tabletLeft.png");
 }
 
 .tabletRight {
   width: 47px;
-  height: 730px;
-  margin-top: 37px;
+  height: 736px;
+  margin-top: 29px;
   margin-left: calc(50% + 271px);
   background-image: url("../public/images/tabletRight.png");
 }
@@ -674,7 +675,7 @@ body {
   padding: 4px 0;
   width: 100%;
   color: #777;
-  display:none
+  display: none;
 }
 
 .sidebarSelect {
@@ -798,7 +799,7 @@ body {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   transform: translateY(-40px);
   opacity: 0;
-  padding:20px;
+  padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 1px 3px 0px rgb(0, 0, 0, 0.18);
 }
@@ -808,8 +809,8 @@ body {
   opacity: 1;
 }
 
-.closeButton{
-  float:right;
+.closeButton {
+  float: right;
   margin-right: 0px;
   margin-top: 0px;
   cursor: pointer;
@@ -817,7 +818,7 @@ body {
 }
 
 .closeButton:hover {
-  opacity:0.7;
+  opacity: 0.7;
 }
 
 .modalSave {
@@ -830,4 +831,9 @@ body {
   gap: 8px;
   font-size: 15px;
   transition: background 0.3s ease-in-out;
+}
+
+.fieldWrapper {
+  display: flex;
+  align-items: center;
 }

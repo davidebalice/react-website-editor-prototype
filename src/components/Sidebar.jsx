@@ -62,6 +62,13 @@ export default function Sidebar({
     });
   };
 
+  const handleTextAlignChange = (e) => {
+    setCurrentStyle({
+      ...currentStyle,
+      textAlign: e.target.value,
+    });
+  };
+
   const handlePositionChange = (e) => {
     setCurrentStyle({
       ...currentStyle,
@@ -147,7 +154,10 @@ export default function Sidebar({
               <span> {type || "Options"}</span>
             </div>
           </div>
-          <div className="sidebarId" style={{ display: viewId ? 'block' : 'none'}}>
+          <div
+            className="sidebarId"
+            style={{ display: viewId ? "block" : "none" }}
+          >
             <b>id:</b> {id}
           </div>
 
@@ -323,6 +333,19 @@ export default function Sidebar({
               <div className="bottomCode">
                 {currentStyle?.fontSize || "14px"}
               </div>
+
+              <br />
+              <p>Text align</p>
+              <select
+                className="sidebarSelect"
+                onChange={handleTextAlignChange}
+                value={currentStyle.textAlign || "center"}
+              >
+                <option value=""> ------- </option>
+                <option value="center">Center</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+              </select>
             </div>
           )}
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { IoMdSave } from "react-icons/io";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
+import Image from "./Fields/Image";
+import Text from "./Fields/Text";
 
 const Field = ({
+  view,
   isSelected,
   field,
   fieldId,
@@ -17,7 +18,6 @@ const Field = ({
   setCurrentStyle,
   setDragMode,
 }) => {
-  const fileRepositoryUrl = process.env.REACT_APP_FILE_REPOSITORY;
   const [text, setText] = useState(field?.value ?? "");
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -27,45 +27,45 @@ const Field = ({
     if (isSelected && currentStyle) {
       let updatedStyle = { ...style };
 
-      if (
-        currentStyle.background &&
-        currentStyle.background !== updatedStyle.background
-      ) {
-        updatedStyle.background = currentStyle.background;
-      }
+      const properties = [
+        "background",
+        "align",
+        "position",
+        "color",
+        "fontFamily",
+        "fontSize",
+        "textAlign",
+        "width",
+        "border",
+        "borderSelect",
+        "borderSize",
+        "borderType",
+        "borderColor",
+        "borderTop",
+        "borderBottom",
+        "borderLeft",
+        "borderRight",
+        "borderRadius",
+        "radiusSelect",
+        "borderTopLeftRadius",
+        "borderTopRightRadius",
+        "borderBottomLeftRadius",
+        "borderBottomRightRadius",
+        "padding",
+        "paddingSelect",
+        "paddingTop",
+        "paddingBottom",
+        "paddingLeft",
+        "paddingRight",
+        "marginTop",
+        "marginBottom",
+      ];
 
-      if (currentStyle.align && currentStyle.align !== updatedStyle.align) {
-        updatedStyle.align = currentStyle.align;
-      }
-
-      if (
-        currentStyle.position &&
-        currentStyle.position !== updatedStyle.position
-      ) {
-        updatedStyle.position = currentStyle.position;
-      }
-
-      if (currentStyle.color && currentStyle.color !== updatedStyle.color) {
-        updatedStyle.color = currentStyle.color;
-      }
-
-      if (
-        currentStyle.fontFamily &&
-        currentStyle.fontFamily !== updatedStyle.fontFamily
-      ) {
-        updatedStyle.fontFamily = currentStyle.fontFamily;
-      }
-
-      if (
-        currentStyle.fontSize &&
-        currentStyle.fontSize !== updatedStyle.fontSize
-      ) {
-        updatedStyle.fontSize = currentStyle.fontSize;
-      }
-
-      if (currentStyle.width && currentStyle.width !== updatedStyle.width) {
-        updatedStyle.width = currentStyle.width;
-      }
+      properties.forEach((prop) => {
+        if (currentStyle[prop] && currentStyle[prop] !== updatedStyle[prop]) {
+          updatedStyle[prop] = currentStyle[prop];
+        }
+      });
 
       setStyle(updatedStyle);
     }
@@ -130,7 +130,8 @@ const Field = ({
   const itemStyle = {
     cursor: "pointer",
     color: style?.color ?? "#222222",
-    textAlign: style?.align === "" ? "left" : style?.align,
+    textAlign:
+      style?.textAlign === "" ? "left" : style?.textAlign + " !important",
     fontSize: style?.fontSize || "14px",
   };
 
@@ -146,59 +147,42 @@ const Field = ({
     switch (field.type) {
       case "text":
         return (
-          <div>
-            {!isEditing ? (
-              <div
-                onClick={() => handleEditing()}
-                style={itemStyle}
-                dangerouslySetInnerHTML={{ __html: text }}
-              />
-            ) : (
-              <div style={{ width: "100%" }}>
-                <ReactQuill
-                  value={text}
-                  onChange={handleChange}
-                  theme="snow"
-                  placeholder=""
-                  onKeyPress={handleKeyPress}
-                  style={{
-                    zIndex: 200,
-                    position: "relative",
-                    background: "white",
-                    width: "100%",
-                    height: "70px",
-                    padding: "4px",
-                    fontSize: "13px",
-                  }}
-                />
-                <button onClick={handleSave} className="flex textSave">
-                  <IoMdSave style={{fontSize:"16px"}} />
-                  <span>Save</span>
-                </button>
-              </div>
-            )}
-          </div>
+          <Text
+            view={view}
+            isEditing={isEditing}
+            text={text}
+            handleEditing={handleEditing}
+            itemStyle={itemStyle}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            content={content}
+            field={field}
+            style={style}
+            isHovered={isHovered}
+            handleSave={handleSave}
+            handleKeyPress={handleKeyPress}
+            handleChange={handleChange}
+          />
         );
 
       case "image":
         return (
-          <div
-            style={itemStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <>
-              <img
-                src={`${fileRepositoryUrl}${field.value}`}
-                alt={field.name}
-                style={{
-                  height: "auto",
-                  opacity: isHovered ? 0.8 : 1,
-                  width: "100%",
-                }}
-              />
-            </>
-          </div>
+          <Image
+            view={view}
+            itemStyle={itemStyle}
+            isEditing={isEditing}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            content={content}
+            field={field}
+            style={style}
+            isHovered={isHovered}
+            handleChange={handleChange}
+            handleKeyPress={handleKeyPress}
+            setFields={setFields}
+            editor={editor}
+            setDragMode={setDragMode}
+          />
         );
 
       case "spacer":
@@ -215,7 +199,7 @@ const Field = ({
         );
 
       case "menu":
-        return <div style={itemStyle}>menu</div>;
+        return view === "mobile" ? null : <div style={itemStyle}>menu</div>;
       default:
         return (
           <div style={itemStyle}>

@@ -32,8 +32,8 @@ const data = {
         background: "none",
         width: "100%",
         paddingTop: 10,
-        paddingBottom: 10,
         paddingSelect: "select",
+        wrap: "none",
       },
     },
 
@@ -51,6 +51,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingSelect: "select",
+        wrap: "none",
       },
     },
 
@@ -69,19 +70,24 @@ const data = {
         paddingTop: 0,
         paddingBottom: 10,
         paddingSelect: "select",
+        wrap: "wrap",
       },
     },
     {
       _id: "SWE3_lGx-fopIZgdAJwcb",
-      layout: "two_column_layout_5050",
+      layout: "three_column_layout_333333",
       content: [
         {
           position: "left",
           columns: ["PSiKuYCIIjyUiVM5nMLjR"],
         },
         {
-          position: "right",
+          position: "center",
           columns: ["EvyPzsDPVb-3Jx3F9vqBJ"],
+        },
+        {
+          position: "right",
+          columns: ["H9k4F9kt4Kb4hg3f3f1m"],
         },
       ],
       style: {
@@ -90,8 +96,30 @@ const data = {
         paddingTop: 10,
         paddingBottom: 10,
         paddingSelect: "select",
+        wrap: "wrap",
       },
     },
+
+    {
+      _id: "kGsYEK_SVfYovo0Xikvia",
+      layout: "one_column_layout",
+      content: [
+        {
+          position: "center",
+          columns: ["rdTS-deY4VY8ANjWIxL8z"],
+        },
+      ],
+      style: {
+        background: "none",
+        width: "92%",
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingSelect: "select",
+        wrap: "wrap",
+        align: "center",
+      },
+    },
+
     {
       _id: "lmTUfqMF7lTZYx-mcG5n3",
       layout: "two_column_layout_5050",
@@ -106,32 +134,11 @@ const data = {
         },
       ],
       style: {
-        background: "none",
+        background: "#f1f1f1",
         width: "100%",
-        paddingTop: 10,
-        paddingBottom: 10,
         paddingSelect: "select",
-      },
-    },
-    {
-      _id: "kGsYEK_SVfYovo0Xikvia",
-      layout: "two_column_layout_5050",
-      content: [
-        {
-          position: "left",
-          columns: ["rdTS-deY4VY8ANjWIxL8z"],
-        },
-        {
-          position: "right",
-          columns: ["hHv0QL6x7IK_aJdLMwnFq"],
-        },
-      ],
-      style: {
-        background: "none",
-        width: "100%",
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingSelect: "select",
+        wrap: "wrap",
+        marginTop: "80px",
       },
     },
     {
@@ -153,6 +160,7 @@ const data = {
         paddingTop: 10,
         paddingBottom: 10,
         paddingSelect: "select",
+        wrap: "wrap",
       },
     },
     {
@@ -170,6 +178,7 @@ const data = {
         paddingTop: 10,
         paddingBottom: 10,
         paddingSelect: "select",
+        wrap: "wrap",
       },
     },
   ],
@@ -188,15 +197,14 @@ const data = {
       type: "column",
       fields: ["ydG7ASZvd0Oa6BrwYo8hL", "1T6IO7Hmnx-rjpV22iekq"],
       style: {
-        width: "100%",
+        width: "60%",
         background: "none",
       },
     },
     {
       _id: "7vxqu0BKnkDJJxNU8iBUm",
       type: "column",
-
-      fields: ["Ov81qtvSOtv5ITYRhqFDF", "bjO6icF1bO3goXd-fGQbf"],
+      fields: ["Ov81qtvSOtv5ITYRhqFDF"],
       style: {
         width: "100%",
         background: "none",
@@ -205,31 +213,35 @@ const data = {
     {
       _id: "EvyPzsDPVb-3Jx3F9vqBJ",
       type: "column",
-
-      fields: [
-        "lVmlUAhNlFHC08a9g6wbo",
-        "ibve1hOGwWhZSLyBtakWU",
-        "Hp91i771Tmk-g9j84qYBU",
-      ],
+      fields: ["lVmlUAhNlFHC08a9g6wbo", "ibve1hOGwWhZSLyBtakWU"],
       style: {
-        width: "100%",
+        width: "33%",
         background: "none",
       },
     },
+
+    {
+      _id: "H9k4F9kt4Kb4hg3f3f1m",
+      type: "column",
+      fields: ["bl049FG9k4FDl0954hgg1", "Hp91i771Tmk-g9j84qYBU"],
+      style: {
+        width: "33%",
+        background: "none",
+      },
+    },
+
     {
       _id: "PSiKuYCIIjyUiVM5nMLjR",
       type: "column",
-
       fields: ["pDmiLz7ATant93rvnqSZX", "4OvKpkoWGjNZCMy54MQqH"],
       style: {
-        width: "100%",
+        width: "33%",
         background: "none",
       },
     },
     {
       _id: "fydpEG38vjxUbtVjSxJwe",
       type: "column",
-
       fields: ["21ozPTyU49OX8rWE3R4Xd"],
       style: {
         width: "100%",
@@ -266,16 +278,6 @@ const data = {
       },
     },
     {
-      _id: "hHv0QL6x7IK_aJdLMwnFq",
-      type: "column",
-
-      fields: ["VL8g-Ng_6YvNBJugjBvmv", "vDWZS7LpnhRbt1TIV1rCk"],
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
       _id: "mmA1e65RfIIAa3IVubb7U",
       type: "column",
 
@@ -294,32 +296,17 @@ const data = {
     {
       _id: "rdTS-deY4VY8ANjWIxL8z",
       type: "column",
-
-      fields: [
-        "sqamlv2do7gOIHgg-3qOI",
-        "oDzfyc60vInktmgnkQnEm",
-        "6Pp4ckqSnfZYzCtgve21y",
-        "Jl64si1TP2aGoutT4sEa8",
-        "9HtZW4GPLSkCCB0inqQ03",
-      ],
+      fields: ["sqamlv2do7gOIHgg-3qOI", "oDzfyc60vInktmgnkQnEm"],
       style: {
-        width: "100%",
         background: "none",
       },
     },
     {
       _id: "uLHhlU_unzF58GxUi6nJF",
       type: "column",
-
-      fields: [
-        "bso1JAuD8RSkNstsoi066",
-        "UL4vk56zbKNwut5y3KBRM",
-        "87YKwOkKSIbwd82q-knHD",
-        "NSQECa4BAVBDnlXcNCK02",
-        "iXVDIUPAAdX2W4MdsRufA",
-      ],
+      fields: ["bso1JAuD8RSkNstsoi066"],
       style: {
-        width: "100%",
+        width: "40%",
         background: "none",
       },
     },
@@ -338,6 +325,7 @@ const data = {
       type: "image",
       style: {
         width: "70%",
+        mobileWidth: "55%",
         maxWidth: "190px",
         align: "left",
         background: "none",
@@ -352,7 +340,7 @@ const data = {
         width: "100%",
         background: "#222222",
         color: "#ffffff",
-        padding:"10px"
+        padding: "10px",
       },
     },
 
@@ -370,30 +358,10 @@ const data = {
       style: {
         width: "100%",
         background: "none",
-      },
-    },
-    {
-      _id: "6Pp4ckqSnfZYzCtgve21y",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "87YKwOkKSIbwd82q-knHD",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "9HtZW4GPLSkCCB0inqQ03",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
+        textAlign: "center",
+        fontSize: "16px",
+        marginTop: "12px",
+        marginBottom: "25px",
       },
     },
     {
@@ -402,18 +370,14 @@ const data = {
       style: {
         width: "100%",
         background: "none",
+        textAlign: "center",
+        fontSize: "16px",
+        marginTop: "12px",
+        marginBottom: "25px",
       },
     },
     {
       _id: "Ifiya4gZRAc7vZmWWG4z5",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "Jl64si1TP2aGoutT4sEa8",
       type: "text",
       style: {
         width: "100%",
@@ -429,37 +393,27 @@ const data = {
       },
     },
     {
-      _id: "NSQECa4BAVBDnlXcNCK02",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
       _id: "Ov81qtvSOtv5ITYRhqFDF",
       type: "image",
+      text: {
+        value:
+          "Lorem ipsum<br />dolor sit amet consectetur<br />adipiscing elit",
+      },
       style: {
         width: "100%",
         maxWidth: "auto",
         align: "center",
         background: "none",
-      },
-    },
-    {
-      _id: "UL4vk56zbKNwut5y3KBRM",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "VL8g-Ng_6YvNBJugjBvmv",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
+        text: {
+          color: "#ffffff",
+          fontSize: "30px",
+          mobileFontSize: "20px",
+          paddingSelect: "select",
+          paddingTop: "130px",
+          paddingLeft: "70px",
+          mobilePaddingTop: "10px",
+          mobilePaddingLeft: "10px",
+        },
       },
     },
     {
@@ -471,24 +425,8 @@ const data = {
       },
     },
     {
-      _id: "bjO6icF1bO3goXd-fGQbf",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
       _id: "bso1JAuD8RSkNstsoi066",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-      },
-    },
-    {
-      _id: "iXVDIUPAAdX2W4MdsRufA",
-      type: "text",
+      type: "image",
       style: {
         width: "100%",
         background: "none",
@@ -500,6 +438,10 @@ const data = {
       style: {
         width: "100%",
         background: "none",
+        textAlign: "center",
+        fontSize: "16px",
+        marginTop: "12px",
+        marginBottom: "25px",
       },
     },
     {
@@ -528,18 +470,48 @@ const data = {
     },
     {
       _id: "lVmlUAhNlFHC08a9g6wbo",
-      type: "text",
+      type: "image",
       style: {
-        width: "100%",
+        width: "94%",
+        mobileWidth: "90%",
+        align: "center",
         background: "none",
+        position: "center",
+        borderRadius: "8px",
+        borderType: "solid",
+        borderColor: "#ddd",
+        borderSize: "3px",
+        borderSelect: "all",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
       },
     },
+    {
+      _id: "bl049FG9k4FDl0954hgg1",
+      type: "image",
+      style: {
+        width: "94%",
+        mobileWidth: "90%",
+        align: "center",
+        background: "none",
+        position: "center",
+        borderRadius: "8px",
+        borderType: "solid",
+        borderColor: "#ddd",
+        borderSize: "3px",
+        borderSelect: "all",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
+      },
+    },
+
     {
       _id: "oDzfyc60vInktmgnkQnEm",
       type: "text",
       style: {
         width: "100%",
         background: "none",
+        textAlign: "center",
+        marginTop: "10px",
+        fontSize: "17px",
       },
     },
     {
@@ -552,10 +524,19 @@ const data = {
     },
     {
       _id: "pDmiLz7ATant93rvnqSZX",
-      type: "text",
+      type: "image",
       style: {
-        width: "100%",
+        width: "94%",
+        mobileWidth: "90%",
+        align: "center",
         background: "none",
+        position: "center",
+        borderRadius: "8px",
+        borderType: "solid",
+        borderColor: "#ddd",
+        borderSize: "3px",
+        borderSelect: "all",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
       },
     },
     {
@@ -569,24 +550,17 @@ const data = {
     {
       _id: "sqamlv2do7gOIHgg-3qOI",
       type: "text",
-
       style: {
         width: "100%",
         background: "none",
-      },
-    },
-    {
-      _id: "vDWZS7LpnhRbt1TIV1rCk",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
+        textAlign: "center",
+        marginTop: "60px",
+        fontSize: "26px",
       },
     },
     {
       _id: "ydG7ASZvd0Oa6BrwYo8hL",
       type: "text",
-
       style: {
         width: "100%",
         background: "none",
@@ -598,78 +572,65 @@ const data = {
       _id: "ymsMTaKM12NCVJp0Fb3Fj",
       field_ref: "pDmiLz7ATant93rvnqSZX",
       page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "8753",
+      type: "image",
+      value: "001.jpg",
     },
     {
       _id: "vRkGehkg9F-9PCyjEUhgv",
       field_ref: "4OvKpkoWGjNZCMy54MQqH",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum",
+      value: "<b>Lorem ipsum dolor</b>",
     },
     {
       _id: "quSioVhtoBSXELGXOgFcS",
       field_ref: "ibve1hOGwWhZSLyBtakWU",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum",
+      value: "<b>Lorem ipsum dolor</b>",
     },
     {
       _id: "SqatDTeTCzoIYjprGadbZ",
       field_ref: "lVmlUAhNlFHC08a9g6wbo",
       page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
+      type: "image",
+      value: "003.jpg",
+    },
+    {
+      _id: "4hg56TeTCzoIYjp4h5Z",
+      field_ref: "bl049FG9k4FDl0954hgg1",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "image",
+      value: "004.jpg",
     },
     {
       _id: "1J8Bd6kqDHlRPVLQHkhll",
       field_ref: "Hp91i771Tmk-g9j84qYBU",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "auV69t6q1L7rxIFi-Q4K4",
-      field_ref: "87YKwOkKSIbwd82q-knHD",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "pZvmSzwB8IEFnxyeypnXG",
-      field_ref: "UL4vk56zbKNwut5y3KBRM",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
+      value: "<b>Lorem ipsum dolor</b>",
     },
     {
       _id: "lL5VO03O13rYOXmMVXtOH",
       field_ref: "bso1JAuD8RSkNstsoi066",
       page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
+      type: "image",
+      value: "005.jpg",
     },
     {
       _id: "NvIXKOtr87cnF15a9Z2fL",
       field_ref: "oDzfyc60vInktmgnkQnEm",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "TUYEQAEHiVGfyTyesxsSp",
-      field_ref: "6Pp4ckqSnfZYzCtgve21y",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
+      value:
+        "Eiusmod ut labore quis et exercitation labore quis incididunt amet voluptate exercitation nostrud<br />Nostrud sit eiusmod fugiat aliqua minim laboris dolor fugiat et et lorem cillum",
     },
     {
       _id: "QCjOkkNsjChM9vUHEeQPs",
       field_ref: "sqamlv2do7gOIHgg-3qOI",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum",
+      value: "<b>Lorem ipsum dolor</b>",
     },
     {
       _id: "g3hIx9562nP8fW1B6oQuf",
@@ -723,22 +684,8 @@ const data = {
       value: "lorem ipsum",
     },
     {
-      _id: "vrdsMV2tLBFY_kCrm_Xzy",
-      field_ref: "VL8g-Ng_6YvNBJugjBvmv",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
-    },
-    {
       _id: "UFpCHAnEKWbmVzxO3L43O",
       field_ref: "o_tU_IgxlpIlyaQ-WgLqb",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "efJxZFSP4133tjuHN9t_J",
-      field_ref: "bjO6icF1bO3goXd-fGQbf",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
       value: "lorem ipsum",
@@ -760,13 +707,6 @@ const data = {
     {
       _id: "jVkudagyVe9Xhktz_B59T",
       field_ref: "1T6IO7Hmnx-rjpV22iekq",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "kxLdN4W6RS3VYG2e2DKsG",
-      field_ref: "vDWZS7LpnhRbt1TIV1rCk",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
       value: "lorem ipsum",

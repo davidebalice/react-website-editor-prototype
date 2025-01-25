@@ -93,7 +93,7 @@ export default function Section({
     userSelect: "none",
     cursor: "grab",
     boxSizing: "border-box",
-    minHeight: 30,
+    minHeight: 10,
     color: style?.color ?? "black",
     background: style?.background || "white",
     outline: hovered && editor ? "2px dashed #999" : "none",

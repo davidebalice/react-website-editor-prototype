@@ -16,6 +16,7 @@ import Content from "./components/Content.jsx";
 import Devices from "./components/Devices.jsx";
 import Field from "./components/Field.jsx";
 import Info from "./components/Info.jsx";
+import MobileMenu from "./components/MobileMenu.jsx";
 import Section from "./components/Section.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import Topbar from "./components/Topbar.jsx";
@@ -272,6 +273,42 @@ const App = () => {
     },
   };
 
+  const handleOrderContent = (columnId, contentId, direction) => {
+    setItems((prevItems) => {
+      // Ottieni l'array degli elementi nella colonna
+      const columnItems = [...prevItems[columnId]];
+
+      // Trova l'indice dell'elemento da spostare
+      const currentIndex = columnItems.findIndex((id) => id === contentId);
+
+      // Calcola il nuovo indice
+      let newIndex = currentIndex;
+      if (direction === "up" && currentIndex > 0) {
+        newIndex = currentIndex - 1;
+      } else if (
+        direction === "down" &&
+        currentIndex < columnItems.length - 1
+      ) {
+        newIndex = currentIndex + 1;
+      }
+
+      // Se il nuovo indice è diverso, sposta l'elemento
+      if (newIndex !== currentIndex) {
+        // Rimuovi l'elemento dall'indice attuale
+        columnItems.splice(currentIndex, 1);
+
+        // Inserisci l'elemento nella nuova posizione
+        columnItems.splice(newIndex, 0, contentId);
+      }
+
+      // Ritorna il nuovo stato aggiornato
+      return {
+        ...prevItems,
+        [columnId]: columnItems,
+      };
+    });
+  };
+
   const handleAddSection = (afterSectionId = null) => {
     const column1Id = generateUniqueId();
     const column2Id = generateUniqueId();
@@ -428,6 +465,8 @@ const App = () => {
               setSelectedContainer={setSelectedContainer}
               isSelected={selectedContainer.id === pageId}
             >
+              {view === "mobile" && <MobileMenu />}
+
               {items[pageId] &&
                 items[pageId].map((section) => {
                   return (
@@ -453,23 +492,12 @@ const App = () => {
                     >
                       <div
                         className={`wrapper ${
-                          view === "mobile" ? "small" : ""
+                          view === "mobile" &&
+                          contents[section].style.wrap === "wrap"
+                            ? "small"
+                            : ""
                         }`}
                       >
-                        {/*
-                        
-                       
-                      
-                        style={{
-                          height:
-                            dragging && dragMode === "sections"
-                              ? "100px"
-                              : "auto",
-                        }}
-                      >
-                        
-                        */}
-
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
                             return (
@@ -496,69 +524,82 @@ const App = () => {
                                   dragging={dragging}
                                 >
                                   {items[column] &&
-                                    items[column].map((field, j) => (
-                                      <>
-                                        <Content
-                                          key={field}
-                                          id={field}
-                                          i={i}
-                                          j={j}
-                                          field={fields.find(
-                                            (f) => f.field_ref === field
-                                          )}
-                                          idSection={section}
-                                          activeId={activeId}
-                                          currentStyle={currentStyle}
-                                          setCurrentStyle={setCurrentStyle}
-                                          dragging={dragging}
-                                          setSelectedContainer={
-                                            setSelectedContainer
-                                          }
-                                          isSelected={
-                                            selectedContainer.id === field
-                                          }
-                                          content={contents[field] || {}}
-                                          editor={editor}
-                                          setEditor={setEditor}
-                                          handleDeleteContent={
-                                            handleDeleteContent
-                                          }
-                                          setSidebar={setSidebar}
-                                          dragMode={dragMode}
-                                          setDragMode={setDragMode}
-                                        >
-                                          <div
-                                            style={{
-                                              height: dragging
-                                                ? "50px"
-                                                : "auto",
-                                              overflow: dragging
-                                                ? "hidden"
-                                                : "visible",
-                                            }}
-                                            className="fieldWrapper"
+                                    items[column]
+                                      .filter((field) => {
+                                        const currentField = fields.find(
+                                          (f) => f.field_ref === field
+                                        );
+
+                                        if (
+                                          view === "mobile" &&
+                                          currentField?.type === "menu"
+                                        ) {
+                                          return false;
+                                        }
+
+                                        return true;
+                                      })
+                                      .map((field, j) => (
+                                        <>
+                                          <Content
+                                            key={field}
+                                            id={field}
+                                            i={i}
+                                            j={j}
+                                            view={view}
+                                            columnId={column}
+                                            field={fields.find(
+                                              (f) => f.field_ref === field
+                                            )}
+                                            idSection={section}
+                                            activeId={activeId}
+                                            currentStyle={currentStyle}
+                                            setCurrentStyle={setCurrentStyle}
+                                            dragging={dragging}
+                                            setSelectedContainer={
+                                              setSelectedContainer
+                                            }
+                                            isSelected={
+                                              selectedContainer.id === field
+                                            }
+                                            content={contents[field] || {}}
+                                            editor={editor}
+                                            setEditor={setEditor}
+                                            handleDeleteContent={
+                                              handleDeleteContent
+                                            }
+                                            setSidebar={setSidebar}
+                                            dragMode={dragMode}
+                                            setDragMode={setDragMode}
+                                            handleOrderContent={
+                                              handleOrderContent
+                                            }
                                           >
-                                            <Field
-                                              editor={editor}
-                                              content={contents[field] || {}}
-                                              fieldId={field}
-                                              field={fields.find(
-                                                (f) => f.field_ref === field
-                                              )}
-                                              activeId={activeId}
-                                              setFields={setFields}
-                                              dragging={dragging}
-                                              setDragMode={setDragMode}
-                                              currentStyle={currentStyle}
-                                              setCurrentStyle={setCurrentStyle}
-                                              isSelected={
-                                                selectedContainer.id === field
-                                              }
-                                            />
-                                          </div>
-                                        </Content>
-                                      </>
-                                    ))}
+                                          
+                                              <Field
+                                                view={view}
+                                                editor={editor}
+                                                content={contents[field] || {}}
+                                                fieldId={field}
+                                                field={fields.find(
+                                                  (f) => f.field_ref === field
+                                                )}
+                                                activeId={activeId}
+                                                setFields={setFields}
+                                                dragging={dragging}
+                                                setDragMode={setDragMode}
+                                                currentStyle={currentStyle}
+                                                setCurrentStyle={
+                                                  setCurrentStyle
+                                                }
+                                                isSelected={
+                                                  selectedContainer.id === field
+                                                }
+                                              />
+                                           
+                                          </Content>
+                                        </>
+                                      ))}
                                 </Column>
                               </>
                             );
@@ -765,6 +806,16 @@ const App = () => {
         type: "field",
         container: "column",
         style: field.style,
+        text:
+          field.type === "image" &&
+          field.text &&
+          field.text.value !== undefined &&
+          field.text.value !== null &&
+          field.text.value.trim() !== ""
+            ? {
+                value: field.text.value,
+              }
+            : undefined,
       };
     });
 

@@ -9,6 +9,8 @@ import { RiDragMove2Line } from "react-icons/ri";
 const Content = React.memo(
   ({
     id,
+    view,
+    columnId,
     children,
     content,
     isSelected,
@@ -24,6 +26,7 @@ const Content = React.memo(
     setDragMode,
     dragging,
     field,
+    handleOrderContent,
   }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({
@@ -45,6 +48,7 @@ const Content = React.memo(
           "color",
           "fontFamily",
           "fontSize",
+          "textAlign",
           "width",
           "border",
           "borderSelect",
@@ -85,25 +89,30 @@ const Content = React.memo(
       transform: CSS.Translate.toString(transform),
       transition,
       flex: 1,
+      overflow: "hidden",
       flexWrap: "wrap",
       alignItems: "center",
       userSelect: "none",
       cursor: "grab",
       boxSizing: "border-box",
-      minHeight: 20,
+      minHeight: 10,
       color: style?.color ?? "#222222",
       background: style?.background || "white",
       outline: hovered && editor ? "2px dashed #999" : "none",
-      width: style?.width || "100%",
+      width:
+        view === "mobile" || view === "tablet"
+          ? style?.mobileWidth || "100%"
+          : style?.width || "100%",
       height: style?.height || "",
       maxWidth: style?.maxWidth || "auto",
-      textAlign: style?.align === "" ? "left" : style?.align,
+      textAlign: style?.textAlign === "" ? "left" : style?.textAlign,
       marginRight: style?.position === "left" ? "auto" : "",
       marginLeft: style?.position === "right" ? "auto" : "",
       margin: !style?.position || style?.position === "center" ? "0 auto" : "",
       marginTop: style?.marginTop || "",
       marginBottom: style?.marginBottom || "",
       fontFamily: style?.fontFamily || "",
+      boxShadow: style?.boxShadow || "",
       ...(style?.borderSelect !== "select" && {
         border: `${style?.borderSize || "0px"} ${
           style?.borderType || "solid"
@@ -152,7 +161,6 @@ const Content = React.memo(
     return (
       <div
         ref={setNodeRef}
-        style={styles}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -173,7 +181,10 @@ const Content = React.memo(
 
               {open && (
                 <>
-                  <div className="buttonContainerOpened">
+                  <div
+                    className="buttonContainerOpened"
+                    style={{ marginTop: "144px" }}
+                  >
                     <div className="textButtonContainer">
                       {field?.type.charAt(0).toUpperCase() +
                         field?.type.slice(1) || " - "}
@@ -222,6 +233,30 @@ const Content = React.memo(
                         <FaRegTrashAlt />
                       </button>
 
+                      <button
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Delete"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => {
+                          handleOrderContent(columnId, id, "up");
+                        }}
+                        className="button buttonDeleteContent"
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+
+                      <button
+                        data-tooltip-id="tooltip-global"
+                        data-tooltip-content="Delete"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={() => {
+                          handleOrderContent(columnId, id, "down");
+                        }}
+                        className="button buttonDeleteContent"
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+
                       <button className="button buttonDeleteContent">
                         &nbsp;
                       </button>
@@ -232,7 +267,7 @@ const Content = React.memo(
             </div>
           )}
         </div>
-        <div>{children}</div>
+        <div style={styles}>{children}</div>
       </div>
     );
   }
