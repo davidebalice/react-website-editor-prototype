@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
+import Button from "./Fields/Button";
+import Icon from "./Fields/Icon";
 import Image from "./Fields/Image";
 import Text from "./Fields/Text";
 
@@ -164,6 +166,25 @@ const Field = ({
             handleChange={handleChange}
           />
         );
+      case "icon":
+        return (
+          <Icon
+            view={view}
+            isEditing={isEditing}
+            text={text}
+            handleEditing={handleEditing}
+            itemStyle={itemStyle}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            content={content}
+            field={field}
+            style={style}
+            isHovered={isHovered}
+            handleSave={handleSave}
+            handleKeyPress={handleKeyPress}
+            handleChange={handleChange}
+          />
+        );
 
       case "image":
         return (
@@ -185,7 +206,27 @@ const Field = ({
           />
         );
 
-      case "spacer":
+      case "button":
+        return (
+          <Button
+            view={view}
+            isEditing={isEditing}
+            text={text}
+            handleEditing={handleEditing}
+            itemStyle={itemStyle}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            content={content}
+            field={field}
+            style={style}
+            isHovered={isHovered}
+            handleSave={handleSave}
+            handleKeyPress={handleKeyPress}
+            handleChange={handleChange}
+          />
+        );
+
+      case "divider":
         return (
           <div
             style={itemStyle}
@@ -193,7 +234,7 @@ const Field = ({
             onMouseLeave={handleMouseLeave}
           >
             <>
-              <div className="spacer"></div>
+              <div className="divider"></div>
             </>
           </div>
         );

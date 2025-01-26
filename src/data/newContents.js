@@ -7,6 +7,7 @@ import { RxText } from "react-icons/rx";
 import { TbSlideshow } from "react-icons/tb";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { TiSocialInstagram } from "react-icons/ti";
+import { RxButton } from "react-icons/rx";
 
 const newContest = [
   {
@@ -20,9 +21,14 @@ const newContest = [
     icon: <FaRegImage />,
   },
   {
-    title: "spacer",
+    title: "divider",
     implemented: true,
     icon: <TfiLayoutLineSolid />,
+  },
+  {
+    title: "button",
+    implemented: false,
+    icon: <RxButton />,
   },
   {
     title: "slideshow",

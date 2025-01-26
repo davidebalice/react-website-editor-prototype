@@ -185,7 +185,6 @@ export default function Sidebar({
                 if (item.type === "margin" && type === "Site options")
                   return false;
                 if (item.type === "font" && type !== "Text") return false;
-                if (item.type === "size" && type === "Column") return false;
                 return true;
               })
               .map((item) => (
@@ -195,6 +194,7 @@ export default function Sidebar({
                     setIsOpen(false);
                   }}
                   className="flex sidebarMenuItem"
+                  key={item.type}
                 >
                   <div className="sidebarMenuIcon">{item.icon}</div>
                   <span>
@@ -236,7 +236,7 @@ export default function Sidebar({
               <p>Width</p>
               <input
                 type="range"
-                min="40"
+                min="10"
                 max="100"
                 step="1"
                 value={parseInt(currentStyle.width || 100)}

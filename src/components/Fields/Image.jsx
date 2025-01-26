@@ -59,6 +59,7 @@ const Image = ({
     position: "absolute",
     zIndex: 10,
     color: style?.text?.color || "#ffffff",
+    width: style?.text?.width || "auto",
     textAlign: style?.text?.align?.trim() ? style.text.align : "left",
     fontSize:
       view === "mobile" || view === "tablet"

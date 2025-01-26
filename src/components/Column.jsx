@@ -45,6 +45,7 @@ export default function Column({
         "background",
         "align",
         "position",
+        "width",
         "border",
         "borderSelect",
         "borderSize",
