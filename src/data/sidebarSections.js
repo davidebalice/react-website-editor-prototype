@@ -7,12 +7,18 @@ import { TbBoxPadding } from "react-icons/tb";
 import { RxBorderAll } from "react-icons/rx";
 import { AiOutlineRadiusUpleft } from "react-icons/ai";
 import { RiShadowLine } from "react-icons/ri";
+import { FaIcons } from "react-icons/fa";
 
 const sidebarSections = [
   {
     type: "background",
     implemented: true,
     icon: <MdColorLens style={{ fontSize: "24px" }} />,
+  },
+  {
+    type: "icon",
+    implemented: false,
+    icon: <FaIcons style={{ fontSize: "18px" }} />,
   },
   {
     type: "size",

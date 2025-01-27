@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineRadiusUpleft } from "react-icons/ai";
+import { FaIcons } from "react-icons/fa";
 import { FaGear, FaSquarePlus } from "react-icons/fa6";
 import { GiHamburgerMenu, GiResize } from "react-icons/gi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -184,6 +185,7 @@ export default function Sidebar({
               .filter((item) => {
                 if (item.type === "margin" && type === "Site options")
                   return false;
+                if (item.type === "icon" && type !== "Icon") return false;
                 if (item.type === "font" && type !== "Text") return false;
                 return true;
               })
@@ -630,8 +632,26 @@ export default function Sidebar({
               </p>
             </div>
           )}
+
+          {activeSection === "icon" && (
+            <div className="sidebarMenuSection">
+              <div className="flex sidebarMenuTitle">
+                <div>
+                  <FaIcons style={{ fontSize: "19px" }} />
+                </div>
+                <span>Icon</span>
+              </div>
+              <p className="notImplemented">
+                Icon
+                <br />
+                not yet implemented
+              </p>
+            </div>
+          )}
         </>
       )}
+      <br />
+      <br />
     </div>
   );
 }

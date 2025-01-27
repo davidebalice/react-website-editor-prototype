@@ -183,6 +183,26 @@ const data = {
         marginTop: "80px",
       },
     },
+
+    {
+      _id: "G034F93H4056ih4h53g34",
+      layout: "one_column_layout",
+      content: [
+        {
+          position: "center",
+          columns: ["Gow8FD893uhh567hgv45"],
+        },
+      ],
+      style: {
+        background: "none",
+        width: "100%",
+        paddingTop: 50,
+        paddingBottom: 50,
+        paddingSelect: "select",
+        wrap: "wrap",
+      },
+    },
+
     {
       _id: "2FFnsZwEdiTmJblgpwIne",
       layout: "two_column_layout_5050",
@@ -195,7 +215,7 @@ const data = {
       style: {
         background: "none",
         width: "100%",
-        paddingTop: 50,
+        paddingTop: 0,
         paddingBottom: 50,
         paddingSelect: "select",
         wrap: "wrap",
@@ -254,8 +274,20 @@ const data = {
       layout: "one_column_layout",
       content: [
         {
-          position: "default",
+          position: "left",
           columns: ["54945muihGHk953tD21f1"],
+        },
+        {
+          position: "center",
+          columns: ["jg3F83f4fD8h34h94j589"],
+        },
+        {
+          position: "center",
+          columns: ["3f4i9jm53gbhih54jhh54"],
+        },
+        {
+          position: "right",
+          columns: ["J9oj43gh3g534y45654h"],
         },
       ],
       style: {
@@ -281,13 +313,39 @@ const data = {
     {
       _id: "54945muihGHk953tD21f1",
       type: "column",
-      fields: ["h03FG93HG064u46j3325"],
+      fields: ["G89234G8h34gg535g31","h03FG93HG064u46j3325"],
       style: {
-        width: "100%",
+        width: "25%",
         background: "none",
       },
     },
-
+    {
+      _id: "jg3F83f4fD8h34h94j589",
+      type: "column",
+      fields: ["f983g8hg3G934j5hg345"],
+      style: {
+        width: "25%",
+        background: "none",
+      },
+    },
+    {
+      _id: "3f4i9jm53gbhih54jhh54",
+      type: "column",
+      fields: ["vfki5g4h56ohj44h456h"],
+      style: {
+        width: "25%",
+        background: "none",
+      },
+    },
+    {
+      _id: "J9oj43gh3g534y45654h",
+      type: "column",
+      fields: ["hjo93jG98k453g654h56h"],
+      style: {
+        width: "25%",
+        background: "none",
+      },
+    },
     {
       _id: "1sEvvov8Oqktyp6-CeJNt",
       type: "column",
@@ -367,7 +425,7 @@ const data = {
       type: "column",
       fields: ["21ozPTyU49OX8rWE3R4Xd"],
       style: {
-        width: "100%",
+        width: "50%",
         background: "none",
       },
     },
@@ -383,10 +441,9 @@ const data = {
     {
       _id: "mydpE348vjxUbtVjSxJwe",
       type: "column",
-
       fields: ["70ozPTyU49OX8rWE3R4Xg"],
       style: {
-        width: "100%",
+        width: "50%",
         background: "none",
       },
     },
@@ -394,6 +451,16 @@ const data = {
       _id: "mmA1e65RfIIAa3IVubb7U",
       type: "column",
       fields: ["Ifiya4gZRAc7vZmWWG4z5"],
+      style: {
+        width: "100%",
+        background: "none",
+        textAlign: "center",
+      },
+    },
+    {
+      _id: "Gow8FD893uhh567hgv45",
+      type: "column",
+      fields: ["H5nj09435G£g3553h475F"],
       style: {
         width: "100%",
         background: "none",
@@ -534,7 +601,6 @@ const data = {
         position: "left",
       },
     },
-
     {
       _id: "bqr0oqm0qimnjqb4b4",
       type: "menu",
@@ -545,13 +611,14 @@ const data = {
         padding: "10px",
       },
     },
-
     {
       _id: "70ozPTyU49OX8rWE3R4Xg",
-      type: "text",
+      type: "social",
       style: {
         width: "100%",
         background: "none",
+        textAlign:"right",
+        socialColor:"original"
       },
     },
     {
@@ -694,11 +761,13 @@ const data = {
       type: "icon",
       style: {
         width: "100%",
-        background: "none",
+        padding: "4px",
+        background: "#33507c",
         textAlign: "center",
         fontSize: "14px",
         marginTop: "0px",
         marginBottom: "20px",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
       },
     },
 
@@ -719,11 +788,13 @@ const data = {
       type: "icon",
       style: {
         width: "100%",
-        background: "none",
+        padding: "4px",
+        background: "#33507c",
         textAlign: "center",
         fontSize: "14px",
         marginTop: "0px",
         marginBottom: "20px",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
       },
     },
     {
@@ -743,14 +814,15 @@ const data = {
       type: "icon",
       style: {
         width: "100%",
-        background: "none",
+        padding: "4px",
+        background: "#33507c",
         textAlign: "center",
         fontSize: "14px",
         marginTop: "0px",
         marginBottom: "20px",
+        boxShadow: "0px 4px 5px rgba(0, 0, 0, 0.3)",
       },
     },
-
     {
       _id: "ibve1hOGwWhZSLyBtakWU",
       type: "text",
@@ -806,6 +878,43 @@ const data = {
       style: {
         width: "100%",
         background: "none",
+        color: "#ffffff",
+      },
+    },
+    {
+      _id: "G89234G8h34gg535g31",
+      type: "text",
+      style: {
+        width: "100%",
+        background: "none",
+        color: "#ffffff",
+      },
+    },
+    {
+      _id: "f983g8hg3G934j5hg345",
+      type: "text",
+      style: {
+        width: "100%",
+        background: "none",
+        color: "#ffffff",
+      },
+    },
+    {
+      _id: "vfki5g4h56ohj44h456h",
+      type: "text",
+      style: {
+        width: "100%",
+        background: "none",
+        color: "#ffffff",
+      },
+    },
+    {
+      _id: "hjo93jG98k453g654h56h",
+      type: "text",
+      style: {
+        width: "100%",
+        background: "none",
+        color: "#ffffff",
       },
     },
     {
@@ -849,7 +958,7 @@ const data = {
         width: "98%",
         background: "none",
         textAlign: "center",
-        marginTop: "10px",
+        marginTop: "0px",
         marginBottom: "0px",
         borderSelect: "select",
         borderTop: "1px",
@@ -857,6 +966,23 @@ const data = {
         borderType: "dashed",
       },
     },
+
+    {
+      _id: "H5nj09435G£g3553h475F",
+      type: "divider",
+      style: {
+        width: "98%",
+        background: "none",
+        textAlign: "center",
+        marginTop: "0px",
+        marginBottom: "0px",
+        borderSelect: "select",
+        borderTop: "1px",
+        borderColor: "#ddd",
+        borderType: "dashed",
+      },
+    },
+
     {
       _id: "oDzfyc60vInktmgnkQnEm",
       type: "text",
@@ -911,7 +1037,7 @@ const data = {
         width: "100%",
         background: "none",
         textAlign: "center",
-        marginTop: "60px",
+        marginTop: "40px",
         fontSize: "26px",
       },
     },
@@ -948,6 +1074,13 @@ const data = {
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
       value: "<b>Lorem ipsum dolor</b>",
+    },
+    {
+      _id: "DF89k4G9j335h9PCyjEUhgv",
+      field_ref: "70ozPTyU49OX8rWE3R4Xg",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "social",
+      value: "",
     },
     {
       _id: "43tmtrbVER9ke4trgVTRBE",
@@ -991,7 +1124,14 @@ const data = {
       field_ref: "F0kgbH45rthrthr4541",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "divider",
-      value: "004.jpg",
+      value: "",
+    },
+    {
+      _id: "hb93VF834g435h56j",
+      field_ref: "H5nj09435G£g3553h475F",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "divider",
+      value: "",
     },
     {
       _id: "1J8Bd6kqDHlRPVLQHkhll",
@@ -1020,7 +1160,8 @@ const data = {
       field_ref: "H9k3F93B04965h4fdg554",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "aaaaaaaaaaaa",
+      value:
+        "<b>Lorem ipsum dolor</b><br />Sit lorem eiusmod<br />ipsum consequat voluptate",
     },
 
     {
@@ -1028,7 +1169,7 @@ const data = {
       field_ref: "hk94G93F9jh5h24312",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "icon",
-      value: "fas fa-home",
+      value: "fas fa-city",
     },
 
     {
@@ -1036,31 +1177,31 @@ const data = {
       field_ref: "J9j34GVRgb9i3gewrj54e",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "aaaaaaaaaaaa",
+      value:
+        "<b>Lorem ipsum dolor</b><br />Sit lorem eiusmod<br />ipsum consequat voluptate",
     },
     {
       _id: "bv03V934j45h4h411",
       field_ref: "Ji938F8h25hg4gg6t31",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "icon",
-      value: "fas fa-home",
+      value: "fas fa-user-alt",
     },
     {
       _id: "J04vb35gKJ4jn3487h32",
       field_ref: "R0keG93jg32Ddgggsd1",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "aaaaaaaaaaaa",
+      value:
+        "<b>Lorem ipsum dolor</b><br />Sit lorem eiusmod<br />ipsum consequat voluptate",
     },
-
     {
       _id: "h6hik9h656jh56MUUK56",
       field_ref: "FG9m534rgegbi9k4gtr",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "icon",
-      value: "fas fa-home",
+      value: "fas fa-map-marker-alt",
     },
-
     {
       _id: "NvIXKOtr87cnF15a9Z2fL",
       field_ref: "oDzfyc60vInktmgnkQnEm",
@@ -1166,7 +1307,36 @@ const data = {
       _id: "vb93B94hn46h6311",
       field_ref: "h03FG93HG064u46j3325",
       page: "4dTQcIGijLUuqB-j3H_me",
+      type: "text",
+      value: "lorem ipsum<br />lorem ipsum<br />",
+    },
+
+    {
+      _id: "fkgb85Gi9jhj56hj56",
+      field_ref: "G89234G8h34gg535g31",
+      page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
+      value: "logo-white.png",
+    },
+    {
+      _id: "HG8934FG945H0456h456",
+      field_ref: "f983g8hg3G934j5hg345",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "text",
+      value: "lorem ipsum",
+    },
+    {
+      _id: "gl4igbij454F83uhj54g",
+      field_ref: "vfki5g4h56ohj44h456h",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "text",
+      value: "",
+    },
+    {
+      _id: "f8h38F9j345G5340ikg",
+      field_ref: "hjo93jG98k453g654h56h",
+      page: "4dTQcIGijLUuqB-j3H_me",
+      type: "text",
       value: "lorem ipsum",
     },
     {

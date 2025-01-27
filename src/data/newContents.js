@@ -8,6 +8,7 @@ import { TbSlideshow } from "react-icons/tb";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import { TiSocialInstagram } from "react-icons/ti";
 import { RxButton } from "react-icons/rx";
+import { FaIcons } from "react-icons/fa";
 
 const newContest = [
   {
@@ -44,6 +45,11 @@ const newContest = [
     title: "table",
     implemented: false,
     icon: <BsTable />,
+  },
+  {
+    title: "icon",
+    implemented: false,
+    icon: <FaIcons />,
   },
   {
     title: "file",

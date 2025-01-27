@@ -97,7 +97,6 @@ const Content = React.memo(
       boxSizing: "border-box",
       minHeight: 10,
       color: style?.color ?? "#222222",
-      background: style?.background || "white",
       outline: hovered && editor ? "2px dashed #999" : "none",
       width:
         view === "mobile" || view === "tablet"
@@ -112,7 +111,12 @@ const Content = React.memo(
       marginTop: style?.marginTop || "",
       marginBottom: style?.marginBottom || "",
       fontFamily: style?.fontFamily || "",
-      boxShadow: style?.boxShadow || "",
+      ...(field?.type !== "icon" && {
+        boxShadow: style?.boxShadow || "",
+      }),
+      ...(field?.type !== "icon" && {
+        background: style?.background || "white",
+      }),
       ...(style?.borderSelect !== "select" && {
         border: `${style?.borderSize || "0px"} ${
           style?.borderType || "solid"

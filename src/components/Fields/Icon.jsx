@@ -18,11 +18,25 @@ const Icon = ({
   handleKeyPress,
   handleChange,
 }) => {
+  const styles = {
+    width: "80px",
+    height: "80px",
+    background: style?.background || "blue",
+    borderRadius: "50%",
+    margin: "0 auto",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignIterms: "center",
+    boxShadow: style?.boxShadow || "",
+  };
+
   return (
-    <div>
+    <div style={styles}>
       <i
         className={field.value}
-        style={{ fontSize: "24px", color: "#333" }}
+        style={{ fontSize: "26px", color: "#fff" }}
       ></i>
     </div>
   );

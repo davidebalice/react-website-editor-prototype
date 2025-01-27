@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import Button from "./Fields/Button";
 import Icon from "./Fields/Icon";
 import Image from "./Fields/Image";
+import Social from "./Fields/Social";
 import Text from "./Fields/Text";
 
 const Field = ({
@@ -209,6 +210,26 @@ const Field = ({
       case "button":
         return (
           <Button
+            view={view}
+            isEditing={isEditing}
+            text={text}
+            handleEditing={handleEditing}
+            itemStyle={itemStyle}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            content={content}
+            field={field}
+            style={style}
+            isHovered={isHovered}
+            handleSave={handleSave}
+            handleKeyPress={handleKeyPress}
+            handleChange={handleChange}
+          />
+        );
+
+      case "social":
+        return (
+          <Social
             view={view}
             isEditing={isEditing}
             text={text}
