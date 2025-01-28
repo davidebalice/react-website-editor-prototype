@@ -472,6 +472,7 @@ const App = () => {
                   return (
                     <Section
                       id={section}
+                      view={view}
                       items={items[section] || []}
                       key={section}
                       dragging={dragging}
@@ -491,12 +492,16 @@ const App = () => {
                       setDragMode={setDragMode}
                     >
                       <div
-                        className={`wrapper ${
-                          view === "mobile" &&
-                          contents[section].style.wrap === "wrap"
-                            ? "small"
-                            : ""
-                        }`}
+                        className="wrapper"
+                        style={{
+                          flexWrap:
+                            (view === "mobile" &&
+                              contents[section].style?.wrap === "nowrap") ||
+                            (view === "tablet" &&
+                              contents[section].style?.wrap === "nowrap")
+                              ? "nowrap"
+                              : "wrap",
+                        }}
                       >
                         {Array.isArray(items[section]) &&
                           (items[section] || []).map((column, i) => {
@@ -575,28 +580,25 @@ const App = () => {
                                               handleOrderContent
                                             }
                                           >
-                                          
-                                              <Field
-                                                view={view}
-                                                editor={editor}
-                                                content={contents[field] || {}}
-                                                fieldId={field}
-                                                field={fields.find(
-                                                  (f) => f.field_ref === field
-                                                )}
-                                                activeId={activeId}
-                                                setFields={setFields}
-                                                dragging={dragging}
-                                                setDragMode={setDragMode}
-                                                currentStyle={currentStyle}
-                                                setCurrentStyle={
-                                                  setCurrentStyle
-                                                }
-                                                isSelected={
-                                                  selectedContainer.id === field
-                                                }
-                                              />
-                                           
+                                            <Field
+                                              view={view}
+                                              editor={editor}
+                                              content={contents[field] || {}}
+                                              fieldId={field}
+                                              field={fields.find(
+                                                (f) => f.field_ref === field
+                                              )}
+                                              activeId={activeId}
+                                              setFields={setFields}
+                                              dragging={dragging}
+                                              setDragMode={setDragMode}
+                                              currentStyle={currentStyle}
+                                              setSelectedContainer={setSelectedContainer}
+                                              setCurrentStyle={setCurrentStyle}
+                                              isSelected={
+                                                selectedContainer.id === field
+                                              }
+                                            />
                                           </Content>
                                         </>
                                       ))}

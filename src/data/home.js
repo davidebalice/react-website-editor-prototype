@@ -33,7 +33,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingSelect: "select",
-        wrap: "none",
+        wrap: "nowrap",
       },
     },
 
@@ -51,7 +51,7 @@ const data = {
         width: "100%",
         paddingTop: 10,
         paddingSelect: "select",
-        wrap: "none",
+        wrap: "nowrap",
       },
     },
 
@@ -271,19 +271,11 @@ const data = {
     },
     {
       _id: "LVDPPHKPhECCZ5J2FH890",
-      layout: "one_column_layout",
+      layout: "two_column_layout5050",
       content: [
         {
           position: "left",
           columns: ["54945muihGHk953tD21f1"],
-        },
-        {
-          position: "center",
-          columns: ["jg3F83f4fD8h34h94j589"],
-        },
-        {
-          position: "center",
-          columns: ["3f4i9jm53gbhih54jhh54"],
         },
         {
           position: "right",
@@ -296,7 +288,7 @@ const data = {
         paddingTop: 10,
         paddingBottom: 10,
         paddingSelect: "select",
-        wrap: "wrap",
+        wrap: "nowrap",
       },
     },
   ],
@@ -313,27 +305,9 @@ const data = {
     {
       _id: "54945muihGHk953tD21f1",
       type: "column",
-      fields: ["G89234G8h34gg535g31","h03FG93HG064u46j3325"],
+      fields: ["G89234G8h34gg535g31", "h03FG93HG064u46j3325"],
       style: {
-        width: "25%",
-        background: "none",
-      },
-    },
-    {
-      _id: "jg3F83f4fD8h34h94j589",
-      type: "column",
-      fields: ["f983g8hg3G934j5hg345"],
-      style: {
-        width: "25%",
-        background: "none",
-      },
-    },
-    {
-      _id: "3f4i9jm53gbhih54jhh54",
-      type: "column",
-      fields: ["vfki5g4h56ohj44h456h"],
-      style: {
-        width: "25%",
+        width: "50%",
         background: "none",
       },
     },
@@ -342,7 +316,7 @@ const data = {
       type: "column",
       fields: ["hjo93jG98k453g654h56h"],
       style: {
-        width: "25%",
+        width: "50%",
         background: "none",
       },
     },
@@ -593,9 +567,9 @@ const data = {
       _id: "21ozPTyU49OX8rWE3R4Xd",
       type: "image",
       style: {
-        width: "70%",
-        mobileWidth: "55%",
-        maxWidth: "190px",
+        width: "60%",
+        mobileWidth: "70%",
+        maxWidth: "150px",
         align: "left",
         background: "none",
         position: "left",
@@ -617,8 +591,13 @@ const data = {
       style: {
         width: "100%",
         background: "none",
-        textAlign:"right",
-        socialColor:"original"
+        textAlign: "right",
+        position: "right",
+        socialColor: "original",
+        display: "flex",
+        justifyContent: "right",
+        alignItems: "center",
+        marginTop: "10px",
       },
     },
     {
@@ -861,13 +840,13 @@ const data = {
         background: "none",
         text: {
           color: "#ffffff",
-          fontSize: "30px",
-          mobileFontSize: "18px",
+          fontSize: "26px",
+          mobileFontSize: "14px",
           align: "center",
           textAlign: "center",
           paddingSelect: "select",
           width: "100%",
-          paddingTop: "130px",
+          paddingTop: "90px",
           mobilePaddingTop: "10px",
         },
       },
@@ -879,42 +858,42 @@ const data = {
         width: "100%",
         background: "none",
         color: "#ffffff",
+        paddingSelect:"select",
+        paddingLeft:"20px",
+        paddingTop:"20px",
+        paddingBottom:"20px",
+        fontSize:"13px"
       },
     },
     {
       _id: "G89234G8h34gg535g31",
       type: "text",
       style: {
-        width: "100%",
+        width: "60%",
+        mobileWidth: "70%",
+        maxWidth: "120px",
+        align: "left",
         background: "none",
-        color: "#ffffff",
-      },
-    },
-    {
-      _id: "f983g8hg3G934j5hg345",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-        color: "#ffffff",
-      },
-    },
-    {
-      _id: "vfki5g4h56ohj44h456h",
-      type: "text",
-      style: {
-        width: "100%",
-        background: "none",
-        color: "#ffffff",
+        position: "left",
+        paddingLeft:"20px",
+        paddingSelect:"select",
+        paddingTop:"20px",
+        paddingBottom:"0px",
       },
     },
     {
       _id: "hjo93jG98k453g654h56h",
-      type: "text",
+      type: "social",
       style: {
         width: "100%",
         background: "none",
-        color: "#ffffff",
+        textAlign: "right",
+        position: "right",
+        socialColor: "white",
+        display: "flex",
+        justifyContent: "right",
+        alignItems: "center",
+        marginTop: "10px",
       },
     },
     {
@@ -1237,28 +1216,28 @@ const data = {
       field_ref: "8091g534uhng104hu9n",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "004.jpg",
+      value: "008.jpg",
     },
     {
       _id: "G09k4F9jk534g45g3411",
       field_ref: "pL3imhIq46mm0ihqg3gG",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "004.jpg",
+      value: "009.jpg",
     },
     {
       _id: "450k35u8njGg423H543h534",
       field_ref: "Kkim3GF9ik3G9k354vfwe4",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "004.jpg",
+      value: "010.jpg",
     },
     {
       _id: "Sf09k34fNM095348uj34g",
       field_ref: "fd10893G89j35G354g31",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "004.jpg",
+      value: "011.jpg",
     },
     {
       _id: "t0N0S7a4GMm3Wfl6aydzr",
@@ -1308,7 +1287,8 @@ const data = {
       field_ref: "h03FG93HG064u46j3325",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "text",
-      value: "lorem ipsum<br />lorem ipsum<br />",
+      value:
+        "Amet exercitation sed<br />laboris magna veniam<br />commodo ipsum<br />consectetur consequat<br />consectetur laboris<br />",
     },
 
     {
@@ -1316,28 +1296,14 @@ const data = {
       field_ref: "G89234G8h34gg535g31",
       page: "4dTQcIGijLUuqB-j3H_me",
       type: "image",
-      value: "logo-white.png",
-    },
-    {
-      _id: "HG8934FG945H0456h456",
-      field_ref: "f983g8hg3G934j5hg345",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
-    },
-    {
-      _id: "gl4igbij454F83uhj54g",
-      field_ref: "vfki5g4h56ohj44h456h",
-      page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "",
+      value: "logo_white.png",
     },
     {
       _id: "f8h38F9j345G5340ikg",
       field_ref: "hjo93jG98k453g654h56h",
       page: "4dTQcIGijLUuqB-j3H_me",
-      type: "text",
-      value: "lorem ipsum",
+      type: "social",
+      value: "",
     },
     {
       _id: "jVkudagyVe9Xhktz_B59T",

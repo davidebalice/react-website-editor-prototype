@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import Button from "./Fields/Button";
 import Icon from "./Fields/Icon";
 import Image from "./Fields/Image";
+import Menu from "./Fields/Menu";
 import Social from "./Fields/Social";
 import Text from "./Fields/Text";
 
@@ -19,6 +20,7 @@ const Field = ({
   content,
   currentStyle,
   setCurrentStyle,
+  setSelectedContainer,
   setDragMode,
 }) => {
   const [text, setText] = useState(field?.value ?? "");
@@ -102,6 +104,11 @@ const Field = ({
   };
 
   const handleEditing = () => {
+    setSelectedContainer({
+      id: fieldId,
+      type: field?.type.charAt(0).toUpperCase() + field?.type.slice(1) || null,
+    });
+    setCurrentStyle(style);
     if (editor) {
       setIsEditing(true);
       setDragMode("none");
@@ -261,7 +268,17 @@ const Field = ({
         );
 
       case "menu":
-        return view === "mobile" ? null : <div style={itemStyle}>menu</div>;
+        return view === "mobile" ? null : (
+          <Menu
+            view={view}
+            text={text}
+            itemStyle={itemStyle}
+            content={content}
+            field={field}
+            style={style}
+          />
+        );
+
       default:
         return (
           <div style={itemStyle}>

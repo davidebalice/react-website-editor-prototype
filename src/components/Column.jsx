@@ -85,7 +85,6 @@ export default function Column({
     transform: CSS.Translate.toString(transform),
     transition,
     flexWrap: "wrap",
-    alignItems: "center",
     userSelect: "none",
     cursor: "grab",
     boxSizing: "border-box",
@@ -100,6 +99,15 @@ export default function Column({
     margin: !style?.position || style?.position === "center" ? "0 auto" : "",
     marginTop: style?.marginTop || "",
     marginBottom: style?.marginBottom || "",
+    ...(style?.display !== "" && {
+      display: style?.display,
+    }),
+    ...(style?.justifyContent !== "" && {
+      justifyContent: style?.justifyContent,
+    }),
+    ...(style?.alignItems !== "" && {
+      alignItems: style?.alignItems,
+    }),
     ...(style?.borderSelect !== "select" && {
       border: `${style?.borderSize || "0px"} ${style?.borderType || "solid"} ${
         style?.borderColor || "#ddd"

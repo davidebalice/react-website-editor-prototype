@@ -9,6 +9,7 @@ import { RiDragMove2Line } from "react-icons/ri";
 
 export default function Section({
   id,
+  view,
   items,
   children,
   currentStyle,
@@ -88,7 +89,10 @@ export default function Section({
     transition,
     width: style?.width || "100%",
     flex: 1,
-    flexWrap: "wrap",
+    flexWrap:
+      (view === "mobile" || view === "tablet") && style?.wrap === "nowrap"
+        ? "nowrap"
+        : "wrap",
     alignItems: "center",
     userSelect: "none",
     cursor: "grab",

@@ -111,6 +111,15 @@ const Content = React.memo(
       marginTop: style?.marginTop || "",
       marginBottom: style?.marginBottom || "",
       fontFamily: style?.fontFamily || "",
+      ...(style?.display !== "" && {
+        display: style?.display,
+      }),
+      ...(style?.justifyContent !== "" && {
+        justifyContent: style?.justifyContent,
+      }),
+      ...(style?.alignItems !== "" && {
+        alignItems: style?.alignItems,
+      }),
       ...(field?.type !== "icon" && {
         boxShadow: style?.boxShadow || "",
       }),

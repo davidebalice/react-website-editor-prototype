@@ -22,35 +22,31 @@ const Text = ({
 }) => {
   return (
     <div>
-      {!isEditing ? (
-        <div
-          onClick={() => handleEditing()}
-          style={itemStyle}
-          dangerouslySetInnerHTML={{ __html: text }}
-        />
-      ) : (
-        <div style={{ width: "100%" }}>
-          <ReactQuill
-            value={text}
-            onChange={handleChange}
-            theme="snow"
-            placeholder=""
-            onKeyPress={handleKeyPress}
-            style={{
-              zIndex: 200,
-              position: "relative",
-              background: "white",
-              width: "100%",
-              height: "70px",
-              padding: "4px",
-              fontSize: "13px",
-            }}
-          />
-          <button onClick={handleSave} className="flex textSave">
-            <IoMdSave style={{ fontSize: "16px" }} />
-            <span>Save</span>
-          </button>
-        </div>
+      <div
+        onClick={() => handleEditing()}
+        style={itemStyle}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
+
+      {isEditing && (
+        <>
+          <div className="textEditorOverlay">
+            <div className="textEditor">
+              <ReactQuill
+                value={text}
+                onChange={handleChange}
+                theme="snow"
+                placeholder=""
+                onKeyPress={handleKeyPress}
+                className="quillEditor"
+              />
+              <button onClick={handleSave} className="flex textSave">
+                <IoMdSave style={{ fontSize: "16px" }} />
+                <span>Save</span>
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
