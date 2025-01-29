@@ -13,18 +13,40 @@ const Field = ({
   isSelected,
   field,
   fieldId,
+  isTextEditing,
+  setIsTextEditing,
   editor,
   setFields,
   activeId,
-  dragging,
+  setActiveId,
   content,
   currentStyle,
   setCurrentStyle,
   setSelectedContainer,
+  selectedText,
+  setSelectedText,
   setDragMode,
+  updateText,
+  setUpdateText,
 }) => {
-  const [text, setText] = useState(field?.value ?? "");
-  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(() => {
+    if (field?.type === "image") {
+      if (field?.type === "image" && content?.text) {
+        return content?.text?.value ?? "";
+      } else {
+        return null;
+      }
+    } else {
+      return field?.value ?? "";
+    }
+  });
+
+  useEffect(() => {
+    if (fieldId === activeId && updateText) {
+      setText(selectedText);
+    }
+  }, [selectedText]);
+
   const [isHovered, setIsHovered] = useState(false);
   const [style, setStyle] = useState(content.style || {});
 
@@ -76,62 +98,42 @@ const Field = ({
     }
   }, [isSelected, currentStyle]);
 
-  const handleChange = (value) => {
-    setText(value);
-  };
-
-  const handleSave = () => {
-    setIsEditing(false);
-    setDragMode("Sections");
-
-    setFields((prevFields) => {
-      return prevFields.map((f) => {
-        if (field._id === f._id) {
-          return {
-            ...f,
-            value: text,
-          };
-        }
-        return f;
-      });
-    });
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSave();
-    }
-  };
-
-  const handleEditing = () => {
+  const handleTextEditing = () => {
+    setUpdateText(true);
+    setActiveId(fieldId);
     setSelectedContainer({
       id: fieldId,
       type: field?.type.charAt(0).toUpperCase() + field?.type.slice(1) || null,
     });
+    if (field?.type === "image") {
+      setSelectedText(text);
+    } else {
+      setSelectedText(text);
+    }
     setCurrentStyle(style);
     if (editor) {
-      setIsEditing(true);
+      setIsTextEditing(true);
       setDragMode("none");
     } else {
-      setIsEditing(false);
+      setIsTextEditing(false);
       setDragMode("Sections");
     }
   };
 
   const handleMouseDown = (e) => {
-    if (isEditing && window.getSelection().toString()) {
+    if (isTextEditing && window.getSelection().toString()) {
       e.stopPropagation();
     }
   };
 
   useEffect(() => {
-    if (isEditing) {
+    if (isTextEditing) {
       document.addEventListener("mousedown", handleMouseDown);
     }
     return () => {
       document.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [isEditing]);
+  }, [isTextEditing]);
 
   if (!field) {
     return null;
@@ -159,9 +161,10 @@ const Field = ({
         return (
           <Text
             view={view}
-            isEditing={isEditing}
+            isTextEditing={isTextEditing}
+            handleTextEditing={handleTextEditing}
+            setSelectedText={setSelectedText}
             text={text}
-            handleEditing={handleEditing}
             itemStyle={itemStyle}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
@@ -169,18 +172,13 @@ const Field = ({
             field={field}
             style={style}
             isHovered={isHovered}
-            handleSave={handleSave}
-            handleKeyPress={handleKeyPress}
-            handleChange={handleChange}
           />
         );
       case "icon":
         return (
           <Icon
             view={view}
-            isEditing={isEditing}
             text={text}
-            handleEditing={handleEditing}
             itemStyle={itemStyle}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
@@ -188,26 +186,23 @@ const Field = ({
             field={field}
             style={style}
             isHovered={isHovered}
-            handleSave={handleSave}
-            handleKeyPress={handleKeyPress}
-            handleChange={handleChange}
           />
         );
 
       case "image":
         return (
           <Image
+            isTextEditing={isTextEditing}
+            handleTextEditing={handleTextEditing}
             view={view}
+            text={text ?? ""}
             itemStyle={itemStyle}
-            isEditing={isEditing}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
             content={content}
             field={field}
             style={style}
             isHovered={isHovered}
-            handleChange={handleChange}
-            handleKeyPress={handleKeyPress}
             setFields={setFields}
             editor={editor}
             setDragMode={setDragMode}
@@ -218,9 +213,7 @@ const Field = ({
         return (
           <Button
             view={view}
-            isEditing={isEditing}
             text={text}
-            handleEditing={handleEditing}
             itemStyle={itemStyle}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
@@ -228,9 +221,6 @@ const Field = ({
             field={field}
             style={style}
             isHovered={isHovered}
-            handleSave={handleSave}
-            handleKeyPress={handleKeyPress}
-            handleChange={handleChange}
           />
         );
 
@@ -238,9 +228,7 @@ const Field = ({
         return (
           <Social
             view={view}
-            isEditing={isEditing}
             text={text}
-            handleEditing={handleEditing}
             itemStyle={itemStyle}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
@@ -248,9 +236,6 @@ const Field = ({
             field={field}
             style={style}
             isHovered={isHovered}
-            handleSave={handleSave}
-            handleKeyPress={handleKeyPress}
-            handleChange={handleChange}
           />
         );
 

@@ -1,13 +1,58 @@
-import React from 'react';
+import React from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 
-const Info = ({setInfo}) => {
-    return (
-        <div className='infoContainer'>
-            <b onClick={()=>setInfo(false)}>close</b>
-            <h1>Website Editor Info</h1>
-            <p>This is a simple website editor built with React.</p>
-        </div>
-    );
+const Info = ({ setInfo }) => {
+  return (
+    <div className="infoContainer">
+      <b onClick={() => setInfo(false)}>
+        <IoMdCloseCircle style={{ float: "right", fontSize: "32px",cursor:"pointer" }} />
+      </b>
+      <br />
+      <b style={{ fontSize: "24px" }}>Website Editor Info</b>
+      <p>
+        This app is a prototype of a website editor, starting point of a more
+        complex project.
+        <br />
+        <br />
+        A powerful and intuitive tool for managing the layout of fully
+        responsive websites. This editor allows you to easily design and
+        customize your site through drag-and-drop functionality and
+        user-friendly buttons, simplifying the entire process. Everything is
+        draggable: you can move columns between different sections, shift
+        content between columns, and rearrange sections, columns, and individual
+        content effortlessly. In addition to managing layouts, you can add or
+        delete elements and customize various options, such as backgrounds,
+        borders, fonts, font sizes, and more. Whether you're building from
+        scratch or refining an existing design, the editor provides complete
+        control for creating a visually appealing and functional website.
+        <br />
+        <br />
+        This app is just a prototype, at the moment there is no connection with
+        a database, data saving is not supported.
+        <br />
+        <br />
+        <b>Some possible future updates</b>: 
+        <br /><br />
+        - connection of the app with a database
+        <br />
+         - login to access the editor 
+        <br />
+         - management of more contents 
+        <br />
+         - more options for each content 
+        <br />
+         - content product management 
+        <br />
+         - page management
+        <br />
+         - and more
+        <br />
+        <br />
+        This app uses <b>dnd-kit</b> for drag and drop operations and{" "}
+        <b>quill</b> for text editor.
+      </p>
+    </div>
+  );
 };
 
 export default Info;

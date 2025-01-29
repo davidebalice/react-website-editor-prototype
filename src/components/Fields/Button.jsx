@@ -4,7 +4,6 @@ import "tailwindcss/tailwind.css";
 
 const Button = ({
   text,
-
   itemStyle,
   handleEditing,
 }) => {

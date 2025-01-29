@@ -447,7 +447,8 @@ body {
 }
 
 .infoContainer {
-  width: 1200px;
+  width: 1000px;
+  text-align: justify;
   margin: 0 auto;
   margin-top: 70px;
 }
@@ -572,9 +573,13 @@ body {
 .dragOverlay {
   padding: 10px;
   border: 2px dashed gray;
-  background: lightgray;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
   cursor: grabbing;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dragOverlayContents {

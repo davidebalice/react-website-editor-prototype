@@ -19,13 +19,18 @@ import Info from "./components/Info.jsx";
 import MobileMenu from "./components/MobileMenu.jsx";
 import Section from "./components/Section.jsx";
 import Sidebar from "./components/Sidebar.jsx";
+import TextEditor from "./components/TextEditor.jsx";
 import Topbar from "./components/Topbar.jsx";
 import data from "./data/home.js";
+
 import "./styles.css";
 
 const App = () => {
   const pageId = data.pageData._id;
   const pageStyle = data.pageData?.style || {};
+  const [isTextEditing, setIsTextEditing] = useState(false);
+  const [updateText, setUpdateText] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
   const [dragMode, setDragMode] = useState("sections");
   const [view, setView] = useState("desktop");
   const [editor, setEditor] = useState(true);
@@ -97,7 +102,7 @@ const App = () => {
   const typeContent = (type) => {
     switch (type) {
       case "text":
-        return "lorem ipsum new";
+        return "Lorem ipsum dolor";
       case "image":
         return "001.jpg";
       default:
@@ -424,6 +429,22 @@ const App = () => {
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />
+
+      <TextEditor
+        activeId={activeId}
+        contents={contents}
+        selectedContainer={selectedContainer}
+        setFields={setFields}
+        setDragMode={setDragMode}
+        setContents={setContents}
+        isTextEditing={isTextEditing}
+        setIsTextEditing={setIsTextEditing}
+        updateText={updateText}
+        setUpdateText={setUpdateText}
+        selectedText={selectedText}
+        setSelectedText={setSelectedText}
+      />
+
       <Sidebar
         id={selectedContainer.id}
         type={selectedContainer.type}
@@ -589,15 +610,24 @@ const App = () => {
                                                 (f) => f.field_ref === field
                                               )}
                                               activeId={activeId}
+                                              setActiveId={setActiveId}
+                                              setIsTextEditing={
+                                                setIsTextEditing
+                                              }
                                               setFields={setFields}
-                                              dragging={dragging}
                                               setDragMode={setDragMode}
                                               currentStyle={currentStyle}
-                                              setSelectedContainer={setSelectedContainer}
+                                              setSelectedContainer={
+                                                setSelectedContainer
+                                              }
                                               setCurrentStyle={setCurrentStyle}
+                                              selectedText={selectedText}
+                                              setSelectedText={setSelectedText}
                                               isSelected={
                                                 selectedContainer.id === field
                                               }
+                                              updateText={updateText}
+                                              setUpdateText={setUpdateText}
                                             />
                                           </Content>
                                         </>
@@ -631,7 +661,7 @@ const App = () => {
               }`}
             >
               {contents[activeId]?.type
-                ? `Dragging ${contents[activeId].type}: ${contents[activeId].name}`
+                ? `Dragging ${contents[activeId].type}`
                 : `Dragging ${activeId}`}
             </div>
           ) : contents[activeId]?.type === "section" ? (
@@ -655,11 +685,9 @@ const App = () => {
     const id = active.id;
     const overId = over.id;
 
-    // Find the containers
     const activeContainer = findContainer(id, items);
     const overContainer = findContainer(overId, items);
 
-    //Do nothing if haven't moved out of current container
     if (
       !activeContainer ||
       !overContainer ||
@@ -668,7 +696,6 @@ const App = () => {
       return;
     }
 
-    //Move item to new container for the right container type
     if (
       contents[id] &&
       contents[overContainer] &&
@@ -678,7 +705,6 @@ const App = () => {
         const activeItems = prev[activeContainer];
         const overItems = prev[overContainer];
 
-        // Find the indexes for the items
         const activeIndex = activeItems.indexOf(id);
         const overIndex = overItems.indexOf(overId);
 

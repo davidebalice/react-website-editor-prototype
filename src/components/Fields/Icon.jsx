@@ -2,22 +2,7 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
-const Icon = ({
-  view,
-  isEditing,
-  text,
-  handleMouseEnter,
-  handleMouseLeave,
-  content,
-  field,
-  style,
-  itemStyle,
-  isHovered,
-  handleEditing,
-  handleSave,
-  handleKeyPress,
-  handleChange,
-}) => {
+const Icon = ({ field, style }) => {
   const styles = {
     width: "80px",
     height: "80px",

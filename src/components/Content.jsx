@@ -5,6 +5,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { HiTemplate } from "react-icons/hi";
 import { HiMiniCog6Tooth } from "react-icons/hi2";
 import { RiDragMove2Line } from "react-icons/ri";
+import { FaCaretSquareDown } from "react-icons/fa";
+import { FaCaretSquareUp } from "react-icons/fa";
 
 const Content = React.memo(
   ({
@@ -248,26 +250,26 @@ const Content = React.memo(
 
                       <button
                         data-tooltip-id="tooltip-global"
-                        data-tooltip-content="Delete"
+                        data-tooltip-content="Move Up"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={() => {
                           handleOrderContent(columnId, id, "up");
                         }}
                         className="button buttonDeleteContent"
                       >
-                        <FaRegTrashAlt />
+                        <FaCaretSquareUp style={{fontSize:"18px"}}/>
                       </button>
 
                       <button
                         data-tooltip-id="tooltip-global"
-                        data-tooltip-content="Delete"
+                        data-tooltip-content="Move down"
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={() => {
                           handleOrderContent(columnId, id, "down");
                         }}
                         className="button buttonDeleteContent"
                       >
-                        <FaRegTrashAlt />
+                        <FaCaretSquareDown style={{fontSize:"18px"}}/>
                       </button>
 
                       <button className="button buttonDeleteContent">

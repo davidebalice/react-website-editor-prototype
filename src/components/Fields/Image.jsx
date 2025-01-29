@@ -1,59 +1,20 @@
 import React, { useState } from "react";
-import { IoMdSave } from "react-icons/io";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
 const Image = ({
+  text,
   view,
   handleMouseEnter,
   handleMouseLeave,
-  content,
   field,
   style,
   itemStyle,
   isHovered,
-  handleKeyPress,
-  setFields,
-  editor,
-  setDragMode,
+  handleTextEditing,
 }) => {
   const fileRepositoryUrl = process.env.REACT_APP_FILE_REPOSITORY;
-  const [text, setText] = useState((content.text && content.text.value) ?? "");
-  const [isEditing, setIsEditing] = useState(false);
 
-  const handleChange = (value) => {
-    setText(value);
-  };
-
-  const handleSave = () => {
-    setIsEditing(false);
-    setDragMode("Sections");
-
-    setFields((prevFields) => {
-      return prevFields.map((f) => {
-        if (field._id === f._id) {
-          return {
-            ...f,
-            text: {
-              value: text,
-            },
-          };
-        }
-        return f;
-      });
-    });
-  };
-
-  const handleEditing = () => {
-    if (editor) {
-      setIsEditing(true);
-      setDragMode("none");
-    } else {
-      setIsEditing(false);
-      setDragMode("Sections");
-    }
-  };
 
   const textOverImgStyle = {
     position: "absolute",
@@ -98,32 +59,13 @@ const Image = ({
       onMouseLeave={handleMouseLeave}
     >
       <>
-        {content.text && content.text.value && (
+        {text && (
           <>
-            {!isEditing ? (
-              <div
-                onClick={() => handleEditing()}
-                style={textOverImgStyle}
-                dangerouslySetInnerHTML={{ __html: text }}
-              />
-            ) : (
-              <div className="textEditorOverlay">
-                <div className="textEditor">
-                  <ReactQuill
-                    value={text}
-                    onChange={handleChange}
-                    theme="snow"
-                    placeholder=""
-                    onKeyPress={handleKeyPress}
-                    className="quillEditor"
-                  />
-                  <button onClick={handleSave} className="flex textSave">
-                    <IoMdSave style={{ fontSize: "16px" }} />
-                    <span>Save</span>
-                  </button>
-                </div>
-              </div>
-            )}
+            <div
+              onClick={() => handleTextEditing()}
+              style={textOverImgStyle}
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
           </>
         )}
 

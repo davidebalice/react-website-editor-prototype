@@ -695,7 +695,7 @@ const data = {
       type: "image",
       text: {
         value:
-          "Lorem ipsum<br />dolor sit amet consectetur<br />adipiscing elit",
+          "<b><i>Lorem ipsum</i></b><br />dolor sit amet consectetur<br />adipiscing elit",
       },
       style: {
         width: "100%",
@@ -858,11 +858,11 @@ const data = {
         width: "100%",
         background: "none",
         color: "#ffffff",
-        paddingSelect:"select",
-        paddingLeft:"20px",
-        paddingTop:"20px",
-        paddingBottom:"20px",
-        fontSize:"13px"
+        paddingSelect: "select",
+        paddingLeft: "20px",
+        paddingTop: "20px",
+        paddingBottom: "20px",
+        fontSize: "13px",
       },
     },
     {
@@ -875,10 +875,10 @@ const data = {
         align: "left",
         background: "none",
         position: "left",
-        paddingLeft:"20px",
-        paddingSelect:"select",
-        paddingTop:"20px",
-        paddingBottom:"0px",
+        paddingLeft: "20px",
+        paddingSelect: "select",
+        paddingTop: "20px",
+        paddingBottom: "0px",
       },
     },
     {

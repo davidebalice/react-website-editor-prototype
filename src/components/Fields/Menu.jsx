@@ -4,7 +4,6 @@ import "tailwindcss/tailwind.css";
 import pages from "../../data/pages.js";
 import PageModal from "../PageModal.jsx";
 
-
 const Menu = ({ view }) => {
   const [modal, setModal] = useState(false);
 
