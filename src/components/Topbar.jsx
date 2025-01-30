@@ -14,11 +14,10 @@ import { TbArrowAutofitContent } from "react-icons/tb";
 import logo from "../assets/img/logo.png";
 import "../styles.css";
 import SaveModal from "./SaveModal";
+import { RiResetLeftFill } from "react-icons/ri";
 
 export default function Topbar({
   id,
-  view,
-  activeId,
   setView,
   editor,
   setEditor,
@@ -28,11 +27,9 @@ export default function Topbar({
   setInfo,
   setSidebar,
   style,
-  setStyle,
   setSelectedContainer,
   setCurrentStyle,
-  dragMode,
-  setDragMode,
+  handleReset,
   setNewContentData,
 }) {
   const [modal, setModal] = useState(false);
@@ -161,8 +158,11 @@ export default function Topbar({
               <div style={{ marginLeft: "6px" }}>
                 {Math.round(zoomLevel * 100)}%
               </div>
-
-              <button onClick={handleSave} className="flex topSave">
+              <button onClick={handleReset} className="flex topButton">
+                <RiResetLeftFill style={{ fontSize: "16px" }} />
+                <span>Reset</span>
+              </button>
+              <button onClick={handleSave} className="flex topButton" style={{marginLeft:"4px"}}>
                 <IoMdSave style={{ fontSize: "16px" }} />
                 <span>Save</span>
               </button>

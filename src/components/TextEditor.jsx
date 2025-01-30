@@ -5,27 +5,16 @@ import "react-quill/dist/quill.snow.css";
 import "tailwindcss/tailwind.css";
 
 const TextEditor = ({
-  view,
   isTextEditing,
   setIsTextEditing,
   selectedContainer,
-  text,
-  handleMouseEnter,
-  handleMouseLeave,
-  content,
   setFields,
   setContents,
-  activeId,
-  style,
-  itemStyle,
-  isHovered,
-  handleEditing,
   setDragMode,
   selectedText,
   setSelectedText,
   handleKeyPress,
   setUpdateText,
-  contents,
 }) => {
   const handleChange = (value) => {
     setSelectedText(value);
@@ -56,38 +45,38 @@ const TextEditor = ({
         return f;
       });
     });
-
-    setContents((prevContents) => {
-      if (!prevContents || typeof prevContents !== "object") {
-        return prevContents;
-      }
-
-      const updatedEntries = Object.entries(prevContents).map(
-        ([key, value]) => {
-          if (value && typeof value === "object") {
-
-            if (value.name === selectedContainer.name) {
-              return [
-                key,
-                {
-                  ...value,
-                  text: {
-                    value: selectedText,
-                  },
-                },
-              ];
-            }
-          }
-
-          return [key, value];
+    if (selectedContainer.type === "Image") {
+      setContents((prevContents) => {
+        if (!prevContents || typeof prevContents !== "object") {
+          return prevContents;
         }
-      );
 
-      const updatedContents = Object.fromEntries(updatedEntries);
+        const updatedEntries = Object.entries(prevContents).map(
+          ([key, value]) => {
+            if (value && typeof value === "object") {
+              if (value.name === selectedContainer.name) {
+                return [
+                  key,
+                  {
+                    ...value,
+                    text: {
+                      value: selectedText,
+                    },
+                  },
+                ];
+              }
+            }
 
-      return updatedContents;
-    });
+            return [key, value];
+          }
+        );
 
+        const updatedContents = Object.fromEntries(updatedEntries);
+
+        return updatedContents;
+      });
+    }
+    setSelectedText("");
     setUpdateText(false);
   };
 

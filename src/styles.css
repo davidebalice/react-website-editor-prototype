@@ -787,7 +787,7 @@ body {
   background-color: var(--button-background-secondary);
 }
 
-.topSave {
+.topButton {
   margin-left: 18px;
   padding: 5px 9px;
   background-color: var(--button-background-primary);
@@ -801,7 +801,7 @@ body {
   transition: background 0.3s ease-in-out;
 }
 
-.topSave:hover {
+.topButton:hover {
   background-color: var(--button-background-secondary);
 }
 

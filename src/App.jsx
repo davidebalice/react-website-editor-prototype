@@ -86,17 +86,39 @@ const App = () => {
     })
   );
 
+  const handleReset = () => {
+    setIsTextEditing(false);
+    setUpdateText(false);
+    setSelectedText("");
+    setDragMode("sections");
+    setView("desktop");
+    setEditor(true);
+    setSidebar(true);
+    setActiveId(null);
+    setZoomLevel(1);
+    setDragging(false);
+    setCurrentStyle({ background: data.pageData?.style.background } || {});
+    setSelectedContainer({
+      id: pageId,
+      type: "Site options",
+    });
+    setItems(idArrays || []);
+    setContents(idTypes || []);
+    setFields(fieldData || []);
+    setInfo(false);
+    setNewContentData({
+      selectContent: false,
+      columnId: "",
+      type: "",
+    });
+    setStyle(data.pageData?.style || {});
+  };
+
   const handleDragStart = ({ active }) => {
     setDragging(true);
     setActiveId(active.id);
-    console.log("active.id");
-    console.log(active.id);
   };
 
-  console.log("data, idArrays");
-  console.log({ data, idArrays });
-
-  console.log("items useeffect");
   useEffect(() => console.log({ items }), [items]);
 
   const typeContent = (type) => {
@@ -280,13 +302,10 @@ const App = () => {
 
   const handleOrderContent = (columnId, contentId, direction) => {
     setItems((prevItems) => {
-      // Ottieni l'array degli elementi nella colonna
       const columnItems = [...prevItems[columnId]];
 
-      // Trova l'indice dell'elemento da spostare
       const currentIndex = columnItems.findIndex((id) => id === contentId);
 
-      // Calcola il nuovo indice
       let newIndex = currentIndex;
       if (direction === "up" && currentIndex > 0) {
         newIndex = currentIndex - 1;
@@ -297,16 +316,11 @@ const App = () => {
         newIndex = currentIndex + 1;
       }
 
-      // Se il nuovo indice è diverso, sposta l'elemento
       if (newIndex !== currentIndex) {
-        // Rimuovi l'elemento dall'indice attuale
         columnItems.splice(currentIndex, 1);
-
-        // Inserisci l'elemento nella nuova posizione
         columnItems.splice(newIndex, 0, contentId);
       }
 
-      // Ritorna il nuovo stato aggiornato
       return {
         ...prevItems,
         [columnId]: columnItems,
@@ -426,6 +440,7 @@ const App = () => {
         dragMode={dragMode}
         setDragMode={setDragMode}
         setNewContentData={setNewContentData}
+        handleReset={handleReset}
       />
       <Tooltip id="tooltip-global" place="top" className="tooltip" />
       <Tooltip id="tooltip-topbar" place="bottom" className="tooltip" />

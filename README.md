@@ -44,6 +44,6 @@ a database, data saving is not supported.
 <br /> - and more
 <br />
 <br />
-This app uses <b>Dnd-Kit</b> for drag and drop operations and{" "}
+This app uses <b>Dnd-Kit</b> for drag and drop operations and
 <b>quill</b> for text editor.
 </p>
